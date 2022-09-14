@@ -9,11 +9,13 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
     declarations: [
         NavbarComponent,
-        SidebarComponent
+        SidebarComponent,
+        FooterComponent
     ],
     imports: [
         CommonModule,
@@ -31,7 +33,8 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
         MatSortModule,
 
         NavbarComponent,
-        SidebarComponent
+        SidebarComponent,
+        FooterComponent
     ],
     providers: [],
 })
