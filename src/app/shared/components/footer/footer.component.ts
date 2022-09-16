@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class FooterComponent {
 
+  icons = [
+    { icon: 'fa-linkedin-in', link: 'https://www.linkedin.com/in/patryksadowski/' },
+    { icon: 'fa-github', link: 'https://github.com/Patryk-S-W' }
+  ];
+
 }

@@ -1,22 +1,13 @@
 <footer class="bg-dark text-center text-white">
   <div class="container p-4">
-    <!-- Section: Social media -->
     <section class="mb-4">
-      <!-- Linkedin -->
       <a
         mdbRipple
         class="btn btn-outline-light btn-floating m-1"
-        href="https://www.linkedin.com/in/patryksadowski/"
         role="button"
-      ><i class="fab fa-linkedin-in"></i></a>
-
-      <!-- Github -->
-      <a
-        mdbRipple
-        class="btn btn-outline-light btn-floating m-1"
-        href="https://github.com/Patryk-S-W"
-        role="button"
-      ><i class="fab fa-github"></i></a>
+        *ngFor="let icon of icons"
+        [href]="icon.link"
+      ><i class="fab {{icon.icon}}"></i></a>
     </section>
   </div>
   <div class="text-center p-3">
