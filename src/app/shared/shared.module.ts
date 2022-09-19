@@ -7,6 +7,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpClientModule } from '@angular/common/http';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -23,7 +24,8 @@ import { FooterComponent } from './components/footer/footer.component';
         MatCheckboxModule,
         MatTooltipModule,
         MatPaginatorModule,
-        MatSortModule
+        MatSortModule,
+        NgbModule
     ],
     exports: [
         MatTableModule,
@@ -31,6 +33,7 @@ import { FooterComponent } from './components/footer/footer.component';
         MatTooltipModule,
         MatPaginatorModule,
         MatSortModule,
+        NgbModule,
 
         NavbarComponent,
         SidebarComponent,

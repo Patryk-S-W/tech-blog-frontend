@@ -1,6 +1,5 @@
 import {
   Component,
-  OnInit,
 } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -9,15 +8,34 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.sass'],
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
+  isNavbarCollapsed = true;
 
   links = [
-    { title: 'Home', fragment: 'home' },
-    { title: 'Articles', fragment: 'articles' }
+    {
+      title: 'Home',
+      fragment: ''
+    },
+    {
+      title: 'Projects',
+      fragment: 'projects'
+    },
+    {
+      title: 'Articles',
+      fragment: '#',
+      dropdown: [
+        {
+          title: 'Recent articles',
+          fragment: 'recent-articles'
+        },
+        {
+          title: 'Hardware',
+          fragment: 'hardware'
+        }
+      ]
+    }
   ];
 
   constructor(public route: ActivatedRoute) { }
-
-  ngOnInit(): void { }
 
 }
