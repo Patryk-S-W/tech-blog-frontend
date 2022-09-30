@@ -1,8 +1,8 @@
 <header>
-  <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container-fluid">
       <span class="navbar-brand">
-        <a href="https://patryksadowski.pl">
+        <a href="/">
           <img
             class="logo-blog"
             width="40"
@@ -44,7 +44,7 @@
                 ngbDropdownMenu
               >
                 <a
-                  class="dropdown-item"
+                  class="dropdown-item text-dark"
                   *ngFor="let item of link.dropdown"
                   [href]="item.fragment"
                 >{{item.title}}</a>
@@ -65,7 +65,7 @@
           <input
             type="search"
             class="form-control"
-            placeholder="Type query"
+            placeholder="Search"
             aria-label="Search"
           />
           <button

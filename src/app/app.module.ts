@@ -10,6 +10,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
 import { HardwareComponent } from './modules/hardware/hardware.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
+import { TestComponent } from './modules/test/test.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ProjectsComponent } from './modules/projects/projects.component';
     HomeComponent,
     RecentArticlesComponent,
     HardwareComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,
