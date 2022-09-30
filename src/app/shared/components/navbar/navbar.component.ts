@@ -22,7 +22,6 @@ export class NavbarComponent {
     },
     {
       title: 'Articles',
-      fragment: '#',
       dropdown: [
         {
           title: 'Recent articles',

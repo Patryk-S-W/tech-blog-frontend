@@ -6,10 +6,18 @@ import { AppComponent } from './app.component';
 
 import { SharedModule } from './shared/shared.module';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { HomeComponent } from './modules/home/home.component';
+import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
+import { HardwareComponent } from './modules/hardware/hardware.component';
+import { ProjectsComponent } from './modules/projects/projects.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    HomeComponent,
+    RecentArticlesComponent,
+    HardwareComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
