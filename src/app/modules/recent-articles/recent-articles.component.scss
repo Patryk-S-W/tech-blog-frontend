@@ -12,11 +12,6 @@ body {
   background: #110f16;
 }
 
-
-.light {
-  background: #f3f5f7;
-}
-
 a,
 a:hover {
   text-decoration: none;
@@ -43,10 +38,6 @@ a:hover {
 
   &.dark {
     background-color: #18151f;
-  }
-
-  &.light {
-    background-color: #e1e5ea;
   }
 
   .t-dark {
@@ -222,12 +213,6 @@ a:hover {
   .postcard.dark {
     .postcard__text:before {
       background: #18151f;
-    }
-  }
-
-  .postcard.light {
-    .postcard__text:before {
-      background: #e1e5ea;
     }
   }
 }
