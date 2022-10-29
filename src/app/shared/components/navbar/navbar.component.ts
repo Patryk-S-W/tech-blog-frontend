@@ -13,23 +13,27 @@ export class NavbarComponent {
 
   links = [
     {
-      title: 'Home',
-      fragment: ''
+      title: "Home",
+      fragment: ""
     },
     {
-      title: 'Projects',
-      fragment: 'projects'
+      title: "Projects",
+      fragment: "projects"
     },
     {
-      title: 'Articles',
+      title: "Articles",
       dropdown: [
         {
-          title: 'Recent articles',
-          fragment: 'recent-articles'
+          title: "Recent articles",
+          fragment: "recent-articles"
         },
         {
-          title: 'Hardware',
-          fragment: 'hardware'
+          title: "Hardware",
+          fragment: "hardware"
+        },
+        {
+          title: "AI",
+          fragment: "ai"
         }
       ]
     }

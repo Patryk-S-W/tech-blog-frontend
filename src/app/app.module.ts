@@ -11,6 +11,7 @@ import { RecentArticlesComponent } from './modules/recent-articles/recent-articl
 import { HardwareComponent } from './modules/hardware/hardware.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
 import { TestComponent } from './modules/test/test.component';
+import { AIComponent } from './modules/ai/ai.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { TestComponent } from './modules/test/test.component';
     RecentArticlesComponent,
     HardwareComponent,
     ProjectsComponent,
-    TestComponent
+    TestComponent,
+    AIComponent
   ],
   imports: [
     BrowserModule,
