@@ -178,17 +178,6 @@ svg#rocket-smoke {
   z-index: -10;
 }
 
-a,
-a:visited,
-a:hover {
-  color: #1976d2;
-  text-decoration: none;
-}
-
-a:hover {
-  color: #125699;
-}
-
 .terminal {
   position: relative;
   width: 80%;
@@ -321,10 +310,6 @@ svg#clouds {
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 
-.card {
-  border-color: transparent !important;
-}
-
 $main-blue: #0076bd !default;
 $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
 
@@ -352,10 +337,6 @@ $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
 
   .t-dark {
     color: #18151f;
-  }
-
-  a {
-    color: inherit;
   }
 
   h1,

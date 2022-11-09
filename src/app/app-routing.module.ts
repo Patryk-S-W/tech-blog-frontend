@@ -4,6 +4,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
 import { HardwareComponent } from './modules/hardware/hardware.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
+import { AIComponent } from './modules/ai/ai.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,13 @@ const routes: Routes = [
     component: HardwareComponent,
     data: {
       title: 'Hardware - Tech Blog',
+    },
+  },
+  {
+    path: 'ai',
+    component: AIComponent,
+    data: {
+      title: 'AI - Tech Blog',
     },
   },
   {
