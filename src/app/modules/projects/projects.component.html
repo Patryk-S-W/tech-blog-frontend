@@ -1,41 +1,34 @@
-    <div class="bg-dark-blog">
-      <div class="container py-4">
-        <h1
-          class="h1 text-center text-white"
-          id="pageHeaderTitle"
-        >Projects</h1>
+<div class="bg-dark-blog">
+  <div class="container py-4">
+    <h1 class="h1 text-center text-white" id="pageHeaderTitle">Projects</h1>
 
-        <div class="row">
-          <div
-            class="col-md-4"
-            *ngFor="let card of cards; trackBy:trackById"
-          >
-            <div class="card border-0 p-0 mb-4 w-100">
-              <img
-                class="card-img-top"
-                alt="Thumbnail [100%x225]"
-                style="height: 225px; width: 100%; display: block;"
-                src="{{card.image}}"
-                data-holder-rendered="true"
-              >
-              <div class="card-body">
-                <p class="card-text text-center font-weight-bold">{{card.title}}</p>
-                <p class="card-text">{{card.text}}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                  <div class="btn-group">
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                    >View</button>
-                    <button
-                      type="button"
-                      class="btn btn-sm btn-outline-secondary"
-                    >Edit</button>
-                  </div>
-                </div>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let card of cards; trackBy: trackById">
+        <div class="card border-0 p-0 mb-4 w-100">
+          <img
+            class="card-img-top"
+            alt="Thumbnail [100%x225]"
+            style="height: 225px; width: 100%; display: block"
+            src="{{ card.image }}"
+            data-holder-rendered="true" />
+          <div class="card-body">
+            <p class="card-text text-center font-weight-bold">
+              {{ card.title }}
+            </p>
+            <p class="card-text">{{ card.text }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="btn-group">
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                  View
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-secondary">
+                  Edit
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
+  </div>
+</div>

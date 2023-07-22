@@ -23,15 +23,10 @@ import { AboutMeComponent } from './modules/about-me/about-me.component';
     ProjectsComponent,
     TestComponent,
     AIComponent,
-    AboutMeComponent
+    AboutMeComponent,
   ],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    SharedModule,
-    NgbCollapseModule
-  ],
+  imports: [BrowserModule, AppRoutingModule, SharedModule, NgbCollapseModule],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

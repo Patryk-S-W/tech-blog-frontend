@@ -8,7 +8,6 @@
   padding: 0;
 }
 
-
 ul.social-network li {
   display: inline;
   margin: 0 5px;
@@ -41,7 +40,7 @@ ul.social-network {
   vertical-align: middle;
   z-index: 1;
   will-change: opacity, transform;
-  transition: .3s ease-out;
+  transition: 0.3s ease-out;
   color: #fff;
 }
 

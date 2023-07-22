@@ -3,17 +3,22 @@
     <div class="row">
       <div class="col-sm-12">
         <ul class="social-network">
-          <li><a
+          <li>
+            <a
               class="waves-effect waves-dark"
               href="https://www.linkedin.com/in/patryksadowski/"
-            ><i class="fab fa-linkedin-in"></i></a></li>
-          <li><a
+              ><i class="fab fa-linkedin-in"></i
+            ></a>
+          </li>
+          <li>
+            <a
               class="waves-effect waves-dark"
               href="https://github.com/Patryk-S-W"
-            ><i class="fab fa-github"></i></a></li>
+              ><i class="fab fa-github"></i
+            ></a>
+          </li>
         </ul>
       </div>
-
     </div>
   </div>
 </header>
@@ -25,8 +30,7 @@
           class="logo-blog"
           width="40"
           alt="Tech Blog Logo"
-          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
-        />
+          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
       </a>
     </span>
     <button
@@ -36,47 +40,32 @@
       data-target="#navbarsDefault"
       aria-controls="navbarsDefault"
       aria-expanded="false"
-      aria-label="Toggle navigation"
-    >
+      aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div
       class="collapse navbar-collapse"
       id="navbarSupportedContent"
-      [ngbCollapse]="isNavbarCollapsed"
-    >
-
+      [ngbCollapse]="isNavbarCollapsed">
       <ul class="navbar-nav ml-auto">
-        <ng-container *ngFor="let link of links; trackBy:trackByFragment">
-          <li
-            *ngIf="link.dropdown"
-            class="nav-item dropdown"
-            ngbDropdown
-          >
-            <a
-              class="nav-link active dropdown-toggle"
-              ngbDropdownToggle
-            >{{link.title}}</a>
-            <div
-              class="dropdown-menu"
-              aria-labelledby="id01"
-              ngbDropdownMenu
-            >
+        <ng-container *ngFor="let link of links; trackBy: trackByFragment">
+          <li *ngIf="link.dropdown" class="nav-item dropdown" ngbDropdown>
+            <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{
+              link.title
+            }}</a>
+            <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
               <a
                 class="dropdown-item text-dark"
-                *ngFor="let item of link.dropdown; trackBy:trackByFragment"
+                *ngFor="let item of link.dropdown; trackBy: trackByFragment"
                 [href]="item.fragment"
-              >{{item.title}}</a>
+                >{{ item.title }}</a
+              >
             </div>
           </li>
-          <li
-            *ngIf="!link.dropdown"
-            class="nav-item"
-          >
-            <a
-              class="nav-link active"
-              [href]="link.fragment"
-            >{{link.title}}</a>
+          <li *ngIf="!link.dropdown" class="nav-item">
+            <a class="nav-link active" [href]="link.fragment">{{
+              link.title
+            }}</a>
           </li>
         </ng-container>
       </ul>
@@ -86,14 +75,8 @@
         type="search"
         class="form-control"
         placeholder="Search"
-        aria-label="Search"
-      />
-      <button
-        class="btn btn-outline-light"
-        type="button"
-      >
-        Search
-      </button>
+        aria-label="Search" />
+      <button class="btn btn-outline-light" type="button">Search</button>
     </form>
   </div>
 </nav>

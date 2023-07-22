@@ -5,15 +5,15 @@
         mdbRipple
         class="btn text-white btn-outline-secondary btn-floating m-1"
         role="button"
-        *ngFor="let icon of icons; trackBy:trackById"
+        *ngFor="let icon of icons; trackBy: trackById"
         [href]="icon.link"
-      ><i class="fab {{icon.icon}}"></i></a>
+        ><i class="fab {{ icon.icon }}"></i
+      ></a>
     </section>
   </div>
   <div class="text-center p-3 d-flex">
-    © Copyright&nbsp;&bull;&nbsp;<a
-      class="text-gray"
-      href="/"
-    >Patryk Sadowski</a>
+    © Copyright&nbsp;&bull;&nbsp;<a class="text-gray" href="/"
+      >Patryk Sadowski</a
+    >
   </div>
 </footer>

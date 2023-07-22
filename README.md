@@ -3,15 +3,16 @@
 Frontend for private blog based on Angular.
 
 ## Frontend technologies stack
-* TypeScript,
-* Angular,
-* Karma,
-* Bootstrap+FontAwesome
+
+- TypeScript,
+- Angular,
+- Karma,
+- Bootstrap+FontAwesome
 
 ## System requirements
 
-*  Node v12.18+
-*  Angular v15.2.6+
+- Node v12.18+
+- Angular v15.2.6+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
@@ -40,4 +41,5 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
 
 ## License
+
 This project is licensed under the BSD-4-Clause license.

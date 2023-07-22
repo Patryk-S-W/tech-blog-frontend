@@ -13,32 +13,28 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-    declarations: [
-        NavbarComponent,
-        SidebarComponent,
-        FooterComponent
-    ],
-    imports: [
-        CommonModule,
-        MatTableModule,
-        MatCheckboxModule,
-        MatTooltipModule,
-        MatPaginatorModule,
-        MatSortModule,
-        NgbModule
-    ],
-    exports: [
-        MatTableModule,
-        MatCheckboxModule,
-        MatTooltipModule,
-        MatPaginatorModule,
-        MatSortModule,
-        NgbModule,
+  declarations: [NavbarComponent, SidebarComponent, FooterComponent],
+  imports: [
+    CommonModule,
+    MatTableModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    MatSortModule,
+    NgbModule,
+  ],
+  exports: [
+    MatTableModule,
+    MatCheckboxModule,
+    MatTooltipModule,
+    MatPaginatorModule,
+    MatSortModule,
+    NgbModule,
 
-        NavbarComponent,
-        SidebarComponent,
-        FooterComponent
-    ],
-    providers: [],
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
+  ],
+  providers: [],
 })
-export class SharedModule { }
+export class SharedModule {}
