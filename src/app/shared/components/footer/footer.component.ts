@@ -8,8 +8,11 @@ import { Component } from '@angular/core';
 export class FooterComponent {
 
   icons = [
-    { icon: 'fa-linkedin-in', link: 'https://www.linkedin.com/in/patryksadowski/' },
-    { icon: 'fa-github', link: 'https://github.com/Patryk-S-W' }
+    { id: 0, icon: 'fa-linkedin-in', link: 'https://www.linkedin.com/in/patryksadowski/' },
+    { id: 1, icon: 'fa-github', link: 'https://github.com/Patryk-S-W' }
   ];
+  trackById(index: number, item: any): string {
+    return item.id;
+  }
 
 }

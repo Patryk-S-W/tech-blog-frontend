@@ -520,7 +520,7 @@
         <div class="row">
           <div
             class="col-md-4"
-            *ngFor="let card of cards"
+            *ngFor="let card of cards; trackBy:trackById"
           >
             <div class="card border-0 p-0 mb-4 w-100">
               <img

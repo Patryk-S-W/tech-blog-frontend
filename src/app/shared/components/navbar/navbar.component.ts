@@ -43,6 +43,10 @@ export class NavbarComponent {
     },
   ];
 
+  trackByFragment(index: number, item: any): string {
+    return item.fragment;
+  }
+
   constructor(public route: ActivatedRoute) { }
 
 }

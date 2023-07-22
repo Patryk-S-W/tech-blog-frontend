@@ -47,7 +47,7 @@
     >
 
       <ul class="navbar-nav ml-auto">
-        <ng-container *ngFor="let link of links">
+        <ng-container *ngFor="let link of links; trackBy:trackByFragment">
           <li
             *ngIf="link.dropdown"
             class="nav-item dropdown"
@@ -64,7 +64,7 @@
             >
               <a
                 class="dropdown-item text-dark"
-                *ngFor="let item of link.dropdown"
+                *ngFor="let item of link.dropdown; trackBy:trackByFragment"
                 [href]="item.fragment"
               >{{item.title}}</a>
             </div>

@@ -9,6 +9,7 @@ export class RecentArticlesComponent {
 
   articles = [
     {
+      id: 0,
       title: "Podcast Title",
       image: "https://picsum.photos/1000/1000",
       date: "Mon, May 25th 2020",
@@ -18,6 +19,7 @@ export class RecentArticlesComponent {
       button: "Play Episode",
     },
     {
+      id: 1,
       title: "Podcast Title",
       image: "https://picsum.photos/1000/1000",
       date: "Mon, May 25th 2020",
@@ -27,6 +29,7 @@ export class RecentArticlesComponent {
       button: "Play Episode",
     },
     {
+      id: 2,
       title: "Podcast Title",
       image: "https://picsum.photos/1000/1000",
       date: "Mon, May 25th 2020",
@@ -36,4 +39,8 @@ export class RecentArticlesComponent {
       button: "Play Episode",
     },
   ];
+
+  trackById(index: number, item: any): string {
+    return item.id;
+  }
 }

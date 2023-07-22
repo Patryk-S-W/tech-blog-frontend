@@ -5,7 +5,7 @@
         mdbRipple
         class="btn text-white btn-outline-secondary btn-floating m-1"
         role="button"
-        *ngFor="let icon of icons"
+        *ngFor="let icon of icons; trackBy:trackById"
         [href]="icon.link"
       ><i class="fab {{icon.icon}}"></i></a>
     </section>
