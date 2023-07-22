@@ -22,6 +22,7 @@ export class NavbarComponent {
     },
     {
       title: "Articles",
+      fragment: "artcles",
       dropdown: [
         {
           title: "Recent articles",
@@ -43,10 +44,14 @@ export class NavbarComponent {
     },
   ];
 
-  trackByFragment(index: number, item: any): string {
+  constructor(public route: ActivatedRoute) { }
+
+  trackByFragment(index: number, item: Item): string {
     return item.fragment;
   }
 
-  constructor(public route: ActivatedRoute) { }
-
+}
+interface Item {
+  title: string,
+  fragment: string,
 }

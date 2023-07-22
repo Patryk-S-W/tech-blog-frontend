@@ -39,7 +39,18 @@ export class AIComponent {
     },
   ];
 
-  trackById(index: number, item: any): string {
+  trackById(index: number, item: Item): number {
     return item.id;
   }
+}
+
+interface Item {
+  id: number;
+  title: string,
+  image: string,
+  date: string,
+  text: string,
+  category: string,
+  duration: string,
+  button: string,
 }

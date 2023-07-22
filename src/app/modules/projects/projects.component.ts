@@ -64,7 +64,13 @@ export class ProjectsComponent {
     },
   ];
 
-  trackById(index: number, item: any): string {
+  trackById(index: number, item: Item): number {
     return item.id;
   }
+}
+interface Item {
+  id: number;
+  title: string,
+  image: string,
+  text: string,
 }
