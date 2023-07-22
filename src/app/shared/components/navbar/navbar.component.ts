@@ -36,7 +36,11 @@ export class NavbarComponent {
           fragment: "ai"
         }
       ]
-    }
+    },
+    {
+      title: "About me",
+      fragment: "about-me"
+    },
   ];
 
   constructor(public route: ActivatedRoute) { }

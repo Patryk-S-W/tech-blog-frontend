@@ -4,6 +4,7 @@ import { HomeComponent } from './modules/home/home.component';
 import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
 import { HardwareComponent } from './modules/hardware/hardware.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
+import { AboutMeComponent } from './modules/about-me/about-me.component';
 import { AIComponent } from './modules/ai/ai.component';
 
 const routes: Routes = [
@@ -12,6 +13,13 @@ const routes: Routes = [
     component: HomeComponent,
     data: {
       title: 'Tech Blog',
+    },
+  },
+  {
+    path: 'about-me',
+    component: AboutMeComponent,
+    data: {
+      title: 'About me - Tech Blog',
     },
   },
   {

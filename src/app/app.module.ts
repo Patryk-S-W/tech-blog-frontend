@@ -12,6 +12,7 @@ import { HardwareComponent } from './modules/hardware/hardware.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
 import { TestComponent } from './modules/test/test.component';
 import { AIComponent } from './modules/ai/ai.component';
+import { AboutMeComponent } from './modules/about-me/about-me.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AIComponent } from './modules/ai/ai.component';
     HardwareComponent,
     ProjectsComponent,
     TestComponent,
-    AIComponent
+    AIComponent,
+    AboutMeComponent
   ],
   imports: [
     BrowserModule,
