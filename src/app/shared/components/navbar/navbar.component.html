@@ -7,6 +7,7 @@
             <a
               class="waves-effect waves-dark"
               href="https://www.linkedin.com/in/patryksadowski/"
+              aria-label="LinkedIn"
               ><i class="fab fa-linkedin-in"></i
             ></a>
           </li>
@@ -14,6 +15,7 @@
             <a
               class="waves-effect waves-dark"
               href="https://github.com/Patryk-S-W"
+              aria-label="Github"
               ><i class="fab fa-github"></i
             ></a>
           </li>
@@ -30,23 +32,24 @@
           class="logo-blog"
           width="40"
           alt="Tech Blog Logo"
-          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==" />
+          src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg=="
+        />
       </a>
     </span>
     <button
       class="navbar-toggler hidden-sm-up"
       type="button"
       (click)="isNavbarCollapsed = !isNavbarCollapsed"
-      data-target="#navbarsDefault"
-      aria-controls="navbarsDefault"
-      aria-expanded="false"
-      aria-label="Toggle navigation">
+      aria-expanded="true"
+      aria-label="Toggle navigation"
+    >
       <span class="navbar-toggler-icon"></span>
     </button>
     <div
       class="collapse navbar-collapse"
       id="navbarSupportedContent"
-      [ngbCollapse]="isNavbarCollapsed">
+      [ngbCollapse]="isNavbarCollapsed"
+    >
       <ul class="navbar-nav ml-auto">
         <ng-container *ngFor="let link of links; trackBy: trackByFragment">
           <li *ngIf="link.dropdown" class="nav-item dropdown" ngbDropdown>
@@ -75,7 +78,8 @@
         type="search"
         class="form-control"
         placeholder="Search"
-        aria-label="Search" />
+        aria-label="Search"
+      />
       <button class="btn btn-outline-light" type="button">Search</button>
     </form>
   </div>

@@ -14,13 +14,13 @@
 
 Frontend for private blog based on Angular.
 
-## Frontend technologies stack
-- Docker,
-- TypeScript,
-- Angular,
-- Karma,
-- Bootstrap,
-- FontAwesome
+## Dependencies
+
+- Angular : 17.1.0
+- Angular CLI : 17.1.0
+- Angular SSR : 17.1.0
+- Bootstrap : 5.3.0
+- Fontawesome : 6.4.0
 
 ## System requirements
 
@@ -28,20 +28,34 @@ Frontend for private blog based on Angular.
 - Angular v17.1.0+
 
 ## Features
-  ✅ [Angular 17](https://angular.io/)  
-  ✅ [Angular Material](https://material.angular.io/)  
-  ✅ Unit Testing with [Jest](https://jestjs.io/)  
-  ✅ End-to-End Testing with [TestCafé](https://testcafe.io/)  
-  ✅ Internationalization with [Transloco](https://github.com/ngneat/transloco)  
-  ✅ Auto documentation with [Compodoc](https://compodoc.app/)  
-  ✅ Provide component examples with [Storybook](https://storybook.js.org/)  
-  ✅ Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)  
-  ✅ [Docker](https://www.docker.com/)  
-  ✅ [ESLint](https://eslint.org/)  
-  ✅ [Prettier](https://prettier.io/)  
-  ✅ [Commit Linting](https://github.com/conventional-changelog/commitlint)  
-  ✅ [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
-  ✅ Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
+
+✅ [Angular 17](https://angular.io/)  
+ ✅ [Angular Material](https://material.angular.io/)  
+ ✅ Unit Testing with [Jest](https://jestjs.io/)  
+ ✅ End-to-End Testing with [TestCafé](https://testcafe.io/)  
+ ✅ Internationalization with [Transloco](https://github.com/ngneat/transloco)  
+ ✅ Auto documentation with [Compodoc](https://compodoc.app/)  
+ ✅ Provide component examples with [Storybook](https://storybook.js.org/)  
+ ✅ Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)  
+ ✅ [Docker](https://www.docker.com/)  
+ ✅ [ESLint](https://eslint.org/)  
+ ✅ [Prettier](https://prettier.io/)  
+ ✅ [Commit Linting](https://github.com/conventional-changelog/commitlint)  
+ ✅ [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
+ ✅ Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
+
+✅ Routing
+✅ Lazy Loading
+✅ Server Side Rendering
+✅ Progressive Web App
+✅ Responsive Layout
+✅ Search Engine Optimization (SEO)
+✅ Components
+✅ Services
+✅ Reactive Form
+✅ Atomic Design
+✅ Template Driven Forms
+✅ Search / Grid / Pagination
 
 ## Install / Development
 
