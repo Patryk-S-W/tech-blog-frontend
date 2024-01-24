@@ -12,7 +12,7 @@
 ![Sponsors](https://img.shields.io/github/sponsors/erdkse.svg)
 [![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/Patryk-S-W/tech-blog-frontend)
 
-Frontend for private blog based on Angular.
+The TechBlog project is a front-end application written in the Angular framework that is used to publish articles related to technology, programming and topics related to Artificial Intelligence.
 
 ## Dependencies
 
@@ -44,18 +44,18 @@ Frontend for private blog based on Angular.
  ✅ [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
  ✅ Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
 
-✅ Routing
-✅ Lazy Loading
-✅ Server Side Rendering
-✅ Progressive Web App
-✅ Responsive Layout
-✅ Search Engine Optimization (SEO)
-✅ Components
-✅ Services
-✅ Reactive Form
-✅ Atomic Design
-✅ Template Driven Forms
-✅ Search / Grid / Pagination
+- [x] Routing
+- [x] Lazy Loading
+- [x] Server Side Rendering
+- [x] Progressive Web App
+- [x] Responsive Layout
+- [x] Search Engine Optimization (SEO)
+- [x] Components
+- [x] Services
+- [x] Reactive Form
+- [x] Atomic Design
+- [x] Template Driven Forms
+- [x] Search / Grid / Pagination
 
 ## Install / Development
 

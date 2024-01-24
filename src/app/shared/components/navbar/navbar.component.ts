@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -42,7 +41,7 @@ export class NavbarComponent {
     },
   ];
 
-  constructor(public route: ActivatedRoute) {}
+  constructor() {}
 
   trackByFragment(index: number, item: Item): string {
     return item.fragment;

@@ -6,9 +6,14 @@
 
     <article
       class="postcard bg-dark-blog blue"
-      *ngFor="let article of articles; trackBy: trackById">
+      *ngFor="let article of articles; trackBy: trackById"
+    >
       <a class="postcard__img_link" href="#">
-        <img class="postcard__img" src="{{ article.image }}" />
+        <img
+          class="postcard__img"
+          alt="Article image"
+          src="{{ article.image }}"
+        />
       </a>
       <div class="postcard__text">
         <h1 class="postcard__title blue">
