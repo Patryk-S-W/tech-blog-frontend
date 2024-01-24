@@ -11,8 +11,8 @@ Frontend for private blog based on Angular.
 
 ## System requirements
 
-- Node v12.18+
-- Angular v15.2.6+
+- Node v16+
+- Angular v16.1.1+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
