@@ -6,11 +6,11 @@
       <div class="col-md-4" *ngFor="let card of cards; trackBy: trackById">
         <div class="card border-0 p-0 mb-4 w-100">
           <img
-            class="card-img-top"
+            class="card-img-top card-img-projects"
             alt="Thumbnail [100%x225]"
-            style="height: 225px; width: 100%; display: block"
             src="{{ card.image }}"
-            data-holder-rendered="true" />
+            data-holder-rendered="true"
+          />
           <div class="card-body">
             <p class="card-text text-center font-weight-bold">
               {{ card.title }}

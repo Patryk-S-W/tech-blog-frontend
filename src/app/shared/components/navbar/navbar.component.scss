@@ -14,7 +14,6 @@ ul.social-network li {
   border: 0px solid #110f16;
   padding: 5px 0 0;
   width: 32px;
-  display: inline-block;
   text-align: center;
   height: 32px;
   vertical-align: baseline;
@@ -36,7 +35,6 @@ ul.social-network {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-tap-highlight-color: transparent;
   vertical-align: middle;
   z-index: 1;
   will-change: opacity, transform;

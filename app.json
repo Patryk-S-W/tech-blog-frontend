@@ -1,0 +1,6 @@
+{
+  "name": "Tech Blog",
+  "description": "Frontend for private blog based on Angular. ",
+  "repository": "https://github.com/Patryk-S-W/tech-blog-frontend",
+  "keywords": ["angular", "jest", "compodoc", "transloco"]
+}
