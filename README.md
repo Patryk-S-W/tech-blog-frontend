@@ -1,35 +1,33 @@
 # TechBlog
 
-<div>
-
 [![Run on Repl.it](https://repl.it/badge/github/Patryk-S-W/tech-blog-frontend)](https://repl.it/github/Patryk-S-W/tech-blog-frontend)
 
-</div>
-<span align="center">
+[![StackBlitz Demo](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/Patryk-S-W/tech-blog-frontend)
+
+![Angular17](https://img.shields.io/badge/Angular-17-brightgreen)
 ![Vercel](https://img.shields.io/github/deployments/Patryk-S-W/tech-blog-frontend/production.svg?logo=vercel&label=vercel)
-![Issues](https://img.shields.io/github/issues/Patryk-S-W/tech-blog-frontend)
-![Forks](https://img.shields.io/github/forks/Patryk-S-W/tech-blog-frontend)
-![Stars](https://img.shields.io/github/stars/Patryk-S-W/tech-blog-frontend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Patryk-S-W_tech-blog-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=Patryk-S-W_tech-blog-frontend)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Patryk-S-W/tech-blog-frontend.svg)
-[![License](https://img.shields.io/github/license/Patryk-S-W/tech-blog-frontend.svg)](LICENSE)
 ![Sponsors](https://img.shields.io/github/sponsors/erdkse.svg)
-
-</span>
+[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/Patryk-S-W/tech-blog-frontend)
 
 Frontend for private blog based on Angular.
 
 ## Frontend technologies stack
-
+- Docker,
 - TypeScript,
 - Angular,
 - Karma,
-- Bootstrap+FontAwesome
+- Bootstrap,
+- FontAwesome
 
 ## System requirements
 
 - Node v18+
 - Angular v17.1.0+
+
+## Features
   ✅ [Angular 17](https://angular.io/)  
   ✅ [Angular Material](https://material.angular.io/)  
   ✅ Unit Testing with [Jest](https://jestjs.io/)  
@@ -44,23 +42,6 @@ Frontend for private blog based on Angular.
   ✅ [Commit Linting](https://github.com/conventional-changelog/commitlint)  
   ✅ [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
   ✅ Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
-
-<hr>
-
-![Angular17](https://img.shields.io/badge/Angular-17-brightgreen)
-[![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg)]()
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Patryk-S-W_tech-blog-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=Patryk-S-W_tech-blog-frontend)
-[![Docker Pulls](https://img.shields.io/docker/pulls/Patryk-S-W/tech-blog-frontend)](https://hub.docker.com/repository/docker/Patryk-S-W/tech-blog-frontend)
-[![Docker Image Size (latest by date)](https://img.shields.io/docker/image-size/Patryk-S-W/tech-blog-frontend)](https://hub.docker.com/repository/docker/Patryk-S-W/tech-blog-frontend)
-[![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/Patryk-S-W/tech-blog-frontend)
-
-## Deploy
-
-[![Deploy](https://www.herokucdn.com/deploy/button.png)](https://heroku.com/deploy)
-
-## Demo
-
-[![StackBlitz Demo](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/Patryk-S-W/tech-blog-frontend)
 
 ## Install / Development
 
