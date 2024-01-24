@@ -1,5 +1,19 @@
 # TechBlog
 
+<span align="center">
+
+[![Run on Repl.it](https://repl.it/badge/github/Patryk-S-W/tech-blog-frontend)](https://repl.it/github/Patryk-S-W/tech-blog-frontend)
+![Vercel](https://img.shields.io/github/deployments/Patryk-S-W/tech-blog-frontend/production.svg?logo=vercel&label=vercel)
+![Issues](https://img.shields.io/github/issues/Patryk-S-W/tech-blog-frontend)
+![Forks](https://img.shields.io/github/forks/Patryk-S-W/tech-blog-frontend)
+![Stars](https://img.shields.io/github/stars/Patryk-S-W/tech-blog-frontend)
+[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
+![GitHub last commit](https://img.shields.io/github/last-commit/Patryk-S-W/tech-blog-frontend.svg)
+[![License](https://img.shields.io/github/license/Patryk-S-W/tech-blog-frontend.svg)](LICENSE)
+![Sponsors](https://img.shields.io/github/sponsors/erdkse.svg)
+
+</span>
+
 Frontend for private blog based on Angular.
 
 ## Frontend technologies stack
@@ -11,8 +25,8 @@ Frontend for private blog based on Angular.
 
 ## System requirements
 
-- Node v16+
-- Angular v16.1.1+
+- Node v18+
+- Angular v17.1.0+
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
