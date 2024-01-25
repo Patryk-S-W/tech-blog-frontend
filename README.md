@@ -29,23 +29,23 @@ The TechBlog project is a front-end application written in the Angular framework
 
 ## Features
 
-- [x] [Angular 17](https://angular.io/)   
-- [x] Unit Testing with [Jest](https://jestjs.io/)  
-- [x] End-to-End Testing with [TestCafé](https://testcafe.io/)  
-- [x] Internationalization with [Transloco](https://github.com/ngneat/transloco)  
-- [x] Auto documentation with [Compodoc](https://compodoc.app/)  
-- [x] Provide component examples with [Storybook](https://storybook.js.org/)  
-- [x] Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)  
-- [x] [Docker](https://www.docker.com/)  
-- [x] [ESLint](https://eslint.org/)  
-- [x] [Prettier](https://prettier.io/)  
-- [x] [Commit Linting](https://github.com/conventional-changelog/commitlint)  
-- [x] [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
+- [x] [Angular 17](https://angular.io/)
+- [x] Unit Testing with [Jest](https://jestjs.io/)
+- [x] End-to-End Testing with [TestCafé](https://testcafe.io/)
+- [x] Internationalization with [Transloco](https://github.com/ngneat/transloco)
+- [x] Auto documentation with [Compodoc](https://compodoc.app/)
+- [x] Provide component examples with [Storybook](https://storybook.js.org/)
+- [x] Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)
+- [x] [Docker](https://www.docker.com/)
+- [x] [ESLint](https://eslint.org/)
+- [x] [Prettier](https://prettier.io/)
+- [x] [Commit Linting](https://github.com/conventional-changelog/commitlint)
+- [x] [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index
 - [x] Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
 - [x] Routing
 - [x] Lazy Loading
-- [x] Server Side Rendering
-- [x] Progressive Web App
+- [x] [Server Side Rendering](https://www.npmjs.com/package/@angular/ssr)
+- [x] [Progressive Web App](https://www.npmjs.com/package/@angular/pwa)
 - [x] Responsive Layout
 - [x] Search Engine Optimization (SEO)
 - [x] Components
@@ -89,7 +89,8 @@ $ docker run -p 3000:80 tech-blog
 - `npm run build` - Build the project
 - `npm run build:prod` - Build the project in production mode
 - `npm run build:prod:stats` - Build the project in product mode with stats
-- `npm run analyse` - Analyse bundle with [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
+- `npm run build:ssr` - Build the project with Server-Side Rendering
+- `npm run analyze` - Analyse bundle with [webpack-bundle-analyzer](https://github.com/webpack-contrib/webpack-bundle-analyzer)
 - `npm run compodoc` - Generate [compodoc](https://github.com/compodoc/compodoc) documentation
 - `npm run version` - Generate changelog
 - `npm run prettier` - Format the whole project
