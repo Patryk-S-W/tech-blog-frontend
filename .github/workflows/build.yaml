@@ -1,0 +1,64 @@
+# TechBlog Continuous Integration/Build via GitHub Actions
+# Concepts borrowed from
+# https://docs.github.com/en/free-pro-team@latest/actions/guides/building-and-testing-nodejs
+name: Continuous Integration
+
+# Run this Build for all pushes / PRs to current branch
+on:
+  push:
+  pull_request:
+    branches: [ master ]
+
+permissions:
+  contents: read
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
+      - name: Codecov
+        uses: codecov/codecov-action@v3.1.0
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage/lcov.info
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run ESLint
+        run: npm run lint
+
+  build:
+    needs: tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: 'npm'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+      - name: Archive build output
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: dist
