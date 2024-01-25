@@ -29,21 +29,19 @@ The TechBlog project is a front-end application written in the Angular framework
 
 ## Features
 
-✅ [Angular 17](https://angular.io/)  
- ✅ [Angular Material](https://material.angular.io/)  
- ✅ Unit Testing with [Jest](https://jestjs.io/)  
- ✅ End-to-End Testing with [TestCafé](https://testcafe.io/)  
- ✅ Internationalization with [Transloco](https://github.com/ngneat/transloco)  
- ✅ Auto documentation with [Compodoc](https://compodoc.app/)  
- ✅ Provide component examples with [Storybook](https://storybook.js.org/)  
- ✅ Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)  
- ✅ [Docker](https://www.docker.com/)  
- ✅ [ESLint](https://eslint.org/)  
- ✅ [Prettier](https://prettier.io/)  
- ✅ [Commit Linting](https://github.com/conventional-changelog/commitlint)  
- ✅ [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
- ✅ Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
-
+- [x] [Angular 17](https://angular.io/)   
+- [x] Unit Testing with [Jest](https://jestjs.io/)  
+- [x] End-to-End Testing with [TestCafé](https://testcafe.io/)  
+- [x] Internationalization with [Transloco](https://github.com/ngneat/transloco)  
+- [x] Auto documentation with [Compodoc](https://compodoc.app/)  
+- [x] Provide component examples with [Storybook](https://storybook.js.org/)  
+- [x] Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)  
+- [x] [Docker](https://www.docker.com/)  
+- [x] [ESLint](https://eslint.org/)  
+- [x] [Prettier](https://prettier.io/)  
+- [x] [Commit Linting](https://github.com/conventional-changelog/commitlint)  
+- [x] [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index  
+- [x] Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
 - [x] Routing
 - [x] Lazy Loading
 - [x] Server Side Rendering
@@ -82,10 +80,6 @@ $ docker build . -t tech-blog
 # Run Docker Container
 $ docker run -p 3000:80 tech-blog
 ```
-
-## Docker Hub
-
-https://hub.docker.com/r/Patryk-S-W/tech-blog-frontend
 
 ## Commands
 
