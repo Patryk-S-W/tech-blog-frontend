@@ -7,12 +7,12 @@
 ![Angular17](https://img.shields.io/badge/Angular-17-brightgreen)
 ![Vercel](https://img.shields.io/github/deployments/Patryk-S-W/tech-blog-frontend/production.svg?logo=vercel&label=vercel)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Patryk-S-W_tech-blog-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=Patryk-S-W_tech-blog-frontend)
+[![codecov](https://codecov.io/gh/Patryk-S-W/tech-blog-frontend/branch/master/graph/badge.svg)](https://codecov.io/gh/Patryk-S-W/tech-blog-frontend)
 [![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
 ![GitHub last commit](https://img.shields.io/github/last-commit/Patryk-S-W/tech-blog-frontend.svg)
-![Sponsors](https://img.shields.io/github/sponsors/erdkse.svg)
 [![StackShare](http://img.shields.io/badge/tech-stack-0690fa.svg?style=flat)](https://stackshare.io/Patryk-S-W/tech-blog-frontend)
 
-The TechBlog project is a front-end application written in the Angular framework that is used to publish articles related to technology, programming and topics related to Artificial Intelligence.
+TechBlog project is a fullstack application written in the Angular and .NET that is used to publish articles related to technology, programming and topics related to artificial intelligence.
 
 ## Dependencies
 
@@ -30,18 +30,18 @@ The TechBlog project is a front-end application written in the Angular framework
 ## Features
 
 - [x] [Angular 17](https://angular.io/)
-- [x] Unit Testing with [Jest](https://jestjs.io/)
-- [x] End-to-End Testing with [TestCafé](https://testcafe.io/)
-- [x] Internationalization with [Transloco](https://github.com/ngneat/transloco)
-- [x] Auto documentation with [Compodoc](https://compodoc.app/)
-- [x] Provide component examples with [Storybook](https://storybook.js.org/)
-- [x] Analyse your project with [source-map-explorer](https://www.npmjs.com/package/source-map-explorer)
-- [x] [Docker](https://www.docker.com/)
+- [x] [Jest](https://jestjs.io/) - Unit Testing
+- [x] [TestCafé](https://testcafe.io/) - End-to-End Testing
+- [x] [Transloco](https://github.com/ngneat/transloco) - Internationalization
+- [x] [Compodoc](https://compodoc.app/) - Auto documentation
+- [x] [Storybook](https://storybook.js.org/) - Provide component examples
+- [x] [source-map-explorer](https://www.npmjs.com/package/source-map-explorer) - Analyse project
+- [x] [Docker](https://www.docker.com/) - Containerization
 - [x] [ESLint](https://eslint.org/)
 - [x] [Prettier](https://prettier.io/)
 - [x] [Commit Linting](https://github.com/conventional-changelog/commitlint)
-- [x] [AuditJS](https://www.npmjs.com/package/auditjs) Audit this application using Sonatype OSS Index
-- [x] Auto-generate a CHANGELOG with [auto-changelog](https://github.com/cookpete/auto-changelog)
+- [x] [AuditJS](https://www.npmjs.com/package/auditjs) - Audit application using Sonatype OSS Index
+- [x] [auto-changelog](https://github.com/cookpete/auto-changelog) - Auto-generate a CHANGELOG
 - [x] Routing
 - [x] Lazy Loading
 - [x] [Server Side Rendering](https://www.npmjs.com/package/@angular/ssr)
