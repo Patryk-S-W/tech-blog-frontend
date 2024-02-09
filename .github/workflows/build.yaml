@@ -26,10 +26,10 @@ jobs:
       - name: Run tests
         run: npm run test -- --no-watch --no-progress --browsers=ChromeHeadless
       - name: Codecov
-        uses: codecov/codecov-action@v3.1.0
-        with:
+        uses: codecov/codecov-action@v4.0.1
+        env:
           token: ${{ secrets.CODECOV_TOKEN }}
-          files: ./coverage/lcov.info
+          slug: Patryk-S-W/tech-blog-frontend
 
   lint:
     runs-on: ubuntu-latest
