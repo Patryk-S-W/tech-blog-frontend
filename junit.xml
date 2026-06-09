@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="11" failures="0" errors="0" time="10.466">
-  <testsuite name="FooterComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:44" time="5.421" tests="1">
-    <testcase classname="FooterComponent should create" name="FooterComponent should create" time="0.121">
+<testsuites name="jest tests" tests="11" failures="0" errors="0" time="15.641">
+  <testsuite name="TestComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.278" tests="1">
+    <testcase classname="TestComponent should create" name="TestComponent should create" time="0.07">
     </testcase>
   </testsuite>
-  <testsuite name="SidebarComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:50" time="0.397" tests="1">
-    <testcase classname="SidebarComponent should create" name="SidebarComponent should create" time="0.025">
+  <testsuite name="AboutMeComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.283" tests="1">
+    <testcase classname="AboutMeComponent should create" name="AboutMeComponent should create" time="0.037">
     </testcase>
   </testsuite>
-  <testsuite name="AIComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:50" time="0.473" tests="1">
-    <testcase classname="AIComponent should create" name="AIComponent should create" time="0.043">
+  <testsuite name="FooterComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.299" tests="1">
+    <testcase classname="FooterComponent should create" name="FooterComponent should create" time="0.066">
     </testcase>
   </testsuite>
-  <testsuite name="ProjectsComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:44" time="6.663" tests="1">
-    <testcase classname="ProjectsComponent should create" name="ProjectsComponent should create" time="0.126">
+  <testsuite name="SidebarComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.331" tests="1">
+    <testcase classname="SidebarComponent should create" name="SidebarComponent should create" time="0.051">
     </testcase>
   </testsuite>
-  <testsuite name="AppComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:44" time="6.821" tests="1">
-    <testcase classname="AppComponent should create the app" name="AppComponent should create the app" time="1.251">
+  <testsuite name="ProjectsComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.364" tests="1">
+    <testcase classname="ProjectsComponent should create" name="ProjectsComponent should create" time="0.055">
     </testcase>
   </testsuite>
-  <testsuite name="TestComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:51" time="0.54" tests="1">
-    <testcase classname="TestComponent should create" name="TestComponent should create" time="0.08">
+  <testsuite name="AIComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.363" tests="1">
+    <testcase classname="AIComponent should create" name="AIComponent should create" time="0.044">
     </testcase>
   </testsuite>
-  <testsuite name="NavbarComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:51" time="0.811" tests="1">
-    <testcase classname="NavbarComponent should create" name="NavbarComponent should create" time="0.437">
+  <testsuite name="RecentArticlesComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.368" tests="1">
+    <testcase classname="RecentArticlesComponent should create" name="RecentArticlesComponent should create" time="0.046">
     </testcase>
   </testsuite>
-  <testsuite name="HomeComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:51" time="0.656" tests="1">
-    <testcase classname="HomeComponent should create" name="HomeComponent should create" time="0.212">
+  <testsuite name="HardwareComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.369" tests="1">
+    <testcase classname="HardwareComponent should create" name="HardwareComponent should create" time="0.046">
     </testcase>
   </testsuite>
-  <testsuite name="AboutMeComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:52" time="0.436" tests="1">
-    <testcase classname="AboutMeComponent should create" name="AboutMeComponent should create" time="0.031">
+  <testsuite name="HomeComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.387" tests="1">
+    <testcase classname="HomeComponent should create" name="HomeComponent should create" time="0.066">
     </testcase>
   </testsuite>
-  <testsuite name="HardwareComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:52" time="0.456" tests="1">
-    <testcase classname="HardwareComponent should create" name="HardwareComponent should create" time="0.043">
+  <testsuite name="AppComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.388" tests="1">
+    <testcase classname="AppComponent should create the app" name="AppComponent should create the app" time="0.086">
     </testcase>
   </testsuite>
-  <testsuite name="RecentArticlesComponent" errors="0" failures="0" skipped="0" timestamp="2024-01-25T09:19:51" time="0.641" tests="1">
-    <testcase classname="RecentArticlesComponent should create" name="RecentArticlesComponent should create" time="0.054">
+  <testsuite name="NavbarComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-09T03:19:55" time="4.439" tests="1">
+    <testcase classname="NavbarComponent should create" name="NavbarComponent should create" time="0.099">
     </testcase>
   </testsuite>
 </testsuites>

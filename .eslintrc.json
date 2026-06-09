@@ -11,7 +11,6 @@
       "files": ["*.ts"],
       "parserOptions": {
         "project": ["tsconfig.*?.json"],
-        "tsconfigRootDir": "__dirname",
         "createDefaultProgram": true
       },
       "extends": [
@@ -42,6 +41,12 @@
             "style": "kebab-case"
           }
         ]
+      }
+    },
+    {
+      "files": ["src/environments/environment.prod.ts", "src/jestGlobalMocks.ts", "src/setupJest.ts"],
+      "parserOptions": {
+        "project": null
       }
     },
     {
