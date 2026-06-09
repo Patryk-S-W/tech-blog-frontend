@@ -6,7 +6,10 @@ import { NgModule, isDevMode } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
+import {
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
 import { TranslocoRootModule } from './transloco-root.module';
 import { AppRoutingModule } from './app-routing.module';
 
@@ -32,10 +35,10 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     AIComponent,
     AboutMeComponent,
   ],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     TranslocoRootModule,
     AppRoutingModule,
     SharedModule,
@@ -47,7 +50,9 @@ import { ServiceWorkerModule } from '@angular/service-worker';
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
-  providers: [provideClientHydration()],
-  bootstrap: [AppComponent],
+  providers: [
+    provideClientHydration(),
+    provideHttpClient(withInterceptorsFromDi()),
+  ],
 })
 export class AppModule {}
