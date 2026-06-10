@@ -38,49 +38,54 @@
     </span>
     <button
       class="navbar-toggler hidden-sm-up"
-      type="button"
-      (click)="isNavbarCollapsed = !isNavbarCollapsed"
-      aria-expanded="true"
-      aria-label="Toggle navigation"
-    >
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div
-      class="collapse navbar-collapse"
-      id="navbarSupportedContent"
-      [ngbCollapse]="isNavbarCollapsed"
-    >
-      <ul class="navbar-nav ml-auto">
-        <ng-container *ngFor="let link of links; trackBy: trackByFragment">
-          <li *ngIf="link.dropdown" class="nav-item dropdown" ngbDropdown>
-            <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{
-              link.title
-            }}</a>
-            <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
-              <a
-                class="dropdown-item text-dark"
-                *ngFor="let item of link.dropdown; trackBy: trackByFragment"
-                [href]="item.fragment"
-                >{{ item.title }}</a
-              >
-            </div>
-          </li>
-          <li *ngIf="!link.dropdown" class="nav-item">
-            <a class="nav-link active" [href]="link.fragment">{{
-              link.title
-            }}</a>
-          </li>
-        </ng-container>
-      </ul>
-    </div>
-    <form class="d-flex input-group w-auto">
-      <input
-        type="search"
-        class="form-control"
-        placeholder="Search"
-        aria-label="Search"
-      />
-      <button class="btn btn-outline-light" type="button">Search</button>
-    </form>
-  </div>
-</nav>
+        type="button"
+        (click)="isNavbarCollapsed = !isNavbarCollapsed"
+        aria-expanded="true"
+        aria-label="Toggle navigation"
+        >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div
+        class="collapse navbar-collapse"
+        id="navbarSupportedContent"
+        [ngbCollapse]="isNavbarCollapsed"
+        >
+        <ul class="navbar-nav ml-auto">
+          @for (link of links; track trackByFragment($index, link)) {
+            @if (link.dropdown) {
+              <li class="nav-item dropdown" ngbDropdown>
+                <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{
+                  link.title
+                }}</a>
+                <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+                  @for (item of link.dropdown; track trackByFragment($index, item)) {
+                    <a
+                      class="dropdown-item text-dark"
+                      [href]="item.fragment"
+                      >{{ item.title }}</a
+                      >
+                  }
+                </div>
+              </li>
+            }
+            @if (!link.dropdown) {
+              <li class="nav-item">
+                <a class="nav-link active" [href]="link.fragment">{{
+                  link.title
+                }}</a>
+              </li>
+            }
+          }
+        </ul>
+      </div>
+      <form class="d-flex input-group w-auto">
+        <input
+          type="search"
+          class="form-control"
+          placeholder="Search"
+          aria-label="Search"
+          />
+          <button class="btn btn-outline-light" type="button">Search</button>
+        </form>
+      </div>
+    </nav>

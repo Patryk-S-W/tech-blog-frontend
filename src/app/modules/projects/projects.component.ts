@@ -1,11 +1,9 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'app-projects',
   templateUrl: './projects.component.html',
-  imports: [CommonModule],
+  imports: [],
 })
 export class ProjectsComponent {
   cards = [
