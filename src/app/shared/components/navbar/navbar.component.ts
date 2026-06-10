@@ -1,9 +1,18 @@
+import {
+  NgbCollapseModule,
+  NgbDropdownModule,
+} from '@ng-bootstrap/ng-bootstrap';
+
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
+  standalone: true,
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
+  imports: [CommonModule, RouterModule, NgbCollapseModule, NgbDropdownModule],
 })
 export class NavbarComponent {
   isNavbarCollapsed = true;

@@ -1,8 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-hardware',
   templateUrl: './hardware.component.html',
+  imports: [CommonModule],
 })
 export class HardwareComponent {
   articles = [

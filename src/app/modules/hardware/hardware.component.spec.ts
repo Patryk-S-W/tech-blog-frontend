@@ -8,7 +8,7 @@ describe('HardwareComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [HardwareComponent],
+      imports: [HardwareComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(HardwareComponent);
