@@ -1,12 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 
 @Component({
-  standalone: true,
   selector: 'app-recent-articles',
   templateUrl: './recent-articles.component.html',
   styleUrls: ['./recent-articles.component.scss'],
-  imports: [CommonModule],
+  imports: [],
 })
 export class RecentArticlesComponent {
   articles = [

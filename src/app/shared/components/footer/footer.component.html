@@ -1,20 +1,21 @@
 <footer class="bg-dark text-center text-white d-flex flex-column my-0">
   <div class="container p-4">
     <section class="mb-4">
-      <a
-        mdbRipple
-        aria-label="Social Media"
-        class="btn text-white btn-outline-secondary btn-floating m-1"
-        role="button"
-        *ngFor="let icon of icons; trackBy: trackById"
-        [href]="icon.link"
-        ><i class="fab {{ icon.icon }}"></i
-      ></a>
+      @for (icon of icons; track trackById($index, icon)) {
+        <a
+          mdbRipple
+          aria-label="Social Media"
+          class="btn text-white btn-outline-secondary btn-floating m-1"
+          role="button"
+          [href]="icon.link"
+          ><i class="fab {{ icon.icon }}"></i
+        ></a>
+      }
     </section>
   </div>
   <div class="text-center p-3 d-flex">
     © Copyright&nbsp;&bull;&nbsp;<a href="/"
-      ><span class="text-white">Patryk Sadowski</span></a
+    ><span class="text-white">Patryk Sadowski</span></a
     >
   </div>
 </footer>
