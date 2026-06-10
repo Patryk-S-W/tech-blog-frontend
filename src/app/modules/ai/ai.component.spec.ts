@@ -8,7 +8,7 @@ describe('AIComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AIComponent],
+      imports: [AIComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AIComponent);

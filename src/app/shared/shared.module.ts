@@ -1,17 +1,16 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatTableModule } from '@angular/material/table';
+import { FooterComponent } from './components/footer/footer.component';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { MatTableModule } from '@angular/material/table';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { NavbarComponent } from './components/navbar/navbar.component';
+import { NgModule } from '@angular/core';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
-  declarations: [NavbarComponent, SidebarComponent, FooterComponent],
   imports: [
     CommonModule,
     MatTableModule,
@@ -20,6 +19,9 @@ import { FooterComponent } from './components/footer/footer.component';
     MatPaginatorModule,
     MatSortModule,
     NgbModule,
+    NavbarComponent,
+    SidebarComponent,
+    FooterComponent,
   ],
   exports: [
     MatTableModule,
@@ -28,7 +30,6 @@ import { FooterComponent } from './components/footer/footer.component';
     MatPaginatorModule,
     MatSortModule,
     NgbModule,
-
     NavbarComponent,
     SidebarComponent,
     FooterComponent,

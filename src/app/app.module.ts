@@ -3,29 +3,34 @@ import {
   provideClientHydration,
 } from '@angular/platform-browser';
 import { NgModule, isDevMode } from '@angular/core';
-
-import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   provideHttpClient,
   withInterceptorsFromDi,
 } from '@angular/common/http';
-import { TranslocoRootModule } from './transloco-root.module';
-import { AppRoutingModule } from './app-routing.module';
 
-import { SharedModule } from './shared/shared.module';
-import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import { HomeComponent } from './modules/home/home.component';
-import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
-import { HardwareComponent } from './modules/hardware/hardware.component';
-import { ProjectsComponent } from './modules/projects/projects.component';
-import { TestComponent } from './modules/test/test.component';
 import { AIComponent } from './modules/ai/ai.component';
 import { AboutMeComponent } from './modules/about-me/about-me.component';
+import { AppComponent } from './app.component';
+import { AppRoutingModule } from './app-routing.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HardwareComponent } from './modules/hardware/hardware.component';
+import { HomeComponent } from './modules/home/home.component';
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { ProjectsComponent } from './modules/projects/projects.component';
+import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
+import { SharedModule } from './shared/shared.module';
+import { TestComponent } from './modules/test/test.component';
+import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({
-  declarations: [
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    TranslocoRootModule,
+    AppRoutingModule,
+    SharedModule,
+    NgbCollapseModule,
     AppComponent,
     HomeComponent,
     RecentArticlesComponent,
@@ -34,22 +39,12 @@ import { ServiceWorkerModule } from '@angular/service-worker';
     TestComponent,
     AIComponent,
     AboutMeComponent,
-  ],
-  bootstrap: [AppComponent],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    TranslocoRootModule,
-    AppRoutingModule,
-    SharedModule,
-    NgbCollapseModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000',
     }),
   ],
+  bootstrap: [AppComponent],
   providers: [
     provideClientHydration(),
     provideHttpClient(withInterceptorsFromDi()),
