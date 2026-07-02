@@ -1,0 +1,126 @@
+{
+  "name": "tech-blog",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "root": "apps/tech-blog",
+  "sourceRoot": "apps/tech-blog/src",
+  "prefix": "app",
+  "tags": ["type:app", "scope:tech-blog"],
+  "targets": {
+    "build": {
+      "executor": "@angular/build:application",
+      "outputs": ["{options.outputPath.base}"],
+      "options": {
+        "outputPath": {
+          "base": "dist/tech-blog"
+        },
+        "index": "apps/tech-blog/src/index.html",
+        "polyfills": ["apps/tech-blog/src/polyfills.ts"],
+        "tsConfig": "apps/tech-blog/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/tech-blog/src/favicon.ico",
+          "apps/tech-blog/src/assets",
+          "apps/tech-blog/src/manifest.webmanifest"
+        ],
+        "styles": [
+          "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+          "apps/tech-blog/src/styles.scss"
+        ],
+        "scripts": [],
+        "extractLicenses": false,
+        "sourceMap": true,
+        "optimization": false,
+        "namedChunks": true,
+        "serviceWorker": "apps/tech-blog/ngsw-config.json",
+        "browser": "apps/tech-blog/src/main.ts",
+        "server": "apps/tech-blog/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/tech-blog/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "fileReplacements": [
+            {
+              "replace": "apps/tech-blog/src/environments/environment.ts",
+              "with": "apps/tech-blog/src/environments/environment.prod.ts"
+            }
+          ],
+          "optimization": true,
+          "outputHashing": "all",
+          "sourceMap": false,
+          "namedChunks": false,
+          "extractLicenses": true,
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "2mb",
+              "maximumError": "5mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "6kb",
+              "maximumError": "10kb"
+            }
+          ]
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true,
+          "serviceWorker": "apps/tech-blog/ngsw-config.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular/build:dev-server",
+      "options": {
+        "buildTarget": "tech-blog:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "tech-blog:build:production"
+        },
+        "development": {
+          "buildTarget": "tech-blog:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular/build:extract-i18n",
+      "options": {
+        "buildTarget": "tech-blog:build"
+      }
+    },
+    "test": {
+      "executor": "@angular/build:karma",
+      "options": {
+        "polyfills": ["zone.js", "zone.js/testing"],
+        "tsConfig": "apps/tech-blog/tsconfig.spec.json",
+        "inlineStyleLanguage": "scss",
+        "assets": [
+          "apps/tech-blog/src/favicon.ico",
+          "apps/tech-blog/src/assets",
+          "apps/tech-blog/src/manifest.webmanifest"
+        ],
+        "styles": ["apps/tech-blog/src/styles.scss"],
+        "scripts": []
+      }
+    },
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/tech-blog/src/**/*.ts",
+          "apps/tech-blog/src/**/*.html"
+        ]
+      }
+    }
+  }
+}

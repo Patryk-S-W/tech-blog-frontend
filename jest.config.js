@@ -1,5 +1,5 @@
 module.exports = {
   preset: "jest-preset-angular",
-  setupFilesAfterEnv: ["<rootDir>/src/setupJest.ts"],
+  setupFilesAfterEnv: ["<rootDir>/apps/tech-blog/src/setupJest.ts"],
   reporters: ["default", "jest-junit"],
 };
