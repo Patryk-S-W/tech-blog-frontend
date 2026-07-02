@@ -8,19 +8,19 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 
-import { AIComponent } from './modules/ai/ai.component';
-import { AboutMeComponent } from './modules/about-me/about-me.component';
+import { AIComponent } from '@tech-blog/feature-ai';
+import { AboutMeComponent } from '@tech-blog/feature-about-me';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HardwareComponent } from './modules/hardware/hardware.component';
-import { HomeComponent } from './modules/home/home.component';
+import { HardwareComponent } from '@tech-blog/feature-hardware';
+import { HomeComponent } from '@tech-blog/feature-home';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
-import { ProjectsComponent } from './modules/projects/projects.component';
-import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
+import { ProjectsComponent } from '@tech-blog/feature-projects';
+import { RecentArticlesComponent } from '@tech-blog/feature-recent-articles';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { SharedModule } from './shared/shared.module';
-import { TestComponent } from './modules/test/test.component';
+import { SharedModule } from '@tech-blog/shared-ui';
+import { TestComponent } from '@tech-blog/feature-test';
 import { TranslocoRootModule } from './transloco-root.module';
 
 @NgModule({

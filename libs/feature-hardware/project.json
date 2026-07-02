@@ -1,0 +1,20 @@
+{
+  "name": "feature-hardware",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "root": "libs/feature-hardware",
+  "sourceRoot": "libs/feature-hardware/src",
+  "prefix": "app",
+  "tags": ["type:feature", "scope:tech-blog"],
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/feature-hardware/src/**/*.ts",
+          "libs/feature-hardware/src/**/*.html"
+        ]
+      }
+    }
+  }
+}
