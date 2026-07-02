@@ -21,7 +21,7 @@
               "base": "dist/tech-blog"
             },
             "index": "apps/tech-blog/src/index.html",
-            "polyfills": ["apps/tech-blog/src/polyfills.ts"],
+            "polyfills": [],
             "tsConfig": "apps/tech-blog/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
