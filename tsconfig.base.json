@@ -12,7 +12,19 @@
     "moduleResolution": "bundler",
     "importHelpers": true,
     "target": "ES2022",
-    "useDefineForClassFields": false
+    "useDefineForClassFields": false,
+    "paths": {
+      "@tech-blog/shared-ui": ["libs/shared-ui/src/index.ts"],
+      "@tech-blog/feature-home": ["libs/feature-home/src/index.ts"],
+      "@tech-blog/feature-about-me": ["libs/feature-about-me/src/index.ts"],
+      "@tech-blog/feature-ai": ["libs/feature-ai/src/index.ts"],
+      "@tech-blog/feature-hardware": ["libs/feature-hardware/src/index.ts"],
+      "@tech-blog/feature-projects": ["libs/feature-projects/src/index.ts"],
+      "@tech-blog/feature-recent-articles": [
+        "libs/feature-recent-articles/src/index.ts"
+      ],
+      "@tech-blog/feature-test": ["libs/feature-test/src/index.ts"]
+    }
   },
   "angularCompilerOptions": {
     "fullTemplateTypeCheck": true,

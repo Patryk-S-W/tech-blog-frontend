@@ -1,0 +1,20 @@
+{
+  "name": "shared-ui",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "root": "libs/shared-ui",
+  "sourceRoot": "libs/shared-ui/src",
+  "prefix": "app",
+  "tags": ["type:ui", "scope:tech-blog"],
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared-ui/src/**/*.ts",
+          "libs/shared-ui/src/**/*.html"
+        ]
+      }
+    }
+  }
+}
