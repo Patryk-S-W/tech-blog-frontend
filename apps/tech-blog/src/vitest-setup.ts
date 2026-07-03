@@ -1,16 +1,17 @@
 import './vitest-mocks';
 
-import 'zone.js';
-import 'zone.js/testing';
-
 import { getTestBed, TestBed } from '@angular/core/testing';
+import { provideZonelessChangeDetection } from '@angular/core';
 import {
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting,
-} from '@angular/platform-browser-dynamic/testing';
+  BrowserTestingModule,
+  platformBrowserTesting,
+} from '@angular/platform-browser/testing';
 
 getTestBed().resetTestEnvironment();
-TestBed.initTestEnvironment(
-  BrowserDynamicTestingModule,
-  platformBrowserDynamicTesting()
-);
+TestBed.initTestEnvironment(BrowserTestingModule, platformBrowserTesting());
+
+beforeEach(() => {
+  TestBed.configureTestingModule({
+    providers: [provideZonelessChangeDetection()],
+  });
+});
