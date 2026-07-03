@@ -1,3 +1,0 @@
-{
-  "extends": "./apps/tech-blog/tsconfig.spec.json"
-}
