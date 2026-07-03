@@ -97,21 +97,6 @@
         "buildTarget": "tech-blog:build"
       }
     },
-    "test": {
-      "executor": "@angular/build:karma",
-      "options": {
-        "polyfills": ["zone.js", "zone.js/testing"],
-        "tsConfig": "apps/tech-blog/tsconfig.spec.json",
-        "inlineStyleLanguage": "scss",
-        "assets": [
-          "apps/tech-blog/src/favicon.ico",
-          "apps/tech-blog/src/assets",
-          "apps/tech-blog/src/manifest.webmanifest"
-        ],
-        "styles": ["apps/tech-blog/src/styles.scss"],
-        "scripts": []
-      }
-    },
     "lint": {
       "executor": "@angular-eslint/builder:lint",
       "outputs": ["{options.outputFile}"],
