@@ -37,7 +37,7 @@
     "test:ci": "vitest run",
     "test:coverage": "vitest run --coverage",
     "lint": "nx lint tech-blog",
-    "e2e": "testcafe chrome ./e2e/",
+    "e2e": "playwright test",
     "compodoc": "npx compodoc -p apps/tech-blog/tsconfig.app.json",
     "analyze": "source-map-explorer dist/tech-blog/**/*.js",
     "prettier": "prettier --write \"apps/tech-blog/src/app/**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
@@ -47,7 +47,9 @@
     "docs:json": "compodoc -p ./tsconfig.base.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
-    "serve:ssr:tech-blog": "node dist/tech-blog/server/server.mjs"
+    "serve:ssr:tech-blog": "node dist/tech-blog/server/server.mjs",
+    "e2e:ui": "playwright test --ui",
+    "e2e:report": "playwright show-report"
   },
   "private": false,
   "engines": {
@@ -124,13 +126,12 @@
     "prettier": "^3.8.4",
     "prettier-eslint": "^16.4.2",
     "source-map-explorer": "^2.5.3",
-    "testcafe": "^3.7.4",
-    "testcafe-reporter-html": "^1.4.6",
     "ts-node": "~10.9.2",
     "typescript": "~6.0.0",
     "typescript-eslint": "^8.62.1",
     "vite": "^8.1.2",
-    "vitest": "^4.1.9"
+    "vitest": "^4.1.9",
+    "@playwright/test": "^1.61.1"
   },
   "lint-staged": {
     "*.{js,json,css,scss,less,md,ts,html,component.html}": [
