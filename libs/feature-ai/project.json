@@ -1,0 +1,20 @@
+{
+  "name": "feature-ai",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "root": "libs/feature-ai",
+  "sourceRoot": "libs/feature-ai/src",
+  "prefix": "app",
+  "tags": ["type:feature", "scope:tech-blog"],
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/feature-ai/src/**/*.ts",
+          "libs/feature-ai/src/**/*.html"
+        ]
+      }
+    }
+  }
+}

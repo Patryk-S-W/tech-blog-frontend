@@ -1,0 +1,20 @@
+{
+  "name": "feature-about-me",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "root": "libs/feature-about-me",
+  "sourceRoot": "libs/feature-about-me/src",
+  "prefix": "app",
+  "tags": ["type:feature", "scope:tech-blog"],
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": [
+          "libs/feature-about-me/src/**/*.ts",
+          "libs/feature-about-me/src/**/*.html"
+        ]
+      }
+    }
+  }
+}

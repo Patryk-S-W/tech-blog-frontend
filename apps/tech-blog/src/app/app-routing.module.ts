@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from './modules/home/home.component';
-import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
-import { HardwareComponent } from './modules/hardware/hardware.component';
-import { ProjectsComponent } from './modules/projects/projects.component';
-import { AboutMeComponent } from './modules/about-me/about-me.component';
-import { AIComponent } from './modules/ai/ai.component';
+import { HomeComponent } from '@tech-blog/feature-home';
+import { RecentArticlesComponent } from '@tech-blog/feature-recent-articles';
+import { HardwareComponent } from '@tech-blog/feature-hardware';
+import { ProjectsComponent } from '@tech-blog/feature-projects';
+import { AboutMeComponent } from '@tech-blog/feature-about-me';
+import { AIComponent } from '@tech-blog/feature-ai';
 
 const routes: Routes = [
   {
