@@ -9,18 +9,25 @@ test.describe('Navbar', () => {
     const nav = page.locator('app-navbar nav');
     await expect(nav.getByRole('link', { name: 'Home' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Projects' })).toBeVisible();
-    await expect(nav.getByRole('link', { name: 'Articles' })).toBeVisible();
+    // "Articles" is an ngbDropdownToggle <a> with no href attribute, so it
+    // has no implicit ARIA link role (an <a> only gets the link role when
+    // it has an href, even an empty one) - getByRole('link', ...) will
+    // never match it.
+    await expect(
+      nav.locator('a.dropdown-toggle', { hasText: 'Articles' }),
+    ).toBeVisible();
     await expect(nav.getByRole('link', { name: 'About me' })).toBeVisible();
   });
 
   test('Articles dropdown exposes Recent articles, Hardware, AI', async ({
     page,
   }) => {
-    await page.getByRole('link', { name: 'Articles' }).click();
+    const nav = page.locator('app-navbar nav');
+    await nav.locator('a.dropdown-toggle', { hasText: 'Articles' }).click();
     const dropdown = page.locator('.dropdown-menu');
-    await expect(dropdown.getByText('Recent articles')).toBeVisible();
-    await expect(dropdown.getByText('Hardware')).toBeVisible();
-    await expect(dropdown.getByText('AI')).toBeVisible();
+    await expect(dropdown.getByRole('link', { name: 'Recent articles' })).toBeVisible();
+    await expect(dropdown.getByRole('link', { name: 'Hardware' })).toBeVisible();
+    await expect(dropdown.getByRole('link', { name: 'AI' })).toBeVisible();
   });
 
   test('social links point to the right profiles', async ({ page }) => {
