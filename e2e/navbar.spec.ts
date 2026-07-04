@@ -1,4 +1,19 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, Page } from '@playwright/test';
+
+// Bootstrap's navbar-expand-lg only forces .navbar-collapse to
+// display:flex above the lg breakpoint (see
+// node_modules/bootstrap/scss/_navbar.scss, the .navbar-expand-*
+// media-breakpoint-up block). Below lg (e.g. the Mobile Chrome
+// project), #navbarSupportedContent is genuinely hidden until the
+// toggler is clicked - that's correct product behavior, not a bug.
+// Tests that check nav content (not the collapse mechanism itself)
+// need to open it first on narrow viewports.
+async function ensureNavExpanded(page: Page): Promise<void> {
+  const toggler = page.getByRole('button', { name: 'Toggle navigation' });
+  if (await toggler.isVisible()) {
+    await toggler.click();
+  }
+}
 
 test.describe('Navbar', () => {
   test.beforeEach(async ({ page }) => {
@@ -6,6 +21,7 @@ test.describe('Navbar', () => {
   });
 
   test('shows top-level nav links', async ({ page }) => {
+    await ensureNavExpanded(page);
     const nav = page.locator('app-navbar nav');
     await expect(nav.getByRole('link', { name: 'Home' })).toBeVisible();
     await expect(nav.getByRole('link', { name: 'Projects' })).toBeVisible();
@@ -22,6 +38,7 @@ test.describe('Navbar', () => {
   test('Articles dropdown exposes Recent articles, Hardware, AI', async ({
     page,
   }) => {
+    await ensureNavExpanded(page);
     const nav = page.locator('app-navbar nav');
     await nav.locator('a.dropdown-toggle', { hasText: 'Articles' }).click();
     const dropdown = page.locator('.dropdown-menu');
