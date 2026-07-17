@@ -14,6 +14,13 @@ test.describe('Routing smoke tests', () => {
     test(`${route.name} (${route.path}) loads without console errors`, async ({
       page,
     }) => {
+      // recent-articles fetches from the backend - this suite tests the
+      // frontend shell/routing, not a live API, so mock the response
+      // rather than requiring a running backend (which CI doesn't spin up).
+      await page.route('**/api/blog/announcements', (route) =>
+        route.fulfill({ json: [] }),
+      );
+
       const consoleErrors: string[] = [];
       page.on('console', (msg) => {
         if (msg.type() === 'error') consoleErrors.push(msg.text());
