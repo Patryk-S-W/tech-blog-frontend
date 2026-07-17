@@ -23,7 +23,11 @@
       "@tech-blog/feature-recent-articles": [
         "libs/feature-recent-articles/src/index.ts"
       ],
-      "@tech-blog/feature-test": ["libs/feature-test/src/index.ts"]
+      "@tech-blog/feature-test": ["libs/feature-test/src/index.ts"],
+      "@tech-blog/data-access-blog": ["libs/data-access-blog/src/index.ts"],
+      "@tech-blog/environments": [
+        "apps/tech-blog/src/environments/environment.ts"
+      ]
     }
   },
   "angularCompilerOptions": {

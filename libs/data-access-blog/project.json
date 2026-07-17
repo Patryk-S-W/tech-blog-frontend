@@ -1,0 +1,17 @@
+{
+  "name": "data-access-blog",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "root": "libs/data-access-blog",
+  "sourceRoot": "libs/data-access-blog/src",
+  "prefix": "app",
+  "tags": ["type:data-access", "scope:tech-blog"],
+  "targets": {
+    "lint": {
+      "executor": "@angular-eslint/builder:lint",
+      "options": {
+        "lintFilePatterns": ["libs/data-access-blog/**/*.ts"]
+      }
+    }
+  }
+}

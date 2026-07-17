@@ -1,47 +1,47 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<testsuites name="jest tests" tests="11" failures="0" errors="0" time="13.574">
-  <testsuite name="SidebarComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.733" tests="1">
-    <testcase classname="SidebarComponent should create" name="SidebarComponent should create" time="0.033">
-    </testcase>
-  </testsuite>
-  <testsuite name="AboutMeComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.737" tests="1">
-    <testcase classname="AboutMeComponent should create" name="AboutMeComponent should create" time="0.036">
-    </testcase>
-  </testsuite>
-  <testsuite name="FooterComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.746" tests="1">
-    <testcase classname="FooterComponent should create" name="FooterComponent should create" time="0.045">
-    </testcase>
-  </testsuite>
-  <testsuite name="RecentArticlesComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.75" tests="1">
-    <testcase classname="RecentArticlesComponent should create" name="RecentArticlesComponent should create" time="0.047">
-    </testcase>
-  </testsuite>
-  <testsuite name="HardwareComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.75" tests="1">
-    <testcase classname="HardwareComponent should create" name="HardwareComponent should create" time="0.048">
-    </testcase>
-  </testsuite>
-  <testsuite name="AIComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.754" tests="1">
-    <testcase classname="AIComponent should create" name="AIComponent should create" time="0.051">
-    </testcase>
-  </testsuite>
-  <testsuite name="ProjectsComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.767" tests="1">
-    <testcase classname="ProjectsComponent should create" name="ProjectsComponent should create" time="0.065">
-    </testcase>
-  </testsuite>
-  <testsuite name="HomeComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.781" tests="1">
-    <testcase classname="HomeComponent should create" name="HomeComponent should create" time="0.077">
-    </testcase>
-  </testsuite>
-  <testsuite name="TestComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="3.82" tests="1">
-    <testcase classname="TestComponent should create" name="TestComponent should create" time="0.057">
-    </testcase>
-  </testsuite>
-  <testsuite name="AppComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="4.258" tests="1">
-    <testcase classname="AppComponent should create the app" name="AppComponent should create the app" time="0.034">
-    </testcase>
-  </testsuite>
-  <testsuite name="NavbarComponent" errors="0" failures="0" skipped="0" timestamp="2026-06-11T15:58:07" time="4.258" tests="1">
-    <testcase classname="NavbarComponent should create" name="NavbarComponent should create" time="0.037">
-    </testcase>
-  </testsuite>
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites name="vitest tests" tests="11" failures="0" errors="0" time="0.784963872">
+    <testsuite name="apps/tech-blog/src/app/app.component.spec.ts" timestamp="2026-07-17T05:07:40.309Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.039504102">
+        <testcase classname="apps/tech-blog/src/app/app.component.spec.ts" name="AppComponent &gt; should create the app" time="0.039270216">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-about-me/src/lib/about-me.component.spec.ts" timestamp="2026-07-17T05:07:40.311Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.018868989">
+        <testcase classname="libs/feature-about-me/src/lib/about-me.component.spec.ts" name="AboutMeComponent &gt; should create" time="0.01850087">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-ai/src/lib/ai.component.spec.ts" timestamp="2026-07-17T05:07:40.315Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.036479667">
+        <testcase classname="libs/feature-ai/src/lib/ai.component.spec.ts" name="AIComponent &gt; should create" time="0.036339376">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-hardware/src/lib/hardware.component.spec.ts" timestamp="2026-07-17T05:07:40.316Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.079199277">
+        <testcase classname="libs/feature-hardware/src/lib/hardware.component.spec.ts" name="HardwareComponent &gt; should create" time="0.07873573">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-home/src/lib/home.component.spec.ts" timestamp="2026-07-17T05:07:40.317Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.138615161">
+        <testcase classname="libs/feature-home/src/lib/home.component.spec.ts" name="HomeComponent &gt; should create" time="0.13842987">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-projects/src/lib/projects.component.spec.ts" timestamp="2026-07-17T05:07:40.317Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.048694089">
+        <testcase classname="libs/feature-projects/src/lib/projects.component.spec.ts" name="ProjectsComponent &gt; should create" time="0.048315556">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-recent-articles/src/lib/recent-articles.component.spec.ts" timestamp="2026-07-17T05:07:40.318Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.180255623">
+        <testcase classname="libs/feature-recent-articles/src/lib/recent-articles.component.spec.ts" name="RecentArticlesComponent &gt; should create" time="0.177540486">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/feature-test/src/lib/test.component.spec.ts" timestamp="2026-07-17T05:07:40.318Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.112960814">
+        <testcase classname="libs/feature-test/src/lib/test.component.spec.ts" name="TestComponent &gt; should create" time="0.112807545">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/shared-ui/src/lib/footer/footer.component.spec.ts" timestamp="2026-07-17T05:07:40.318Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.036849155">
+        <testcase classname="libs/shared-ui/src/lib/footer/footer.component.spec.ts" name="FooterComponent &gt; should create" time="0.036622529">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/shared-ui/src/lib/navbar/navbar.component.spec.ts" timestamp="2026-07-17T05:07:40.320Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.083746147">
+        <testcase classname="libs/shared-ui/src/lib/navbar/navbar.component.spec.ts" name="NavbarComponent &gt; should create" time="0.083472735">
+        </testcase>
+    </testsuite>
+    <testsuite name="libs/shared-ui/src/lib/sidebar/sidebar.component.spec.ts" timestamp="2026-07-17T05:07:40.321Z" hostname="vm" tests="1" failures="0" errors="0" skipped="0" time="0.009790848">
+        <testcase classname="libs/shared-ui/src/lib/sidebar/sidebar.component.spec.ts" name="SidebarComponent &gt; should create" time="0.009509222">
+        </testcase>
+    </testsuite>
 </testsuites>
