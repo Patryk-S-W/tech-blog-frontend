@@ -24,6 +24,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { SharedModule } from './shared/shared.module';
 import { TestComponent } from './modules/test/test.component';
 import { TranslocoRootModule } from './transloco-root.module';
+import { LoginComponent } from './modules/login/login.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { TranslocoRootModule } from './transloco-root.module';
     TestComponent,
     AIComponent,
     AboutMeComponent,
+    LoginComponent,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',

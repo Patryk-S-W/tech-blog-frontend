@@ -3,8 +3,9 @@ import {
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { AuthStore } from '../../../core/store/auth.store';
 
 @Component({
   selector: 'app-navbar',
@@ -13,48 +14,51 @@ import { RouterModule } from '@angular/router';
   imports: [RouterModule, NgbCollapseModule, NgbDropdownModule],
 })
 export class NavbarComponent {
+  private readonly authStore = inject(AuthStore);
+
   isNavbarCollapsed = true;
+
+  readonly isAuthenticated = this.authStore.isAuthenticated;
+  readonly username = this.authStore.username;
 
   links = [
     {
       title: 'Home',
-      fragment: '',
+      fragment: '/',
     },
     {
       title: 'Projects',
-      fragment: 'projects',
+      fragment: '/projects',
     },
     {
       title: 'Articles',
-      fragment: 'artcles',
+      fragment: '/recent-articles',
       dropdown: [
         {
           title: 'Recent articles',
-          fragment: 'recent-articles',
+          fragment: '/recent-articles',
         },
         {
           title: 'Hardware',
-          fragment: 'hardware',
+          fragment: '/hardware',
         },
         {
           title: 'AI',
-          fragment: 'ai',
+          fragment: '/ai',
         },
       ],
     },
     {
       title: 'About me',
-      fragment: 'about-me',
+      fragment: '/about-me',
     },
   ];
 
-  constructor() {}
+  logout(): void {
+    this.authStore.logout();
+  }
 
-  trackByFragment(index: number, item: Item): string {
+  trackByFragment(index: number, item: { fragment: string }): string {
     return item.fragment;
   }
-}
-interface Item {
-  title: string;
-  fragment: string;
 }
