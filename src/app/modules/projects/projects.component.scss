@@ -1,0 +1,16 @@
+.bg-dark-blog {
+  background-color: #16213e;
+}
+
+.project-card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  transition:
+    transform 0.2s,
+    border-color 0.2s;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  border-color: #0dcaf0;
+}

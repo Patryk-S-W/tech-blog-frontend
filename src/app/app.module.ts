@@ -27,6 +27,7 @@ import { TranslocoRootModule } from './transloco-root.module';
 import { LoginComponent } from './modules/login/login.component';
 import { AdminDashboardComponent } from './modules/admin/admin-dashboard.component';
 import { PostEditorComponent } from './modules/admin/post-editor.component';
+import { WikiComponent } from './modules/wiki/wiki.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { PostEditorComponent } from './modules/admin/post-editor.component';
     LoginComponent,
     AdminDashboardComponent,
     PostEditorComponent,
+    WikiComponent,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
