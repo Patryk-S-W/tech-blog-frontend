@@ -9,6 +9,7 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { NgModule } from '@angular/core';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { MarkdownPipe } from './pipes/markdown.pipe';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     NavbarComponent,
     SidebarComponent,
     FooterComponent,
+    MarkdownPipe,
   ],
   exports: [
     MatTableModule,
@@ -33,6 +35,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     NavbarComponent,
     SidebarComponent,
     FooterComponent,
+    MarkdownPipe,
   ],
   providers: [],
 })
