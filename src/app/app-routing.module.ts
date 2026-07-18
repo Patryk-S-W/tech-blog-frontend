@@ -6,6 +6,8 @@ import { HardwareComponent } from './modules/hardware/hardware.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
 import { AboutMeComponent } from './modules/about-me/about-me.component';
 import { AIComponent } from './modules/ai/ai.component';
+import { LoginComponent } from './modules/login/login.component';
+import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
   {
@@ -48,6 +50,13 @@ const routes: Routes = [
     component: AIComponent,
     data: {
       title: 'AI - Tech Blog',
+    },
+  },
+  {
+    path: 'login',
+    component: LoginComponent,
+    data: {
+      title: 'Login - Tech Blog',
     },
   },
   {

@@ -27,7 +27,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
   <div class="container">
     <span class="navbar-brand">
-      <a href="/">
+      <a routerLink="/">
         <img
           class="logo-blog"
           width="40"
@@ -38,54 +38,81 @@
     </span>
     <button
       class="navbar-toggler hidden-sm-up"
-        type="button"
-        (click)="isNavbarCollapsed = !isNavbarCollapsed"
-        aria-expanded="true"
-        aria-label="Toggle navigation"
-        >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
-        [ngbCollapse]="isNavbarCollapsed"
-        >
-        <ul class="navbar-nav ml-auto">
-          @for (link of links; track trackByFragment($index, link)) {
-            @if (link.dropdown) {
-              <li class="nav-item dropdown" ngbDropdown>
-                <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{
-                  link.title
-                }}</a>
-                <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
-                  @for (item of link.dropdown; track trackByFragment($index, item)) {
-                    <a
-                      class="dropdown-item text-dark"
-                      [href]="item.fragment"
-                      >{{ item.title }}</a
-                      >
-                  }
-                </div>
-              </li>
-            }
-            @if (!link.dropdown) {
-              <li class="nav-item">
-                <a class="nav-link active" [href]="link.fragment">{{
-                  link.title
-                }}</a>
-              </li>
-            }
+      type="button"
+      (click)="isNavbarCollapsed = !isNavbarCollapsed"
+      aria-expanded="true"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div
+      class="collapse navbar-collapse"
+      id="navbarSupportedContent"
+      [ngbCollapse]="isNavbarCollapsed"
+    >
+      <ul class="navbar-nav ml-auto">
+        @for (link of links; track trackByFragment($index, link)) {
+          @if (link.dropdown) {
+            <li class="nav-item dropdown" ngbDropdown>
+              <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{
+                link.title
+              }}</a>
+              <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+                @for (
+                  item of link.dropdown;
+                  track trackByFragment($index, item)
+                ) {
+                  <a
+                    class="dropdown-item text-dark"
+                    [routerLink]="item.fragment"
+                    >{{ item.title }}</a
+                  >
+                }
+              </div>
+            </li>
           }
-        </ul>
-      </div>
-      <form class="d-flex input-group w-auto">
-        <input
-          type="search"
-          class="form-control"
-          placeholder="Search"
-          aria-label="Search"
-          />
-          <button class="btn btn-outline-light" type="button">Search</button>
-        </form>
-      </div>
-    </nav>
+          @if (!link.dropdown) {
+            <li class="nav-item">
+              <a class="nav-link active" [routerLink]="link.fragment">{{
+                link.title
+              }}</a>
+            </li>
+          }
+        }
+      </ul>
+      <ul class="navbar-nav ms-auto">
+        @if (isAuthenticated()) {
+          <li class="nav-item">
+            <span class="nav-link text-light">
+              <i class="fas fa-user me-1"></i>{{ username() }}
+            </span>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link text-light"
+              routerLink="/admin"
+              style="cursor: pointer"
+            >
+              <i class="fas fa-cog me-1"></i>Admin
+            </a>
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link text-light"
+              (click)="logout()"
+              style="cursor: pointer"
+            >
+              <i class="fas fa-sign-out-alt me-1"></i>Logout
+            </a>
+          </li>
+        } @else {
+          <li class="nav-item">
+            <a class="nav-link text-light" routerLink="/login">
+              <i class="fas fa-sign-in-alt me-1"></i>Login
+            </a>
+          </li>
+        }
+      </ul>
+    </div>
+  </div>
+</nav>
