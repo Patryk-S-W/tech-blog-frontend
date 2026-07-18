@@ -1,0 +1,60 @@
+<div class="container py-4">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="text-light">My Announcements</h2>
+    <a routerLink="/admin/new" class="btn btn-info">
+      <i class="fas fa-plus me-2"></i>New Announcement
+    </a>
+  </div>
+
+  @if (isLoading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-info" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else if (error()) {
+    <div class="alert alert-warning">{{ error() }}</div>
+  } @else {
+    @if (announcements().length === 0) {
+      <div class="text-center text-light py-5">
+        <p>No announcements yet. Create your first one!</p>
+      </div>
+    } @else {
+      <div class="table-responsive">
+        <table class="table table-dark table-hover">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Category</th>
+              <th>Published</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (item of announcements(); track trackById($index, item)) {
+              <tr>
+                <td>{{ item.title }}</td>
+                <td>{{ item.category }}</td>
+                <td>{{ item.publishedAt | date: "dd.MM.yyyy HH:mm" }}</td>
+                <td>
+                  <a
+                    [routerLink]="['/admin/edit', item.id]"
+                    class="btn btn-sm btn-outline-info me-2"
+                  >
+                    <i class="fas fa-edit"></i>
+                  </a>
+                  <button
+                    class="btn btn-sm btn-outline-danger"
+                    (click)="onDelete(item.id)"
+                  >
+                    <i class="fas fa-trash"></i>
+                  </button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  }
+</div>

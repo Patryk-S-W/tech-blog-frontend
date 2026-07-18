@@ -7,6 +7,8 @@ import { ProjectsComponent } from './modules/projects/projects.component';
 import { AboutMeComponent } from './modules/about-me/about-me.component';
 import { AIComponent } from './modules/ai/ai.component';
 import { LoginComponent } from './modules/login/login.component';
+import { AdminDashboardComponent } from './modules/admin/admin-dashboard.component';
+import { PostEditorComponent } from './modules/admin/post-editor.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
@@ -57,6 +59,30 @@ const routes: Routes = [
     component: LoginComponent,
     data: {
       title: 'Login - Tech Blog',
+    },
+  },
+  {
+    path: 'admin',
+    component: AdminDashboardComponent,
+    canActivate: [authGuard],
+    data: {
+      title: 'Admin - Tech Blog',
+    },
+  },
+  {
+    path: 'admin/new',
+    component: PostEditorComponent,
+    canActivate: [authGuard],
+    data: {
+      title: 'New Announcement - Tech Blog',
+    },
+  },
+  {
+    path: 'admin/edit/:id',
+    component: PostEditorComponent,
+    canActivate: [authGuard],
+    data: {
+      title: 'Edit Announcement - Tech Blog',
     },
   },
   {
