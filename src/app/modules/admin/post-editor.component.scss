@@ -1,0 +1,19 @@
+.card {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  position: sticky;
+  top: 1rem;
+}
+
+.form-control {
+  background-color: #16213e;
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.form-control:focus {
+  background-color: #1a1a2e;
+  border-color: #0dcaf0;
+  color: #fff;
+  box-shadow: 0 0 0 0.25rem rgba(13, 202, 240, 0.25);
+}
