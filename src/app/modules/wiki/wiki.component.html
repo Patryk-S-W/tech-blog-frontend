@@ -1,0 +1,65 @@
+<div class="container py-4">
+  @if (isLoading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-info" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else if (error()) {
+    <div class="alert alert-warning">{{ error() }}</div>
+  } @else if (project()) {
+    <div class="row">
+      <div class="col-lg-8">
+        <a
+          routerLink="/projects"
+          class="text-info text-decoration-none mb-3 d-inline-block"
+        >
+          <i class="fas fa-arrow-left me-2"></i>Back to Projects
+        </a>
+
+        <h1 class="text-light mb-3">{{ project()!.title }}</h1>
+
+        <div class="d-flex gap-2 mb-4">
+          <span class="badge bg-info">{{ project()!.author }}</span>
+          @if (project()!.url) {
+            <a
+              [href]="project()!.url"
+              target="_blank"
+              class="badge bg-outline-info text-info text-decoration-none"
+            >
+              <i class="fas fa-external-link-alt me-1"></i>Visit Project
+            </a>
+          }
+        </div>
+
+        <img
+          [src]="project()!.image"
+          [alt]="project()!.title"
+          class="img-fluid rounded mb-4"
+        />
+
+        <div
+          class="wiki-content text-light"
+          [innerHTML]="project()!.text | markdown"
+        ></div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card bg-dark text-light">
+          <div class="card-header">Project Info</div>
+          <div class="card-body">
+            <p><strong>Author:</strong> {{ project()!.author }}</p>
+            @if (project()!.url) {
+              <p>
+                <strong>URL:</strong>
+                <a [href]="project()!.url" target="_blank" class="text-info">{{
+                  project()!.url
+                }}</a>
+              </p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

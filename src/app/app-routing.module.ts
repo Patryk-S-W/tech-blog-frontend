@@ -9,6 +9,7 @@ import { AIComponent } from './modules/ai/ai.component';
 import { LoginComponent } from './modules/login/login.component';
 import { AdminDashboardComponent } from './modules/admin/admin-dashboard.component';
 import { PostEditorComponent } from './modules/admin/post-editor.component';
+import { WikiComponent } from './modules/wiki/wiki.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
@@ -31,6 +32,13 @@ const routes: Routes = [
     component: ProjectsComponent,
     data: {
       title: 'Projects - Tech Blog',
+    },
+  },
+  {
+    path: 'projects/:id',
+    component: WikiComponent,
+    data: {
+      title: 'Project Wiki - Tech Blog',
     },
   },
   {
