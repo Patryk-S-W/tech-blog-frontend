@@ -70,9 +70,11 @@
     "@fortawesome/angular-fontawesome": "^4.0.0",
     "@ng-bootstrap/ng-bootstrap": "^20.0.0",
     "@ngneat/transloco": "^6.0.4",
+    "@ngrx/signals": "^21.1.1",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.8",
     "express": "^5.2.1",
+    "marked": "^18.0.6",
     "rxjs": "~7.8.2",
     "tslib": "^2.8.1",
     "zone.js": "~0.16.2"

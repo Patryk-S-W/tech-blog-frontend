@@ -1,4 +1,4 @@
 export const environment = {
-  apiUrl: '',
+  apiUrl: 'https://api.patryksadowski.pl',
   production: true,
 };
