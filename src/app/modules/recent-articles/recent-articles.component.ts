@@ -1,56 +1,31 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { MarkdownPipe } from '../../shared/pipes/markdown.pipe';
+import { AnnouncementStore } from '../../core/store/announcement.store';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-recent-articles',
   templateUrl: './recent-articles.component.html',
   styleUrls: ['./recent-articles.component.scss'],
-  imports: [],
+  imports: [RouterLink, MarkdownPipe, DatePipe],
 })
-export class RecentArticlesComponent {
-  articles = [
-    {
-      id: 0,
-      title: 'Podcast Title',
-      image: 'https://picsum.photos/1000/1000',
-      date: 'Mon, May 25th 2020',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero.Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!',
-      category: 'Podcast',
-      duration: '55 mins.',
-      button: 'Play Episode',
-    },
-    {
-      id: 1,
-      title: 'Podcast Title',
-      image: 'https://picsum.photos/1000/1000',
-      date: 'Mon, May 25th 2020',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero.Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!',
-      category: 'Podcast',
-      duration: '55 mins.',
-      button: 'Play Episode',
-    },
-    {
-      id: 2,
-      title: 'Podcast Title',
-      image: 'https://picsum.photos/1000/1000',
-      date: 'Mon, May 25th 2020',
-      text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, fugiat asperiores inventore beatae accusamus odit minima enim, commodi quia, doloribus eius! Ducimus nemo accusantium maiores velit corrupti tempora reiciendis molestiae repellat vero.Eveniet ipsam adipisci illo iusto quibusdam, sunt neque nulla unde ipsum dolores nobis enim quidem excepturi, illum quos!',
-      category: 'Podcast',
-      duration: '55 mins.',
-      button: 'Play Episode',
-    },
-  ];
+export class RecentArticlesComponent implements OnInit {
+  private readonly store = inject(AnnouncementStore);
+  private readonly platformId = inject(PLATFORM_ID);
 
-  trackById(index: number, item: Item): number {
+  readonly articles = this.store.announcements;
+  readonly isLoading = this.store.isLoading;
+  readonly error = this.store.error;
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      this.store.loadPublishedAnnouncements();
+    }
+  }
+
+  trackById(index: number, item: { id: number }): number {
     return item.id;
   }
-}
-interface Item {
-  id: number;
-  title: string;
-  image: string;
-  date: string;
-  text: string;
-  category: string;
-  duration: string;
-  button: string;
 }
