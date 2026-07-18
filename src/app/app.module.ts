@@ -5,8 +5,10 @@ import {
 import { NgModule, isDevMode } from '@angular/core';
 import {
   provideHttpClient,
+  withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
+import { authInterceptor } from './core/interceptors/auth.interceptor';
 
 import { AIComponent } from './modules/ai/ai.component';
 import { AboutMeComponent } from './modules/about-me/about-me.component';
@@ -47,7 +49,10 @@ import { TranslocoRootModule } from './transloco-root.module';
   bootstrap: [AppComponent],
   providers: [
     provideClientHydration(),
-    provideHttpClient(withInterceptorsFromDi()),
+    provideHttpClient(
+      withInterceptors([authInterceptor]),
+      withInterceptorsFromDi()
+    ),
   ],
 })
 export class AppModule {}
