@@ -1,19 +1,19 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   AnnouncementDto,
   CreateAnnouncementRequest,
-  UpdateAnnouncementRequest,
   PaginatedResponse,
+  UpdateAnnouncementRequest,
   PaginationParams,
 } from '../models/announcement.model';
 
 @Injectable({ providedIn: 'root' })
 export class AnnouncementService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/api`;
+  private readonly baseUrl = `${environment.apiUrl}/api/v1`;
 
   getPublishedAnnouncements(
     params?: PaginationParams
@@ -24,9 +24,27 @@ export class AnnouncementService {
     if (params?.pageSize)
       httpParams = httpParams.set('pageSize', params.pageSize.toString());
 
+    return this.http
+      .get<
+        PaginatedResponse<AnnouncementDto>
+      >(`${this.baseUrl}/blog/announcements`, { params: httpParams })
+      .pipe(map((res) => res.items));
+  }
+
+  getPublishedByCategory(category: string): Observable<AnnouncementDto[]> {
     return this.http.get<AnnouncementDto[]>(
       `${this.baseUrl}/blog/announcements`,
-      { params: httpParams }
+      { params: { category } }
+    );
+  }
+
+  getCategories(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/blog/categories`);
+  }
+
+  getPublishedAnnouncementBySlug(slug: string): Observable<AnnouncementDto> {
+    return this.http.get<AnnouncementDto>(
+      `${this.baseUrl}/blog/announcements/by-slug/${slug}`
     );
   }
 
@@ -37,18 +55,18 @@ export class AnnouncementService {
   }
 
   getMyAnnouncements(): Observable<AnnouncementDto[]> {
-    return this.http.get<AnnouncementDto[]>(`${this.baseUrl}/Announcement`);
+    return this.http.get<AnnouncementDto[]>(`${this.baseUrl}/announcement`);
   }
 
   getMyAnnouncementById(id: number): Observable<AnnouncementDto> {
-    return this.http.get<AnnouncementDto>(`${this.baseUrl}/Announcement/${id}`);
+    return this.http.get<AnnouncementDto>(`${this.baseUrl}/announcement/${id}`);
   }
 
   createAnnouncement(
     request: CreateAnnouncementRequest
   ): Observable<AnnouncementDto> {
     return this.http.post<AnnouncementDto>(
-      `${this.baseUrl}/Announcement`,
+      `${this.baseUrl}/announcement`,
       request
     );
   }
@@ -57,12 +75,12 @@ export class AnnouncementService {
     request: UpdateAnnouncementRequest
   ): Observable<AnnouncementDto> {
     return this.http.put<AnnouncementDto>(
-      `${this.baseUrl}/Announcement`,
+      `${this.baseUrl}/announcement`,
       request
     );
   }
 
   deleteAnnouncement(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/Announcement/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/announcement/${id}`);
   }
 }

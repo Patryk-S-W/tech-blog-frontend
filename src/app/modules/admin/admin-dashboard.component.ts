@@ -1,7 +1,8 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { AnnouncementStore } from '../../core/store/announcement.store';
+import { AnnouncementService } from '../../core/services/announcement.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -10,24 +11,24 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./admin-dashboard.component.scss'],
   imports: [RouterLink, DatePipe],
 })
-export class AdminDashboardComponent implements OnInit {
+export class AdminDashboardComponent {
+  private readonly service = inject(AnnouncementService);
   private readonly store = inject(AnnouncementStore);
-  private readonly platformId = inject(PLATFORM_ID);
 
-  readonly announcements = this.store.announcements;
-  readonly isLoading = this.store.isLoading;
-  readonly error = this.store.error;
+  private readonly myPostsResource = rxResource({
+    stream: () => this.service.getMyAnnouncements(),
+  });
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.store.loadMyAnnouncements();
-    }
-  }
+  readonly announcements = this.myPostsResource.value;
+  readonly isLoading = this.myPostsResource.isLoading;
+  readonly error = computed(
+    () => this.myPostsResource.error()?.message ?? null
+  );
 
-  onDelete(id: number): void {
-    if (confirm('Are you sure you want to delete this announcement?')) {
-      this.store.deleteAnnouncement(id);
-    }
+  async onDelete(id: number): Promise<void> {
+    if (!confirm('Are you sure you want to delete this announcement?')) return;
+    await this.store.deleteAnnouncement(id);
+    this.myPostsResource.reload();
   }
 
   trackById(index: number, item: { id: number }): number {

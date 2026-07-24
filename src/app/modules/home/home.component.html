@@ -37,7 +37,7 @@
                 }}</span>
                 <div [innerHTML]="latestFour()[0].text | markdown"></div>
                 <a
-                  [routerLink]="['/blog', latestFour()[0].id]"
+                  [routerLink]="['/blog', latestFour()[0].slug]"
                   class="btn btn-light mt-3"
                 >
                   {{ latestFour()[0].button }}
@@ -70,7 +70,7 @@
                     <div class="row mb-3">
                       <div class="col-6">
                         <a
-                          [routerLink]="['/blog', article.id]"
+                          [routerLink]="['/blog', article.slug]"
                           class="text-info"
                         >
                           <i class="fas fa-code"></i>
@@ -83,7 +83,7 @@
                     </div>
 
                     <a
-                      [routerLink]="['/blog', article.id]"
+                      [routerLink]="['/blog', article.slug]"
                       class="text-light text-decoration-none"
                     >
                       <h5>{{ article.title }}</h5>

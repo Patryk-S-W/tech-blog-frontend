@@ -13,11 +13,26 @@ export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly baseUrl = `${environment.apiUrl}/api/Auth`;
   private readonly tokenKey = 'auth_token';
+  private readonly refreshKey = 'refresh_token';
 
   login(request: LoginRequest): Observable<AuthResponse> {
+    return this.http.post<AuthResponse>(`${this.baseUrl}/login`, request).pipe(
+      tap((res) => {
+        this.setToken(res.accessToken);
+        this.setRefreshToken(res.refreshToken);
+      })
+    );
+  }
+
+  refresh(refreshToken: string): Observable<AuthResponse> {
     return this.http
-      .post<AuthResponse>(`${this.baseUrl}/login`, request)
-      .pipe(tap((res) => this.setToken(res.token)));
+      .post<AuthResponse>(`${this.baseUrl}/refresh`, { refreshToken })
+      .pipe(
+        tap((res) => {
+          this.setToken(res.accessToken);
+          this.setRefreshToken(res.refreshToken);
+        })
+      );
   }
 
   register(request: RegisterRequest): Observable<number> {
@@ -26,10 +41,15 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem(this.tokenKey);
+    localStorage.removeItem(this.refreshKey);
   }
 
   getToken(): string | null {
     return localStorage.getItem(this.tokenKey);
+  }
+
+  getRefreshToken(): string | null {
+    return localStorage.getItem(this.refreshKey);
   }
 
   isAuthenticated(): boolean {
@@ -62,5 +82,9 @@ export class AuthService {
 
   private setToken(token: string): void {
     localStorage.setItem(this.tokenKey, token);
+  }
+
+  private setRefreshToken(token: string): void {
+    localStorage.setItem(this.refreshKey, token);
   }
 }

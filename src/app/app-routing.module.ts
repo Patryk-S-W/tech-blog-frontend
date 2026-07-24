@@ -2,14 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './modules/home/home.component';
 import { RecentArticlesComponent } from './modules/recent-articles/recent-articles.component';
-import { HardwareComponent } from './modules/hardware/hardware.component';
+import { CategoryPageComponent } from './modules/category-page/category-page.component';
+import { CategoriesListComponent } from './modules/categories-list/categories-list.component';
 import { ProjectsComponent } from './modules/projects/projects.component';
 import { AboutMeComponent } from './modules/about-me/about-me.component';
-import { AIComponent } from './modules/ai/ai.component';
 import { LoginComponent } from './modules/login/login.component';
 import { AdminDashboardComponent } from './modules/admin/admin-dashboard.component';
 import { PostEditorComponent } from './modules/admin/post-editor.component';
 import { WikiComponent } from './modules/wiki/wiki.component';
+import { BlogDetailComponent } from './modules/blog-detail/blog-detail.component';
 import { authGuard } from './core/guards/auth.guard';
 
 const routes: Routes = [
@@ -18,6 +19,13 @@ const routes: Routes = [
     component: HomeComponent,
     data: {
       title: 'Tech Blog',
+    },
+  },
+  {
+    path: 'blog/:slug',
+    component: BlogDetailComponent,
+    data: {
+      title: 'Article - Tech Blog',
     },
   },
   {
@@ -49,17 +57,17 @@ const routes: Routes = [
     },
   },
   {
-    path: 'hardware',
-    component: HardwareComponent,
+    path: 'categories',
+    component: CategoriesListComponent,
     data: {
-      title: 'Hardware - Tech Blog',
+      title: 'Categories - Tech Blog',
     },
   },
   {
-    path: 'ai',
-    component: AIComponent,
+    path: 'category/:slug',
+    component: CategoryPageComponent,
     data: {
-      title: 'AI - Tech Blog',
+      title: 'Category - Tech Blog',
     },
   },
   {

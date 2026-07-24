@@ -11,25 +11,34 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/api/Project`;
+  private readonly adminUrl = `${environment.apiUrl}/api/v1/project`;
+  private readonly blogUrl = `${environment.apiUrl}/api/v1/blog/projects`;
 
-  getAllProjects(): Observable<ProjectDto[]> {
-    return this.http.get<ProjectDto[]>(this.baseUrl);
+  getAllPublished(): Observable<ProjectDto[]> {
+    return this.http.get<ProjectDto[]>(this.blogUrl);
   }
 
-  getProjectById(id: number): Observable<ProjectDto> {
-    return this.http.get<ProjectDto>(`${this.baseUrl}/${id}`);
+  getPublishedById(id: number): Observable<ProjectDto> {
+    return this.http.get<ProjectDto>(`${this.blogUrl}/${id}`);
+  }
+
+  getMyProjects(): Observable<ProjectDto[]> {
+    return this.http.get<ProjectDto[]>(this.adminUrl);
+  }
+
+  getMyProjectById(id: number): Observable<ProjectDto> {
+    return this.http.get<ProjectDto>(`${this.adminUrl}/${id}`);
   }
 
   createProject(request: CreateProjectRequest): Observable<ProjectDto> {
-    return this.http.post<ProjectDto>(this.baseUrl, request);
+    return this.http.post<ProjectDto>(this.adminUrl, request);
   }
 
   updateProject(request: UpdateProjectRequest): Observable<ProjectDto> {
-    return this.http.put<ProjectDto>(this.baseUrl, request);
+    return this.http.put<ProjectDto>(this.adminUrl, request);
   }
 
   deleteProject(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+    return this.http.delete<void>(`${this.adminUrl}/${id}`);
   }
 }

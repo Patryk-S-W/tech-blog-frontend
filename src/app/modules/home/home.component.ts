@@ -1,8 +1,8 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { MarkdownPipe } from '../../shared/pipes/markdown.pipe';
-import { AnnouncementStore } from '../../core/store/announcement.store';
+import { AnnouncementService } from '../../core/services/announcement.service';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -11,19 +11,18 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./home.component.scss'],
   imports: [RouterLink, MarkdownPipe, DatePipe],
 })
-export class HomeComponent implements OnInit {
-  private readonly store = inject(AnnouncementStore);
-  private readonly platformId = inject(PLATFORM_ID);
+export class HomeComponent {
+  private readonly service = inject(AnnouncementService);
 
-  readonly latestFour = this.store.latestFour;
-  readonly isLoading = this.store.isLoading;
-  readonly error = this.store.error;
+  private readonly postsResource = rxResource({
+    stream: () => this.service.getPublishedAnnouncements(),
+  });
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.store.loadPublishedAnnouncements();
-    }
-  }
+  readonly latestFour = computed(
+    () => this.postsResource.value()?.slice(0, 4) ?? []
+  );
+  readonly isLoading = this.postsResource.isLoading;
+  readonly error = computed(() => this.postsResource.error()?.message ?? null);
 
   trackById(index: number, item: { id: number }): number {
     return item.id;

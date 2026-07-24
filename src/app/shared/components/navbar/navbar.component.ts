@@ -5,7 +5,9 @@ import {
 
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { AuthStore } from '../../../core/store/auth.store';
+import { AnnouncementService } from '../../../core/services/announcement.service';
 
 @Component({
   selector: 'app-navbar',
@@ -15,11 +17,18 @@ import { AuthStore } from '../../../core/store/auth.store';
 })
 export class NavbarComponent {
   private readonly authStore = inject(AuthStore);
+  private readonly service = inject(AnnouncementService);
 
   isNavbarCollapsed = true;
 
   readonly isAuthenticated = this.authStore.isAuthenticated;
   readonly username = this.authStore.username;
+
+  private readonly categoriesResource = rxResource({
+    stream: () => this.service.getCategories(),
+  });
+
+  readonly categories = this.categoriesResource.value;
 
   links = [
     {
@@ -33,20 +42,11 @@ export class NavbarComponent {
     {
       title: 'Articles',
       fragment: '/recent-articles',
-      dropdown: [
-        {
-          title: 'Recent articles',
-          fragment: '/recent-articles',
-        },
-        {
-          title: 'Hardware',
-          fragment: '/hardware',
-        },
-        {
-          title: 'AI',
-          fragment: '/ai',
-        },
-      ],
+    },
+    {
+      title: 'Categories',
+      fragment: '/categories',
+      dropdown: true,
     },
     {
       title: 'About me',
@@ -60,5 +60,9 @@ export class NavbarComponent {
 
   trackByFragment(index: number, item: { fragment: string }): string {
     return item.fragment;
+  }
+
+  trackByCategory(index: number, item: string): string {
+    return item;
   }
 }

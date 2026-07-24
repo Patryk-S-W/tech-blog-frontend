@@ -58,14 +58,22 @@
                 link.title
               }}</a>
               <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
+                <a class="dropdown-item text-dark" routerLink="/categories"
+                  >All categories</a
+                >
                 @for (
-                  item of link.dropdown;
-                  track trackByFragment($index, item)
+                  category of categories();
+                  track trackByCategory($index, category)
                 ) {
                   <a
                     class="dropdown-item text-dark"
-                    [routerLink]="item.fragment"
-                    >{{ item.title }}</a
+                    [routerLink]="['/category', category]"
+                    >{{ category }}</a
+                  >
+                }
+                @if ((categories()?.length ?? 0) === 0) {
+                  <span class="dropdown-item text-muted"
+                    >No categories yet</span
                   >
                 }
               </div>

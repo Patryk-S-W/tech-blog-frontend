@@ -1,6 +1,7 @@
 export interface AnnouncementDto {
   id: number;
   title: string;
+  slug: string;
   image: string;
   text: string;
   category: string;

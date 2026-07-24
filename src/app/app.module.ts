@@ -5,17 +5,18 @@ import {
 import { NgModule, isDevMode } from '@angular/core';
 import {
   provideHttpClient,
+  withFetch,
   withInterceptors,
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { authInterceptor } from './core/interceptors/auth.interceptor';
 
-import { AIComponent } from './modules/ai/ai.component';
 import { AboutMeComponent } from './modules/about-me/about-me.component';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HardwareComponent } from './modules/hardware/hardware.component';
+import { CategoriesListComponent } from './modules/categories-list/categories-list.component';
+import { CategoryPageComponent } from './modules/category-page/category-page.component';
 import { HomeComponent } from './modules/home/home.component';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 import { ProjectsComponent } from './modules/projects/projects.component';
@@ -28,6 +29,7 @@ import { LoginComponent } from './modules/login/login.component';
 import { AdminDashboardComponent } from './modules/admin/admin-dashboard.component';
 import { PostEditorComponent } from './modules/admin/post-editor.component';
 import { WikiComponent } from './modules/wiki/wiki.component';
+import { BlogDetailComponent } from './modules/blog-detail/blog-detail.component';
 
 @NgModule({
   imports: [
@@ -40,15 +42,16 @@ import { WikiComponent } from './modules/wiki/wiki.component';
     AppComponent,
     HomeComponent,
     RecentArticlesComponent,
-    HardwareComponent,
+    CategoriesListComponent,
+    CategoryPageComponent,
     ProjectsComponent,
     TestComponent,
-    AIComponent,
     AboutMeComponent,
     LoginComponent,
     AdminDashboardComponent,
     PostEditorComponent,
     WikiComponent,
+    BlogDetailComponent,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
       registrationStrategy: 'registerWhenStable:30000',
@@ -58,6 +61,7 @@ import { WikiComponent } from './modules/wiki/wiki.component';
   providers: [
     provideClientHydration(),
     provideHttpClient(
+      withFetch(),
       withInterceptors([authInterceptor]),
       withInterceptorsFromDi()
     ),

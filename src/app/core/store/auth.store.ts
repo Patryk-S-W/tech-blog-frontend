@@ -6,11 +6,13 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { firstValueFrom } from 'rxjs';
 import { AuthService } from '../services/auth.service';
 import { LoginRequest, RegisterRequest } from '../models/auth.model';
 
 interface AuthState {
   token: string | null;
+  refreshToken: string | null;
   username: string | null;
   isLoading: boolean;
   error: string | null;
@@ -18,6 +20,7 @@ interface AuthState {
 
 const initialState: AuthState = {
   token: null,
+  refreshToken: null,
   username: null,
   isLoading: false,
   error: null,
@@ -27,7 +30,16 @@ export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
   withComputed((store) => ({
-    isAuthenticated: computed(() => !!store.token()),
+    isAuthenticated: computed(() => {
+      const token = store.token();
+      if (!token) return false;
+      try {
+        const payload = JSON.parse(atob(token.split('.')[1]));
+        return Date.now() < payload.exp * 1000;
+      } catch {
+        return false;
+      }
+    }),
   })),
   withMethods((store, authService = inject(AuthService)) => ({
     initialize(): void {
@@ -35,45 +47,51 @@ export const AuthStore = signalStore(
       if (token && authService.isAuthenticated()) {
         patchState(store, {
           token,
+          refreshToken: authService.getRefreshToken(),
           username: authService.getUsername(),
         });
       }
     },
 
-    login(request: LoginRequest): void {
+    async login(request: LoginRequest): Promise<void> {
       patchState(store, { isLoading: true, error: null });
-      authService.login(request).subscribe({
-        next: (res) => {
-          patchState(store, {
-            token: res.token,
-            username: authService.getUsername(),
-            isLoading: false,
-          });
-        },
-        error: (err) => {
-          patchState(store, {
-            isLoading: false,
-            error: err.error?.message ?? 'Login failed',
-          });
-        },
-      });
+      try {
+        const res = await firstValueFrom(authService.login(request));
+        patchState(store, {
+          token: res.accessToken,
+          refreshToken: res.refreshToken,
+          username: authService.getUsername(),
+          isLoading: false,
+        });
+      } catch (err: any) {
+        patchState(store, {
+          isLoading: false,
+          error: err.error?.message ?? 'Login failed',
+        });
+      }
     },
 
-    register(request: RegisterRequest): void {
+    async register(request: RegisterRequest): Promise<void> {
       patchState(store, { isLoading: true, error: null });
-      authService.register(request).subscribe({
-        next: () => patchState(store, { isLoading: false }),
-        error: (err) =>
-          patchState(store, {
-            isLoading: false,
-            error: err.error?.message ?? 'Registration failed',
-          }),
-      });
+      try {
+        await firstValueFrom(authService.register(request));
+        patchState(store, { isLoading: false });
+      } catch (err: any) {
+        patchState(store, {
+          isLoading: false,
+          error: err.error?.message ?? 'Registration failed',
+        });
+      }
     },
 
     logout(): void {
       authService.logout();
-      patchState(store, { token: null, username: null, error: null });
+      patchState(store, {
+        token: null,
+        refreshToken: null,
+        username: null,
+        error: null,
+      });
     },
 
     clearError(): void {

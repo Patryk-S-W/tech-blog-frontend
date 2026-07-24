@@ -1,0 +1,60 @@
+<div class="container py-4">
+  @if (isLoading()) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-info" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
+  } @else if (error()) {
+    <div class="alert alert-warning">{{ error() }}</div>
+  } @else if (announcement()) {
+    <div class="row">
+      <div class="col-lg-8">
+        <a
+          routerLink="/recent-articles"
+          class="text-info text-decoration-none mb-3 d-inline-block"
+        >
+          <i class="fas fa-arrow-left me-2"></i>Back to Articles
+        </a>
+
+        <h1 class="text-light mb-3">{{ announcement()!.title }}</h1>
+
+        <div class="d-flex gap-2 mb-4">
+          <span class="badge bg-info">{{ announcement()!.category }}</span>
+          @if (announcement()!.publishedAt) {
+            <span class="badge bg-secondary">
+              {{ announcement()!.publishedAt | date: "dd.MM.yyyy" }}
+            </span>
+          }
+        </div>
+
+        <img
+          [src]="announcement()!.image"
+          [alt]="announcement()!.title"
+          class="img-fluid rounded mb-4"
+        />
+
+        <div
+          class="blog-content text-light"
+          [innerHTML]="announcement()!.text | markdown"
+        ></div>
+      </div>
+
+      <div class="col-lg-4">
+        <div class="card bg-dark text-light">
+          <div class="card-header">Article Info</div>
+          <div class="card-body">
+            <p><strong>Category:</strong> {{ announcement()!.category }}</p>
+            <p><strong>Duration:</strong> {{ announcement()!.duration }}</p>
+            @if (announcement()!.publishedAt) {
+              <p>
+                <strong>Published:</strong>
+                {{ announcement()!.publishedAt | date: "dd.MM.yyyy" }}
+              </p>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</div>

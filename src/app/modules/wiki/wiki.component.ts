@@ -1,39 +1,35 @@
-import {
-  Component,
-  OnInit,
-  OnDestroy,
-  inject,
-  PLATFORM_ID,
-} from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { MarkdownPipe } from '../../shared/pipes/markdown.pipe';
-import { ProjectStore } from '../../core/store/project.store';
-import { DatePipe } from '@angular/common';
+import { ProjectService } from '../../core/services/project.service';
+import { ProjectDto } from '../../core/models/project.model';
 
 @Component({
   selector: 'app-wiki',
   templateUrl: './wiki.component.html',
   styleUrls: ['./wiki.component.scss'],
-  imports: [RouterLink, MarkdownPipe, DatePipe],
+  imports: [RouterLink, MarkdownPipe],
 })
-export class WikiComponent implements OnInit, OnDestroy {
-  private readonly store = inject(ProjectStore);
+export class WikiComponent implements OnInit {
+  private readonly service = inject(ProjectService);
   private readonly route = inject(ActivatedRoute);
-  private readonly platformId = inject(PLATFORM_ID);
 
-  readonly project = this.store.currentProject;
-  readonly isLoading = this.store.isLoading;
-  readonly error = this.store.error;
+  private readonly projectId = signal<number | undefined>(undefined);
+
+  private readonly projectResource = rxResource<ProjectDto, number>({
+    params: () => this.projectId(),
+    stream: ({ params }) => this.service.getPublishedById(params),
+  });
+
+  readonly project = this.projectResource.value;
+  readonly isLoading = this.projectResource.isLoading;
+  readonly error = computed(
+    () => this.projectResource.error()?.message ?? null
+  );
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      const id = +this.route.snapshot.paramMap.get('id')!;
-      this.store.loadProjectById(id);
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.store.clearCurrentProject();
+    const id = +this.route.snapshot.paramMap.get('id')!;
+    this.projectId.set(id);
   }
 }

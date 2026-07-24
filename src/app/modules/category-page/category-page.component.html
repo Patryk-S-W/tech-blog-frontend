@@ -1,7 +1,7 @@
 <section class="bg-dark-blog">
   <div class="container py-4">
     <h1 class="h1 text-center text-white" id="pageHeaderTitle">
-      Recent articles
+      {{ categoryName() }}
     </h1>
 
     @if (isLoading()) {
@@ -12,8 +12,12 @@
       </div>
     } @else if (error()) {
       <div class="alert alert-warning">{{ error() }}</div>
+    } @else if (articles()!.length === 0) {
+      <div class="text-center py-5 text-light">
+        <p>No articles in this category yet. Check back soon!</p>
+      </div>
     } @else {
-      @for (article of articles(); track trackById($index, article)) {
+      @for (article of articles()!; track trackById($index, article)) {
         <article class="postcard bg-dark-blog blue">
           <a class="postcard__img_link" [routerLink]="['/blog', article.slug]">
             <img
@@ -33,10 +37,7 @@
               </time>
             </div>
             <div class="postcard__bar"></div>
-            <div
-              class="postcard__preview-txt"
-              [innerHTML]="article.text | markdown"
-            ></div>
+            <div class="postcard__preview-txt">{{ article.text }}</div>
             <ul class="postcard__tagbox">
               <li class="tag__item">
                 <i class="fas fa-tag mx-1"></i>{{ article.category }}

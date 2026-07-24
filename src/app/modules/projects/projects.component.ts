@@ -1,7 +1,7 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { Component, computed, inject } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { ProjectStore } from '../../core/store/project.store';
+import { rxResource } from '@angular/core/rxjs-interop';
+import { ProjectService } from '../../core/services/project.service';
 
 @Component({
   selector: 'app-projects',
@@ -9,19 +9,18 @@ import { ProjectStore } from '../../core/store/project.store';
   styleUrls: ['./projects.component.scss'],
   imports: [RouterLink],
 })
-export class ProjectsComponent implements OnInit {
-  private readonly store = inject(ProjectStore);
-  private readonly platformId = inject(PLATFORM_ID);
+export class ProjectsComponent {
+  private readonly service = inject(ProjectService);
 
-  readonly projects = this.store.projects;
-  readonly isLoading = this.store.isLoading;
-  readonly error = this.store.error;
+  private readonly projectsResource = rxResource({
+    stream: () => this.service.getAllPublished(),
+  });
 
-  ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      this.store.loadProjects();
-    }
-  }
+  readonly projects = this.projectsResource.value;
+  readonly isLoading = this.projectsResource.isLoading;
+  readonly error = computed(
+    () => this.projectsResource.error()?.message ?? null
+  );
 
   trackById(index: number, item: { id: number }): number {
     return item.id;

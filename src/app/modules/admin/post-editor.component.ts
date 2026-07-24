@@ -1,17 +1,23 @@
 import {
   Component,
+  computed,
+  inject,
   OnInit,
   OnDestroy,
-  inject,
-  PLATFORM_ID,
+  signal,
+  effect,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { rxResource } from '@angular/core/rxjs-interop';
 import { MarkdownPipe } from '../../shared/pipes/markdown.pipe';
 import { AnnouncementStore } from '../../core/store/announcement.store';
+import { AnnouncementService } from '../../core/services/announcement.service';
 import { FormStore } from '../../core/store/form.store';
-import { UpdateAnnouncementRequest } from '../../core/models/announcement.model';
+import {
+  UpdateAnnouncementRequest,
+  AnnouncementDto,
+} from '../../core/models/announcement.model';
 
 @Component({
   selector: 'app-post-editor',
@@ -20,11 +26,11 @@ import { UpdateAnnouncementRequest } from '../../core/models/announcement.model'
   imports: [FormsModule, MarkdownPipe],
 })
 export class PostEditorComponent implements OnInit, OnDestroy {
-  private readonly announcementStore = inject(AnnouncementStore);
+  private readonly store = inject(AnnouncementStore);
+  private readonly service = inject(AnnouncementService);
   private readonly formStore = inject(FormStore);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
-  private readonly platformId = inject(PLATFORM_ID);
 
   isEditMode = false;
   announcementId = 0;
@@ -39,40 +45,46 @@ export class PostEditorComponent implements OnInit, OnDestroy {
   readonly canUndo = this.formStore.canUndo;
   readonly canRedo = this.formStore.canRedo;
   readonly currentValues = this.formStore.currentValues;
-  readonly isLoading = this.announcementStore.isLoading;
-  readonly error = this.announcementStore.error;
+
+  private readonly editId = signal<number | undefined>(undefined);
+
+  private readonly announcementResource = rxResource<AnnouncementDto, number>({
+    params: () => this.editId(),
+    stream: ({ params }) => this.service.getMyAnnouncementById(params),
+  });
+
+  readonly isLoading = this.announcementResource.isLoading;
+  readonly error = computed(
+    () => this.announcementResource.error()?.message ?? null
+  );
+
+  private readonly loadEffect = effect(() => {
+    const item = this.announcementResource.value();
+    if (item && !this.title) {
+      this.title = item.title;
+      this.image = item.image;
+      this.text = item.text;
+      this.category = item.category;
+      this.duration = item.duration;
+      this.button = item.button;
+      this.formStore.initialize({
+        id: item.id,
+        title: item.title,
+        image: item.image,
+        text: item.text,
+        category: item.category,
+        duration: item.duration,
+        button: item.button,
+      });
+    }
+  });
 
   ngOnInit(): void {
-    if (!isPlatformBrowser(this.platformId)) return;
-
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
       this.announcementId = +id;
-      this.announcementStore.loadMyAnnouncements();
-      // Load existing data
-      setTimeout(() => {
-        const existing = this.announcementStore
-          .announcements()
-          .find((a) => a.id === this.announcementId);
-        if (existing) {
-          this.title = existing.title;
-          this.image = existing.image;
-          this.text = existing.text;
-          this.category = existing.category;
-          this.duration = existing.duration;
-          this.button = existing.button;
-          this.formStore.initialize({
-            id: existing.id,
-            title: existing.title,
-            image: existing.image,
-            text: existing.text,
-            category: existing.category,
-            duration: existing.duration,
-            button: existing.button,
-          });
-        }
-      }, 500);
+      this.editId.set(+id);
     } else {
       this.formStore.initialize({
         id: 0,
@@ -87,8 +99,8 @@ export class PostEditorComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.loadEffect.destroy();
     this.formStore.reset();
-    this.announcementStore.clearCurrentAnnouncement();
   }
 
   onFieldChange(field: string, value: string): void {
@@ -117,11 +129,11 @@ export class PostEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     if (!this.title || !this.text) return;
 
     if (this.isEditMode) {
-      this.announcementStore.updateAnnouncement({
+      await this.store.updateAnnouncement({
         id: this.announcementId,
         title: this.title,
         image: this.image,
@@ -131,7 +143,7 @@ export class PostEditorComponent implements OnInit, OnDestroy {
         button: this.button,
       });
     } else {
-      this.announcementStore.createAnnouncement({
+      await this.store.createAnnouncement({
         title: this.title,
         image: this.image,
         text: this.text,
@@ -141,6 +153,6 @@ export class PostEditorComponent implements OnInit, OnDestroy {
       });
     }
 
-    setTimeout(() => this.router.navigate(['/admin']), 500);
+    this.router.navigate(['/admin']);
   }
 }
