@@ -1,12 +1,11 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   AnnouncementDto,
   CreateAnnouncementRequest,
   UpdateAnnouncementRequest,
-  PaginatedResponse,
   PaginationParams,
 } from '../models/announcement.model';
 
@@ -24,15 +23,15 @@ export class AnnouncementService {
     if (params?.pageSize)
       httpParams = httpParams.set('pageSize', params.pageSize.toString());
 
-    return this.http.get<AnnouncementDto[]>(
-      `${this.baseUrl}/blog/announcements`,
+    return this.http.get<{ items: AnnouncementDto[] }>(
+      `${this.baseUrl}/v1/blog/announcements`,
       { params: httpParams }
-    );
+    ).pipe(map((response) => response.items));
   }
 
   getPublishedAnnouncementById(id: number): Observable<AnnouncementDto> {
     return this.http.get<AnnouncementDto>(
-      `${this.baseUrl}/blog/announcements/${id}`
+      `${this.baseUrl}/v1/blog/announcements/${id}`
     );
   }
 

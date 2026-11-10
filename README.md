@@ -81,6 +81,12 @@ $ docker build . -t tech-blog
 $ docker run -p 3000:80 tech-blog
 ```
 
+The image preserves Angular SSR behind nginx. API requests use the browser's
+same origin; attach the container to the backend network with a `backend:8080`
+service, or set `BACKEND_UPSTREAM` to the reachable backend host and port.
+For host-network deployment, use `BACKEND_UPSTREAM=127.0.0.1:18080`.
+The internal SSR listener binds to `127.0.0.1:4000` by default.
+
 ## Commands
 
 - `npm run start` - Start the app

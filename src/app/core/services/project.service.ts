@@ -14,11 +14,11 @@ export class ProjectService {
   private readonly baseUrl = `${environment.apiUrl}/api/Project`;
 
   getAllProjects(): Observable<ProjectDto[]> {
-    return this.http.get<ProjectDto[]>(this.baseUrl);
+    return this.http.get<ProjectDto[]>(`${environment.apiUrl}/api/v1/blog/projects`);
   }
 
   getProjectById(id: number): Observable<ProjectDto> {
-    return this.http.get<ProjectDto>(`${this.baseUrl}/${id}`);
+    return this.http.get<ProjectDto>(`${environment.apiUrl}/api/v1/blog/projects/${id}`);
   }
 
   createProject(request: CreateProjectRequest): Observable<ProjectDto> {
