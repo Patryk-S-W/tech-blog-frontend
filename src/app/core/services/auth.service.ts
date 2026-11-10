@@ -1,16 +1,17 @@
-import { Injectable, inject } from '@angular/core';
+import { Injectable, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import {
   LoginRequest,
-  RegisterRequest,
   AuthResponse,
 } from '../models/auth.model';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   private readonly http = inject(HttpClient);
+  private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
   private readonly baseUrl = `${environment.apiUrl}/api/Auth`;
   private readonly tokenKey = 'auth_token';
 
@@ -20,16 +21,12 @@ export class AuthService {
       .pipe(tap((res) => this.setToken(res.token)));
   }
 
-  register(request: RegisterRequest): Observable<number> {
-    return this.http.post<number>(`${this.baseUrl}/register`, request);
-  }
-
   logout(): void {
-    localStorage.removeItem(this.tokenKey);
+    if (this.isBrowser) localStorage.removeItem(this.tokenKey);
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    return this.isBrowser ? localStorage.getItem(this.tokenKey) : null;
   }
 
   isAuthenticated(): boolean {
@@ -61,6 +58,6 @@ export class AuthService {
   }
 
   private setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
+    if (this.isBrowser) localStorage.setItem(this.tokenKey, token);
   }
 }

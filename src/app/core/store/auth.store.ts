@@ -7,7 +7,7 @@ import {
   withState,
 } from '@ngrx/signals';
 import { AuthService } from '../services/auth.service';
-import { LoginRequest, RegisterRequest } from '../models/auth.model';
+import { LoginRequest } from '../models/auth.model';
 
 interface AuthState {
   token: string | null;
@@ -56,18 +56,6 @@ export const AuthStore = signalStore(
             error: err.error?.message ?? 'Login failed',
           });
         },
-      });
-    },
-
-    register(request: RegisterRequest): void {
-      patchState(store, { isLoading: true, error: null });
-      authService.register(request).subscribe({
-        next: () => patchState(store, { isLoading: false }),
-        error: (err) =>
-          patchState(store, {
-            isLoading: false,
-            error: err.error?.message ?? 'Registration failed',
-          }),
       });
     },
 
