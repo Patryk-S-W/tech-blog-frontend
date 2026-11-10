@@ -1,4 +1,4 @@
-import { computed, inject } from '@angular/core';
+import { computed } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -6,7 +6,6 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { AnnouncementService } from '../services/announcement.service';
 import { UpdateAnnouncementRequest } from '../models/announcement.model';
 
 interface FormState {
