@@ -6,7 +6,6 @@ import {
   AnnouncementDto,
   CreateAnnouncementRequest,
   UpdateAnnouncementRequest,
-  PaginatedResponse,
   PaginationParams,
 } from '../models/announcement.model';
 
