@@ -13,24 +13,27 @@ export function app(): express.Express {
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
 
-  const commonEngine = new CommonEngine();
+  const commonEngine = new CommonEngine({
+    allowedHosts: [
+      'patryksadowski.pl',
+      'www.patryksadowski.pl',
+      'localhost',
+      '127.0.0.1',
+    ],
+  });
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
 
-  // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
-  // Serve static files from /browser
-  server.get(
-    '**',
+  server.use(
     express.static(browserDistFolder, {
       maxAge: '1y',
-      index: 'index.html',
+      index: false,
     })
   );
 
   // All regular routes use the Angular engine
-  server.get('**', (req, res, next) => {
+  server.get('/{*path}', (req, res, next) => {
     const { protocol, originalUrl, baseUrl, headers } = req;
 
     commonEngine
@@ -50,11 +53,12 @@ export function app(): express.Express {
 
 function run(): void {
   const port = process.env['PORT'] || 4000;
+  const host = process.env['HOST'] || '127.0.0.1';
 
   // Start up the Node server
   const server = app();
-  server.listen(port, () => {
-    console.log(`Node Express server listening on http://localhost:${port}`);
+  server.listen(Number(port), host, () => {
+    console.log(`Node Express server listening on http://${host}:${port}`);
   });
 }
 

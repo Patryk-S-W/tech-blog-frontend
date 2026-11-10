@@ -1,24 +1,20 @@
-FROM node:18-slim
-
-ARG NODE_ENV=production
-ENV NODE_ENV $NODE_ENV
-
-# Copy files as a non-root user. The `node` user is built in the Node image.
-
-USER node
-WORKDIR /usr/src/app
-RUN chown node:node ./
-
-# Install dependencies first, as they change less often than code.
+FROM node:22-bookworm-slim AS builder
+WORKDIR /app
+ENV HUSKY=0
 COPY package.json package-lock.json ./
-RUN npm ci --ignore-scripts && npm cache clean --force
-COPY ./src ./src
+RUN npm ci
+COPY . .
+RUN npm run build:prod
 
-# Execute NodeJS (not NPM script) to handle SIGTERM and SIGINT signals.
-CMD ["node", "./src/index.js"]
-
-FROM nginx:1.25.3-alpine-slim
-
-USER nginx
-
-COPY --from=builder /usr/src/app/dist/tech-blog/ /usr/share/nginx/html
+FROM node:22-bookworm-slim
+RUN apt-get update && apt-get install -y --no-install-recommends nginx gettext-base \
+    && rm -rf /var/lib/apt/lists/* /etc/nginx/sites-enabled/default
+WORKDIR /app
+ENV NODE_ENV=production BACKEND_UPSTREAM=backend:8080 HOST=127.0.0.1 PORT=4000
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev --ignore-scripts && npm cache clean --force
+COPY --from=builder /app/dist/tech-blog/ ./dist/tech-blog/
+COPY nginx.conf /etc/nginx/templates/default.conf.template
+COPY docker-entrypoint.sh /app/docker-entrypoint.sh
+EXPOSE 80
+ENTRYPOINT ["/bin/bash", "/app/docker-entrypoint.sh"]
