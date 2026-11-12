@@ -32,7 +32,8 @@ export class AnnouncementService {
 
   getPublishedAnnouncementById(id: number): Observable<AnnouncementDto> {
     return this.http.get<AnnouncementDto>(
-      `${this.baseUrl}/blog/announcements/${id}`
+      `${this.baseUrl}/blog/announcements/${id}`,
+      { transferCache: false }
     );
   }
 

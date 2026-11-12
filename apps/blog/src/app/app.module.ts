@@ -1,16 +1,6 @@
-import {
-  BrowserModule,
-  provideClientHydration,
-} from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, isDevMode } from '@angular/core';
-import {
-  provideHttpClient,
-  withInterceptors,
-  withInterceptorsFromDi,
-} from '@angular/common/http';
-import { authInterceptor } from '@blog/auth/data-access';
-import { API_URL } from '@blog/shared/util';
-import { environment } from '../environments/environment';
+import { provideBlogApplication } from './blog.providers';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -35,13 +25,6 @@ import { TranslocoRootModule } from './transloco-root.module';
     }),
   ],
   bootstrap: [AppComponent],
-  providers: [
-    { provide: API_URL, useValue: environment.apiUrl },
-    provideClientHydration(),
-    provideHttpClient(
-      withInterceptors([authInterceptor]),
-      withInterceptorsFromDi()
-    ),
-  ],
+  providers: provideBlogApplication(),
 })
 export class AppModule {}

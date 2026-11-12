@@ -23,6 +23,7 @@ describe('API routing', () => {
     announcements.getPublishedAnnouncementById(7).subscribe();
     const announcement = http.expectOne(`${environment.apiUrl}/api/v1/blog/announcements/7`);
     expect(announcement.request.method).toBe('GET');
+    expect(announcement.request.transferCache).toBe(false);
     announcement.flush(items[0]);
 
     announcements.getMyAnnouncements().subscribe();
