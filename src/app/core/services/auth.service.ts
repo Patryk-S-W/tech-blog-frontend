@@ -12,13 +12,19 @@ import {
 export class AuthService {
   private readonly http = inject(HttpClient);
   private readonly isBrowser = isPlatformBrowser(inject(PLATFORM_ID));
-  private readonly baseUrl = `${environment.apiUrl}/api/Auth`;
+  private readonly baseUrl = `${environment.apiUrl}/api/auth`;
   private readonly tokenKey = 'auth_token';
 
   login(request: LoginRequest): Observable<AuthResponse> {
     return this.http
       .post<AuthResponse>(`${this.baseUrl}/login`, request)
-      .pipe(tap((res) => this.setToken(res.token)));
+      .pipe(tap((res) => {
+        if (!res || typeof res.refreshToken !== 'string' ||
+          !this.isValidToken(res.accessToken)) {
+          throw new Error('Invalid login response');
+        }
+        this.setToken(res.accessToken);
+      }));
   }
 
   logout(): void {
@@ -31,12 +37,16 @@ export class AuthService {
 
   isAuthenticated(): boolean {
     const token = this.getToken();
-    if (!token) return false;
+    return this.isValidToken(token);
+  }
+
+  private isValidToken(token: unknown): token is string {
+    if (typeof token !== 'string' || !token) return false;
 
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      const expiry = payload.exp * 1000;
-      return Date.now() < expiry;
+      const payload = this.readPayload(token);
+      return typeof payload.exp === 'number' &&
+        Number.isFinite(payload.exp) && Date.now() < payload.exp * 1000;
     } catch {
       return false;
     }
@@ -44,17 +54,24 @@ export class AuthService {
 
   getUsername(): string | null {
     const token = this.getToken();
-    if (!token) return null;
+    if (!token || !this.isAuthenticated()) return null;
 
     try {
-      const payload = JSON.parse(atob(token.split('.')[1]));
-      return (
-        payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'] ??
-        null
-      );
+      const payload = this.readPayload(token);
+      const username = payload['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name'];
+      return typeof username === 'string' ? username : null;
     } catch {
       return null;
     }
+  }
+
+  private readPayload(token: string): Record<string, unknown> {
+    const parts = token.split('.');
+    if (parts.length !== 3 || parts.some((part) => !/^[A-Za-z0-9_-]+$/.test(part))) {
+      throw new Error('Invalid token format');
+    }
+    const encoded = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+    return JSON.parse(atob(encoded.padEnd(Math.ceil(encoded.length / 4) * 4, '=')));
   }
 
   private setToken(token: string): void {

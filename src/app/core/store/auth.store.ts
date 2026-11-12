@@ -26,8 +26,8 @@ const initialState: AuthState = {
 export const AuthStore = signalStore(
   { providedIn: 'root' },
   withState(initialState),
-  withComputed((store) => ({
-    isAuthenticated: computed(() => !!store.token()),
+  withComputed((store, authService = inject(AuthService)) => ({
+    isAuthenticated: computed(() => !!store.token() && authService.isAuthenticated()),
   })),
   withMethods((store, authService = inject(AuthService)) => ({
     initialize(): void {
@@ -37,6 +37,8 @@ export const AuthStore = signalStore(
           token,
           username: authService.getUsername(),
         });
+      } else {
+        patchState(store, { token: null, username: null });
       }
     },
 
@@ -45,7 +47,7 @@ export const AuthStore = signalStore(
       authService.login(request).subscribe({
         next: (res) => {
           patchState(store, {
-            token: res.token,
+            token: authService.isAuthenticated() ? res.accessToken : null,
             username: authService.getUsername(),
             isLoading: false,
           });
@@ -53,7 +55,7 @@ export const AuthStore = signalStore(
         error: (err) => {
           patchState(store, {
             isLoading: false,
-            error: err.error?.message ?? 'Login failed',
+            error: err.error?.message ?? err.message ?? 'Login failed',
           });
         },
       });
