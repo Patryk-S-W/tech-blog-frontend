@@ -1,6 +1,6 @@
 FROM node:22-bookworm-slim AS builder
 WORKDIR /app
-ENV HUSKY=0
+ENV HUSKY=0 NX_DAEMON=false
 COPY package.json package-lock.json ./
 RUN npm ci
 COPY . .

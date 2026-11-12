@@ -1,0 +1,10 @@
+{
+  "name": "articles-data-access",
+  "projectType": "library",
+  "sourceRoot": "libs/articles/data-access/src",
+  "tags": [
+    "scope:articles",
+    "type:data-access"
+  ],
+  "targets": {}
+}

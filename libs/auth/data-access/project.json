@@ -1,0 +1,10 @@
+{
+  "name": "auth-data-access",
+  "projectType": "library",
+  "sourceRoot": "libs/auth/data-access/src",
+  "tags": [
+    "scope:auth",
+    "type:data-access"
+  ],
+  "targets": {}
+}

@@ -1,0 +1,1 @@
+module.exports = { ...require('../../../jest.preset.js'), displayName: 'shared-util', rootDir: '../../..', testMatch: ['<rootDir>/libs/shared/util/**/*.spec.ts'], coverageDirectory: '<rootDir>/coverage/libs/shared/util' };

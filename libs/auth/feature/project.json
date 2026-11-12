@@ -1,0 +1,10 @@
+{
+  "name": "auth-feature",
+  "projectType": "library",
+  "sourceRoot": "libs/auth/feature/src",
+  "tags": [
+    "scope:auth",
+    "type:feature"
+  ],
+  "targets": {}
+}

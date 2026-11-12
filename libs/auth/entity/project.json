@@ -1,0 +1,10 @@
+{
+  "name": "auth-entity",
+  "projectType": "library",
+  "sourceRoot": "libs/auth/entity/src",
+  "tags": [
+    "scope:auth",
+    "type:entity"
+  ],
+  "targets": {}
+}

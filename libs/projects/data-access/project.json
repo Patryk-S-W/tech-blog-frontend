@@ -1,0 +1,10 @@
+{
+  "name": "projects-data-access",
+  "projectType": "library",
+  "sourceRoot": "libs/projects/data-access/src",
+  "tags": [
+    "scope:projects",
+    "type:data-access"
+  ],
+  "targets": {}
+}

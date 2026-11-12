@@ -1,0 +1,10 @@
+{
+  "name": "shell-feature",
+  "projectType": "library",
+  "sourceRoot": "libs/shell/feature/src",
+  "tags": [
+    "scope:shell",
+    "type:feature"
+  ],
+  "targets": {}
+}

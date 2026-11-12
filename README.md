@@ -4,7 +4,7 @@
 
 [![StackBlitz Demo](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/Patryk-S-W/tech-blog-frontend)
 
-![Angular17](https://img.shields.io/badge/Angular-17-brightgreen)
+![Angular21](https://img.shields.io/badge/Angular-21-brightgreen)
 ![Vercel](https://img.shields.io/github/deployments/Patryk-S-W/tech-blog-frontend/production.svg?logo=vercel&label=vercel)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Patryk-S-W_tech-blog-frontend&metric=alert_status)](https://sonarcloud.io/dashboard?id=Patryk-S-W_tech-blog-frontend)
 [![codecov](https://codecov.io/gh/Patryk-S-W/tech-blog-frontend/branch/master/graph/badge.svg)](https://codecov.io/gh/Patryk-S-W/tech-blog-frontend)
@@ -16,20 +16,20 @@ TechBlog project is a fullstack application written in the Angular and .NET that
 
 ## Dependencies
 
-- Angular : 17.1.0
-- Angular CLI : 17.1.0
-- Angular SSR : 17.1.0
+- Angular : 21.2
+- Angular CLI : 21.2
+- Angular SSR : 21.2
 - Bootstrap : 5.3.0
 - Fontawesome : 6.4.0
 
 ## System requirements
 
-- Node v18+
-- Angular v17.1.0+
+- Node 22 (>=22.13.0)
+- Angular v21.2
 
 ## Features
 
-- [x] [Angular 17](https://angular.io/)
+- [x] [Angular 21](https://angular.io/)
 - [x] [Jest](https://jestjs.io/) - Unit Testing
 - [x] [TestCafé](https://testcafe.io/) - End-to-End Testing
 - [x] [Transloco](https://github.com/ngneat/transloco) - Internationalization
@@ -63,7 +63,7 @@ $ git clone https://github.com/Patryk-S-W/tech-blog-frontend
 $ cd tech-blog-frontend
 
 # Install dependencies
-$ npm install
+$ npm ci
 
 # Start server
 $ npm run start
@@ -125,3 +125,26 @@ AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
+
+## Workspace architecture
+
+Nx 24.0.6 runs the NgModule-based application in `apps/blog` and domain
+libraries in `libs/{auth,articles,projects,shell,shared}`. Domain libraries
+use `feature`, `data-access`, `ui`, `entity` and `util` tags. ESLint enforces
+layer and domain boundaries; use `@blog/<domain>/<type>` public APIs rather
+than importing private services or signal stores.
+
+Components inject facades. HTTP-backed facade methods return promises that
+resolve after the request and state update, or reject with safe errors.
+Editor history and owner detail are route-scoped; public and owner article
+collections are separate. Server-rendered root providers belong to each
+Angular render, not to the Express process.
+
+- `npm start`: serve `blog`.
+- `npm test` / `npm run lint`: run all project targets serially.
+- `npm run build:prod`: production SSR build, retaining `dist/tech-blog`.
+- `npx nx graph`: inspect project dependencies locally.
+
+CI sets `NX_DAEMON=false` and runs all lint/test/build targets with parallelism
+one. No Nx Cloud or remote cache is configured. Docker still launches
+`dist/tech-blog/server/server.mjs` behind nginx.

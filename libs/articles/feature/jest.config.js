@@ -1,0 +1,1 @@
+module.exports = { ...require('../../../jest.preset.js'), displayName: 'articles-feature', rootDir: '../../..', testMatch: ['<rootDir>/libs/articles/feature/**/*.spec.ts'], coverageDirectory: '<rootDir>/coverage/libs/articles/feature' };

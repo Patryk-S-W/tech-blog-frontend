@@ -1,0 +1,1 @@
+module.exports = { ...require('../../../jest.preset.js'), displayName: 'shell-feature', rootDir: '../../..', testMatch: ['<rootDir>/libs/shell/feature/**/*.spec.ts'], coverageDirectory: '<rootDir>/coverage/libs/shell/feature' };

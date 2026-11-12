@@ -1,0 +1,1 @@
+module.exports = { ...require('../../../jest.preset.js'), displayName: 'auth-data-access', rootDir: '../../..', testMatch: ['<rootDir>/libs/auth/data-access/**/*.spec.ts'], coverageDirectory: '<rootDir>/coverage/libs/auth/data-access' };

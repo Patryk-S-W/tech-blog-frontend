@@ -27,31 +27,31 @@
   },
   "readme": "https://github.com/Patryk-S-W/tech-blog-frontend/blob/master/README.md",
   "scripts": {
-    "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
-    "build:prod": "ng build --configuration production",
-    "build:prod:stats": "ng build --configuration production --stats-json",
-    "test": "jest",
-    "test:watch": "jest --watch",
-    "test:ci": "jest --runInBand",
-    "test:coverage": "jest --coverage",
-    "lint": "ng lint",
+    "ng": "nx",
+    "start": "nx serve blog",
+    "build": "nx build blog",
+    "build:prod": "nx build blog --configuration production",
+    "build:prod:stats": "nx build blog --configuration production --stats-json",
+    "test": "nx run-many -t test --parallel=1",
+    "test:watch": "nx test blog --watch",
+    "test:ci": "nx run-many -t test --parallel=1 --runInBand",
+    "test:coverage": "nx run-many -t test --parallel=1 --coverage",
+    "lint": "nx run-many -t lint --parallel=1",
     "e2e": "testcafe chrome ./e2e/",
-    "compodoc": "npx compodoc -p tsconfig.app.json",
+    "compodoc": "compodoc -p apps/blog/tsconfig.app.json",
     "analyze": "source-map-explorer dist/tech-blog/**/*.js",
-    "prettier": "prettier --write \"src/app/**/*.{js,json,css,scss,less,md,ts,html,component.html}\"",
+    "prettier": "prettier --write \"{apps,libs}/**/*.{js,json,css,scss,md,ts,html}\"",
     "prepare": "husky install",
     "audit": "auditjs ossi",
     "version": "auto-changelog -p && git add CHANGELOG.md",
-    "docs:json": "compodoc -p ./tsconfig.json -e json -d .",
+    "docs:json": "compodoc -p apps/blog/tsconfig.app.json -e json -d .",
     "storybook": "npm run docs:json && start-storybook -p 6006",
     "build-storybook": "npm run docs:json && build-storybook",
     "serve:ssr:tech-blog": "node dist/tech-blog/server/server.mjs"
   },
   "private": false,
   "engines": {
-    "node": "22.x"
+    "node": ">=22.13.0 <23"
   },
   "dependencies": {
     "@angular/animations": "^21.2.16",
@@ -129,11 +129,22 @@
     "testcafe-reporter-html": "^1.4.6",
     "ts-node": "~10.9.2",
     "typescript": "~5.9.3",
-    "typescript-eslint": "^8.61.0"
+    "typescript-eslint": "^8.61.0",
+    "nx": "24.0.6",
+    "@nx/angular": "24.0.6",
+    "@nx/jest": "24.0.6",
+    "@nx/eslint": "24.0.6",
+    "@nx/eslint-plugin": "24.0.6",
+    "@angular-devkit/core": "21.2.14",
+    "@angular-devkit/schematics": "21.2.14",
+    "@schematics/angular": "21.2.14"
   },
   "lint-staged": {
     "*.{js,json,css,scss,less,md,ts,html,component.html}": [
       "prettier --write"
     ]
+  },
+  "nx": {
+    "includedScripts": []
   }
 }

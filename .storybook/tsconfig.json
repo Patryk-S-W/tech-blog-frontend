@@ -1,14 +1,14 @@
 {
-  "extends": "../tsconfig.app.json",
+  "extends": "../apps/blog/tsconfig.app.json",
   "compilerOptions": {
     "types": ["node"],
     "allowSyntheticDefaultImports": true,
   },
   "exclude": [
-    "../src/test.ts",
-    "../src/**/*.spec.ts",
-    "../projects/**/*.spec.ts",
+    "../apps/blog/src/test.ts",
+    "../apps/blog/src/**/*.spec.ts",
+    "../libs/**/*.spec.ts",
   ],
-  "include": ["../src/**/*", "../projects/**/*"],
+  "include": ["../apps/blog/src/**/*", "../libs/**/*"],
   "files": ["./typings.d.ts"],
 }
