@@ -12,7 +12,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class AnnouncementService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/api`;
+  private readonly baseUrl = `${environment.apiUrl}/api/v1`;
 
   getPublishedAnnouncements(
     params?: PaginationParams
@@ -24,30 +24,30 @@ export class AnnouncementService {
       httpParams = httpParams.set('pageSize', params.pageSize.toString());
 
     return this.http.get<{ items: AnnouncementDto[] }>(
-      `${this.baseUrl}/v1/blog/announcements`,
+      `${this.baseUrl}/blog/announcements`,
       { params: httpParams }
     ).pipe(map((response) => response.items));
   }
 
   getPublishedAnnouncementById(id: number): Observable<AnnouncementDto> {
     return this.http.get<AnnouncementDto>(
-      `${this.baseUrl}/v1/blog/announcements/${id}`
+      `${this.baseUrl}/blog/announcements/${id}`
     );
   }
 
   getMyAnnouncements(): Observable<AnnouncementDto[]> {
-    return this.http.get<AnnouncementDto[]>(`${this.baseUrl}/Announcement`);
+    return this.http.get<AnnouncementDto[]>(`${this.baseUrl}/announcement`);
   }
 
   getMyAnnouncementById(id: number): Observable<AnnouncementDto> {
-    return this.http.get<AnnouncementDto>(`${this.baseUrl}/Announcement/${id}`);
+    return this.http.get<AnnouncementDto>(`${this.baseUrl}/announcement/${id}`);
   }
 
   createAnnouncement(
     request: CreateAnnouncementRequest
   ): Observable<AnnouncementDto> {
     return this.http.post<AnnouncementDto>(
-      `${this.baseUrl}/Announcement`,
+      `${this.baseUrl}/announcement`,
       request
     );
   }
@@ -56,12 +56,12 @@ export class AnnouncementService {
     request: UpdateAnnouncementRequest
   ): Observable<AnnouncementDto> {
     return this.http.put<AnnouncementDto>(
-      `${this.baseUrl}/Announcement`,
+      `${this.baseUrl}/announcement`,
       request
     );
   }
 
   deleteAnnouncement(id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/Announcement/${id}`);
+    return this.http.delete<void>(`${this.baseUrl}/announcement/${id}`);
   }
 }

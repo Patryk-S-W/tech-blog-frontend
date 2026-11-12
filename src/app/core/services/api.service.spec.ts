@@ -38,13 +38,67 @@ describe('API routing', () => {
     project.flush({ id: 9 });
 
     announcements.getMyAnnouncements().subscribe();
-    const adminList = http.expectOne(`${environment.apiUrl}/api/Announcement`);
+    const adminList = http.expectOne(`${environment.apiUrl}/api/v1/announcement`);
     expect(adminList.request.method).toBe('GET');
     adminList.flush([]);
+    announcements.getMyAnnouncementById(7).subscribe();
+    const adminDetail = http.expectOne(`${environment.apiUrl}/api/v1/announcement/7`);
+    expect(adminDetail.request.method).toBe('GET');
+    adminDetail.flush(items[0]);
+
+    const announcementBody = {
+      title: 'Test announcement', image: '', text: 'Test text',
+      category: 'Test', duration: '5', button: 'Read',
+    };
+    const createdAnnouncement = jest.fn();
+    announcements.createAnnouncement(announcementBody).subscribe(createdAnnouncement);
+    const announcementCreate = http.expectOne(`${environment.apiUrl}/api/v1/announcement`);
+    expect(announcementCreate.request.method).toBe('POST');
+    expect(announcementCreate.request.body).toEqual(announcementBody);
+    const announcementDto = { ...announcementBody, id: 7, publishedAt: null };
+    announcementCreate.flush(announcementDto, { status: 201, statusText: 'Created' });
+    expect(createdAnnouncement).toHaveBeenCalledWith(announcementDto);
+
+    const announcementUpdateBody = { ...announcementBody, id: 7 };
+    const updatedAnnouncement = jest.fn();
+    announcements.updateAnnouncement(announcementUpdateBody).subscribe(updatedAnnouncement);
+    const announcementUpdate = http.expectOne(`${environment.apiUrl}/api/v1/announcement`);
+    expect(announcementUpdate.request.method).toBe('PUT');
+    expect(announcementUpdate.request.body).toEqual(announcementUpdateBody);
+    announcementUpdate.flush(announcementDto);
+    expect(updatedAnnouncement).toHaveBeenCalledWith(announcementDto);
+
+    announcements.deleteAnnouncement(7).subscribe();
+    const announcementDelete = http.expectOne(`${environment.apiUrl}/api/v1/announcement/7`);
+    expect(announcementDelete.request.method).toBe('DELETE');
+    announcementDelete.flush(null, { status: 204, statusText: 'No Content' });
+
+    const projectBody = {
+      title: 'Test project', image: '', shortDescription: 'Summary',
+      text: 'Test text', url: '/projects/9', author: 'Test author',
+    };
+    const createdProject = jest.fn();
+    projects.createProject(projectBody).subscribe(createdProject);
+    const projectCreate = http.expectOne(`${environment.apiUrl}/api/v1/project`);
+    expect(projectCreate.request.method).toBe('POST');
+    expect(projectCreate.request.body).toEqual(projectBody);
+    const projectDto = { ...projectBody, id: 9 };
+    projectCreate.flush(projectDto, { status: 201, statusText: 'Created' });
+    expect(createdProject).toHaveBeenCalledWith(projectDto);
+
+    const projectUpdateBody = { ...projectBody, id: 9 };
+    const updatedProject = jest.fn();
+    projects.updateProject(projectUpdateBody).subscribe(updatedProject);
+    const projectUpdate = http.expectOne(`${environment.apiUrl}/api/v1/project`);
+    expect(projectUpdate.request.method).toBe('PUT');
+    expect(projectUpdate.request.body).toEqual(projectUpdateBody);
+    projectUpdate.flush(projectDto);
+    expect(updatedProject).toHaveBeenCalledWith(projectDto);
+
     projects.deleteProject(9).subscribe();
-    const adminDelete = http.expectOne(`${environment.apiUrl}/api/Project/9`);
+    const adminDelete = http.expectOne(`${environment.apiUrl}/api/v1/project/9`);
     expect(adminDelete.request.method).toBe('DELETE');
-    adminDelete.flush(null);
+    adminDelete.flush(null, { status: 204, statusText: 'No Content' });
     http.verify();
   });
 });
