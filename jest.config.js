@@ -1,8 +1,1 @@
-module.exports = {
-  preset: "jest-preset-angular",
-  setupFilesAfterEnv: ["<rootDir>/src/setupJest.ts"],
-  transformIgnorePatterns: [
-    'node_modules/(?!(marked/|.*\\.mjs$|@angular/common/locales/.*\\.js$))',
-  ],
-  reporters: ["default", "jest-junit"],
-};
+module.exports = { projects: ['<rootDir>/apps/blog/jest.config.js', '<rootDir>/libs/**/jest.config.js'] };

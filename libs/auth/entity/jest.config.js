@@ -1,0 +1,1 @@
+module.exports = { ...require('../../../jest.preset.js'), displayName: 'auth-entity', rootDir: '../../..', testMatch: ['<rootDir>/libs/auth/entity/**/*.spec.ts'], coverageDirectory: '<rootDir>/coverage/libs/auth/entity' };

@@ -1,0 +1,1 @@
+module.exports = { ...require('../../../jest.preset.js'), displayName: 'projects-entity', rootDir: '../../..', testMatch: ['<rootDir>/libs/projects/entity/**/*.spec.ts'], coverageDirectory: '<rootDir>/coverage/libs/projects/entity' };

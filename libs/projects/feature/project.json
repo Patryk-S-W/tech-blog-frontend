@@ -1,0 +1,10 @@
+{
+  "name": "projects-feature",
+  "projectType": "library",
+  "sourceRoot": "libs/projects/feature/src",
+  "tags": [
+    "scope:projects",
+    "type:feature"
+  ],
+  "targets": {}
+}

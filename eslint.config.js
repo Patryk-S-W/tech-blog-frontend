@@ -5,6 +5,7 @@ const eslint = require("@eslint/js");
 const tseslint = require("typescript-eslint");
 const angular = require("angular-eslint");
 const prettier = require("eslint-config-prettier");
+const nx = require("@nx/eslint-plugin");
 
 module.exports = tseslint.config(
   {
@@ -16,6 +17,7 @@ module.exports = tseslint.config(
       "dist/**",
       "coverage/**",
       ".angular/**",
+      ".nx/**",
     ],
   },
 
@@ -25,6 +27,10 @@ module.exports = tseslint.config(
     languageOptions: {
       ecmaVersion: 2018,
       sourceType: "script",
+      globals: {
+        module: "readonly",
+        require: "readonly",
+      },
     },
   },
 
@@ -37,7 +43,26 @@ module.exports = tseslint.config(
       prettier,
     ],
     processor: angular.processInlineTemplates,
+    plugins: { '@nx': nx },
     rules: {
+      '@nx/enforce-module-boundaries': ['error', {
+        enforceBuildableLibDependency: true,
+        allow: [],
+        depConstraints: [
+          { sourceTag: 'type:app', onlyDependOnLibsWithTags: ['type:feature', 'type:data-access', 'type:ui', 'type:util', 'type:entity'] },
+          { sourceTag: 'type:feature', onlyDependOnLibsWithTags: ['type:data-access', 'type:ui', 'type:util', 'type:entity'] },
+          { sourceTag: 'type:data-access', onlyDependOnLibsWithTags: ['type:entity', 'type:util'] },
+          { sourceTag: 'type:ui', onlyDependOnLibsWithTags: ['type:ui', 'type:util', 'type:entity'] },
+          { sourceTag: 'type:util', onlyDependOnLibsWithTags: ['type:util'] },
+          { sourceTag: 'type:entity', onlyDependOnLibsWithTags: ['type:entity'] },
+          { sourceTag: 'scope:auth', onlyDependOnLibsWithTags: ['scope:auth', 'scope:shared'] },
+          { sourceTag: 'scope:articles', onlyDependOnLibsWithTags: ['scope:articles', 'scope:shared'] },
+          { sourceTag: 'scope:projects', onlyDependOnLibsWithTags: ['scope:projects', 'scope:shared'] },
+          { sourceTag: 'scope:shell', onlyDependOnLibsWithTags: ['scope:shell', 'scope:shared', 'scope:auth'] },
+          { sourceTag: 'scope:shared', onlyDependOnLibsWithTags: ['scope:shared'] },
+        ],
+      }],
+      'no-restricted-imports': ['error', { patterns: [{ group: ['@blog/*/*/*'], message: 'Use the library public API.' }] }],
       "@angular-eslint/component-class-suffix": [
         "error",
         {

@@ -1,0 +1,10 @@
+{
+  "name": "projects-entity",
+  "projectType": "library",
+  "sourceRoot": "libs/projects/entity/src",
+  "tags": [
+    "scope:projects",
+    "type:entity"
+  ],
+  "targets": {}
+}

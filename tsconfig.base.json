@@ -1,0 +1,61 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "module": "es2020",
+    "moduleResolution": "bundler",
+    "importHelpers": true,
+    "target": "ES2022",
+    "useDefineForClassFields": false,
+    "paths": {
+      "@blog/auth/entity": [
+        "libs/auth/entity/src/index.ts"
+      ],
+      "@blog/auth/data-access": [
+        "libs/auth/data-access/src/index.ts"
+      ],
+      "@blog/auth/feature": [
+        "libs/auth/feature/src/index.ts"
+      ],
+      "@blog/articles/entity": [
+        "libs/articles/entity/src/index.ts"
+      ],
+      "@blog/articles/data-access": [
+        "libs/articles/data-access/src/index.ts"
+      ],
+      "@blog/articles/feature": [
+        "libs/articles/feature/src/index.ts"
+      ],
+      "@blog/projects/entity": [
+        "libs/projects/entity/src/index.ts"
+      ],
+      "@blog/projects/data-access": [
+        "libs/projects/data-access/src/index.ts"
+      ],
+      "@blog/projects/feature": [
+        "libs/projects/feature/src/index.ts"
+      ],
+      "@blog/shell/feature": [
+        "libs/shell/feature/src/index.ts"
+      ],
+      "@blog/shared/ui": [
+        "libs/shared/ui/src/index.ts"
+      ],
+      "@blog/shared/util": [
+        "libs/shared/util/src/index.ts"
+      ],
+      "@blog/shell/layout": [
+        "libs/shell/layout/src/index.ts"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "fullTemplateTypeCheck": true,
+    "strictInjectionParameters": true
+  }
+}

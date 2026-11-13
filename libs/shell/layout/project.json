@@ -1,0 +1,10 @@
+{
+  "name": "shell-layout",
+  "projectType": "library",
+  "sourceRoot": "libs/shell/layout/src",
+  "tags": [
+    "scope:shell",
+    "type:feature"
+  ],
+  "targets": {}
+}
