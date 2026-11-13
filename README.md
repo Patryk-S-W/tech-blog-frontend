@@ -87,6 +87,10 @@ service, or set `BACKEND_UPSTREAM` to the reachable backend host and port.
 For host-network deployment, use `BACKEND_UPSTREAM=127.0.0.1:18080`.
 The internal SSR listener binds to `127.0.0.1:4000` by default.
 
+Build-time prerendering is disabled: builds cannot capture live publications or
+archive query parameters. CommonEngine renders these pages per request instead
+of serving stale build-generated HTML, while retaining the existing SSR output.
+
 SSR API calls use `BACKEND_UPSTREAM`, never the incoming request Host header.
 It accepts a host with optional port or an HTTP(S) origin, without credentials,
 paths, query strings or fragments. Direct Node runs use the same deployment

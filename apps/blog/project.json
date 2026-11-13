@@ -35,7 +35,7 @@
         "serviceWorker": "ngsw-config.json",
         "browser": "apps/blog/src/main.ts",
         "server": "apps/blog/src/main.server.ts",
-        "prerender": true,
+        "prerender": false,
         "ssr": {
           "entry": "apps/blog/server.ts"
         }

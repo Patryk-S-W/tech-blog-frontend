@@ -2,7 +2,7 @@ import { computed, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
-import { AnnouncementDto, CreateAnnouncementRequest, UpdateAnnouncementRequest } from '@blog/articles/entity';
+import { AnnouncementDto, CreateAnnouncementRequest, PagedResult, UpdateAnnouncementRequest } from '@blog/articles/entity';
 import { withCallState } from '@blog/shared/util';
 import { AnnouncementService } from '../services/announcement.service';
 
@@ -17,10 +17,47 @@ export const AnnouncementStore = signalStore(
     publicArticleError: null as string | null,
   }),
   withCallState(),
+  withState({
+    archivePage: null as PagedResult<AnnouncementDto> | null,
+    archiveIsLoading: false,
+    archiveError: null as string | null,
+    categories: [] as string[],
+    categoriesError: null as string | null,
+  }),
   withComputed((store) => ({ latestFour: computed(() => store.announcements().slice(0, 4)), announcementCount: computed(() => store.announcements().length) })),
   withMethods((store, service = inject(AnnouncementService)) => {
     let publicRequestId = 0;
+    let archiveRequestId = 0;
+    let categoriesRequestId = 0;
     return {
+    async loadArchive(page: number, category?: string): Promise<void> {
+      const requestId = ++archiveRequestId;
+      patchState(store, { archivePage: null, archiveIsLoading: true, archiveError: null });
+      try {
+        const result = await firstValueFrom(service.getPublishedAnnouncementsPage(page, category));
+        if (requestId !== archiveRequestId) return;
+        patchState(store, { archivePage: result, archiveIsLoading: false });
+      } catch (error) {
+        if (requestId !== archiveRequestId) return;
+        const message = 'Failed to load article archive';
+        patchState(store, { archiveIsLoading: false, archiveError: message });
+        throw new Error(message, { cause: error });
+      }
+    },
+    async loadCategories(): Promise<void> {
+      const requestId = ++categoriesRequestId;
+      patchState(store, { categoriesError: null });
+      try {
+        const categories = await firstValueFrom(service.getCategories());
+        if (requestId !== categoriesRequestId) return;
+        patchState(store, { categories });
+      } catch (error) {
+        if (requestId !== categoriesRequestId) return;
+        const message = 'Failed to load article categories';
+        patchState(store, { categoriesError: message });
+        throw new Error(message, { cause: error });
+      }
+    },
     async loadPublicArticleById(id: number): Promise<void> {
       const requestId = ++publicRequestId;
       patchState(store, { publicArticle: null, publicArticleStatus: 'loading', publicArticleError: null });

@@ -1,0 +1,14 @@
+.category-filter {
+  min-width: min(100%, 16rem);
+}
+
+.archive-pagination {
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 575px) {
+  .archive-pagination p {
+    text-align: center;
+  }
+}

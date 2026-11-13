@@ -7,6 +7,7 @@ import {
   CreateAnnouncementRequest,
   UpdateAnnouncementRequest,
   PaginationParams,
+  PagedResult,
 } from '@blog/articles/entity';
 
 @Injectable({ providedIn: 'root' })
@@ -35,6 +36,19 @@ export class AnnouncementService {
       `${this.baseUrl}/blog/announcements/${id}`,
       { transferCache: false }
     );
+  }
+
+  getPublishedAnnouncementsPage(page: number, category?: string): Observable<PagedResult<AnnouncementDto>> {
+    let params = new HttpParams().set('page', page).set('pageSize', 10);
+    if (category) params = params.set('category', category);
+    return this.http.get<PagedResult<AnnouncementDto>>(
+      `${this.baseUrl}/blog/announcements`,
+      { params, transferCache: false }
+    );
+  }
+
+  getCategories(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/blog/categories`, { transferCache: false });
   }
 
   getMyAnnouncements(): Observable<AnnouncementDto[]> {
