@@ -7,6 +7,7 @@ import express from 'express';
 import { fileURLToPath } from 'node:url';
 import { SSR_RESPONSE_STATUS } from '@blog/shared/util';
 import { SERVER_API_URL, backendApiOrigin } from './src/app/server-api.config';
+import { registerPublicFeeds } from './public-feeds';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
@@ -27,6 +28,7 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', browserDistFolder);
+  registerPublicFeeds(server, apiUrl);
 
   server.use(
     express.static(browserDistFolder, {

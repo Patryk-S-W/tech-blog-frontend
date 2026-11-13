@@ -6,6 +6,9 @@ import { AnnouncementsFacade } from '@blog/articles/data-access';
 import { AnnouncementDto } from '@blog/articles/entity';
 import { SSR_RESPONSE_STATUS } from '@blog/shared/util';
 import { ArticleDetailComponent } from './article-detail.component';
+import { DOCUMENT } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
+import { DEFAULT_SITE_TITLE, PUBLIC_SITE_ORIGIN } from '@blog/shared/util';
 
 describe('ArticleDetailComponent', () => {
   let fixture: ComponentFixture<ArticleDetailComponent>;
@@ -64,6 +67,9 @@ describe('ArticleDetailComponent', () => {
     expect(facade.loadPublicArticleById).toHaveBeenCalledWith(12);
     expect(fixture.nativeElement.querySelector('h1').textContent).toContain('A post');
     expect(fixture.nativeElement.querySelector('.article-body').textContent).toContain('Body text');
+    expect(TestBed.inject(Title).getTitle()).toBe(`A post - ${DEFAULT_SITE_TITLE}`);
+    expect(TestBed.inject(DOCUMENT).querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`${PUBLIC_SITE_ORIGIN}/blog/12`);
+    expect(TestBed.inject(Meta).getTag('name="robots"')?.content).toBe('index, follow');
   });
 
   it('shows loading state', () => {
@@ -82,6 +88,7 @@ describe('ArticleDetailComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Article not found');
     expect(fixture.nativeElement.querySelector('a[routerLink="/recent-articles"]')).not.toBeNull();
     expect(responseStatus.statusCode).toBe(404);
+    expect(TestBed.inject(Meta).getTag('name="robots"')?.content).toBe('noindex, follow');
   });
 
   it('offers retry after a request failure', async () => {
@@ -95,6 +102,7 @@ describe('ArticleDetailComponent', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('button').textContent).toContain('Retry');
     expect(responseStatus.statusCode).toBe(500);
+    expect(TestBed.inject(Meta).getTag('name="robots"')?.content).toBe('noindex, follow');
     fixture.componentInstance.retry();
     expect(facade.loadPublicArticleById).toHaveBeenCalledTimes(2);
     await expect(facade.loadPublicArticleById.mock.results[1].value).resolves.toBeUndefined();
@@ -129,5 +137,27 @@ describe('ArticleDetailComponent', () => {
     await expect(facade.loadPublicArticleById.mock.results[0].value).resolves.toBeUndefined();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelector('.article-body img')?.getAttribute('onerror')).toBeNull();
+  });
+
+  it('removes previous article metadata while the next route loads and restores defaults on destruction', async () => {
+    facade.loadPublicArticleById.mockImplementationOnce(async () => {
+      facade.publicArticle.set(article);
+      facade.publicArticleStatus.set('loaded');
+    }).mockImplementationOnce(() => {
+      facade.publicArticle.set(null);
+      facade.publicArticleStatus.set('loading');
+      return Promise.resolve();
+    });
+    navigate('12');
+    await expect(facade.loadPublicArticleById.mock.results[0].value).resolves.toBeUndefined();
+    fixture.detectChanges();
+    navigate('13');
+    expect(TestBed.inject(DOCUMENT).querySelector('link[rel="canonical"]')).toBeNull();
+    expect(TestBed.inject(Meta).getTag('property="og:title"')).toBeNull();
+    expect(TestBed.inject(Title).getTitle()).toBe(DEFAULT_SITE_TITLE);
+    await expect(facade.loadPublicArticleById.mock.results[1].value).resolves.toBeUndefined();
+    fixture.destroy();
+    expect(TestBed.inject(Title).getTitle()).toBe(DEFAULT_SITE_TITLE);
+    expect(TestBed.inject(Meta).getTag('name="robots"')).toBeNull();
   });
 });
