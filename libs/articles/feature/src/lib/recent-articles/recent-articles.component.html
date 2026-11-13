@@ -1,58 +1,101 @@
 <section class="bg-dark-blog">
   <div class="container py-4">
-    <h1 class="h1 text-center text-white" id="pageHeaderTitle">
-      Recent articles
-    </h1>
+    <h1 class="h1 text-center text-white" id="pageHeaderTitle">Recent articles</h1>
+
+    <div class="archive-controls d-flex flex-wrap align-items-end justify-content-between gap-3 mb-4">
+      <div class="category-filter">
+        <label for="article-category" class="form-label text-light">Category</label>
+        <select
+          id="article-category"
+          class="form-select"
+          [ngModel]="selectedCategory()"
+          [disabled]="categoriesLoading() || isLoading()"
+          (ngModelChange)="onCategoryChange($event)"
+        >
+          <option value="">All categories</option>
+          @if (selectedCategory() && !categories().includes(selectedCategory())) {
+            <option [value]="selectedCategory()">{{ selectedCategory() }}</option>
+          }
+          @for (category of categories(); track category) {
+            <option [value]="category">{{ category }}</option>
+          }
+        </select>
+      </div>
+      @if (categoriesError()) {
+        <div class="category-error text-warning" role="alert">
+          Couldn't load categories.
+          <button type="button" class="btn btn-sm btn-outline-info ms-2" [disabled]="categoriesLoading()" (click)="retryCategories()">Retry categories</button>
+        </div>
+      }
+    </div>
+
+    @if (error()) {
+      <div class="alert alert-warning" role="alert">
+        {{ error() }}
+        <button type="button" class="btn btn-sm btn-outline-dark ms-2" [disabled]="isLoading()" (click)="retryArchive()">Retry</button>
+      </div>
+    }
 
     @if (isLoading()) {
-      <div class="text-center py-5">
-        <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
+      <div class="text-center py-5 text-light" role="status" aria-live="polite">
+        <div class="spinner-border text-info" aria-hidden="true"></div>
+        <span class="visually-hidden">Loading articles…</span>
       </div>
-    } @else if (error()) {
-      <div class="alert alert-warning">{{ error() }}</div>
-    } @else {
-      @for (article of articles(); track trackById($index, article)) {
-        <article class="postcard bg-dark-blog blue">
-          <a class="postcard__img_link" [routerLink]="['/blog', article.id]">
-            <img
-              class="postcard__img"
-              [alt]="article.title"
-              [src]="article.image"
-            />
-          </a>
-          <div class="postcard__text">
-            <h1 class="postcard__title blue">
-              <a [routerLink]="['/blog', article.id]">{{ article.title }}</a>
-            </h1>
-            <div class="postcard__subtitle small">
-              <time>
-                <i class="fas fa-calendar-alt mx-1"></i
-                >{{ article.publishedAt | date: "dd.MM.yyyy" }}
-              </time>
-            </div>
-            <div class="postcard__bar"></div>
-            <div
-              class="postcard__preview-txt"
-              [innerHTML]="article.text | markdown"
-            ></div>
-            <ul class="postcard__tagbox">
-              <li class="tag__item">
-                <i class="fas fa-tag mx-1"></i>{{ article.category }}
-              </li>
-              <li class="tag__item">
-                <i class="fas fa-clock mx-1"></i>{{ article.duration }}
-              </li>
-              <li class="tag__item play blue">
-                <a [routerLink]="['/blog', article.id]">
-                  <i class="fas fa-play mx-1"></i>{{ article.button }}
-                </a>
-              </li>
-            </ul>
-          </div>
-        </article>
+    }
+
+    @if (archivePage(); as page) {
+      @if (!isLoading()) {
+        @if (page.items.length === 0) {
+          <p class="text-center text-light py-5">No articles found.</p>
+        } @else {
+          @for (article of page.items; track trackById($index, article)) {
+            <article class="postcard bg-dark-blog blue">
+              <a class="postcard__img_link" [routerLink]="['/blog', article.id]">
+                <img class="postcard__img" [alt]="article.title" [src]="article.image" />
+              </a>
+              <div class="postcard__text">
+                <h2 class="postcard__title blue">
+                  <a [routerLink]="['/blog', article.id]">{{ article.title }}</a>
+                </h2>
+                <div class="postcard__subtitle small">
+                  @if (article.publishedAt) {
+                    <time [attr.datetime]="article.publishedAt">
+                      <i class="fas fa-calendar-alt mx-1" aria-hidden="true"></i>{{ article.publishedAt | date: "dd.MM.yyyy" }}
+                    </time>
+                  }
+                </div>
+                <div class="postcard__bar"></div>
+                <div class="postcard__preview-txt" [innerHTML]="article.text | markdown"></div>
+                <ul class="postcard__tagbox">
+                  @if (article.category) {
+                    <li class="tag__item"><i class="fas fa-tag mx-1" aria-hidden="true"></i>{{ article.category }}</li>
+                  }
+                  @if (article.duration) {
+                    <li class="tag__item"><i class="fas fa-clock mx-1" aria-hidden="true"></i>{{ article.duration }}</li>
+                  }
+                  @if (article.button) {
+                    <li class="tag__item play blue">
+                      <a [routerLink]="['/blog', article.id]"><i class="fas fa-play mx-1" aria-hidden="true"></i>{{ article.button }}</a>
+                    </li>
+                  }
+                </ul>
+              </div>
+            </article>
+          }
+        }
       }
+
+      @if (page.totalPages > 1) {
+        <nav class="archive-pagination d-flex align-items-center justify-content-between" aria-label="Article pages">
+          <button type="button" class="btn btn-outline-info" [disabled]="isLoading() || !page.hasPrevious" (click)="previousPage()">Previous</button>
+          <p class="text-light mb-0" aria-live="polite">Page {{ currentPage() }} of {{ page.totalPages }} · {{ page.totalCount }} articles</p>
+          <button type="button" class="btn btn-outline-info" [disabled]="isLoading() || !page.hasNext" (click)="nextPage()">Next</button>
+        </nav>
+      } @else if (page.totalCount > 0) {
+        <p class="text-center text-light" aria-live="polite">{{ page.totalCount }} articles</p>
+      }
+    } @else if (!isLoading() && !error()) {
+      <p class="visually-hidden" role="status" aria-live="polite">Loading articles…</p>
     }
   </div>
 </section>
