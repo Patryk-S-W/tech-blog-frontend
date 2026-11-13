@@ -6,7 +6,12 @@
       </h2>
 
       @if (error()) {
-        <div class="alert alert-danger">{{ error() }}</div>
+        <div class="alert alert-danger" role="alert">
+          {{ error() }}
+          @if (isEditMode && !canEdit()) {
+            <button type="button" class="btn btn-sm btn-outline-danger ms-2" (click)="retryLoad()" [disabled]="isLoading()">Retry loading</button>
+          }
+        </div>
       }
 
       <form (ngSubmit)="onSubmit()">
@@ -19,6 +24,7 @@
             [(ngModel)]="title"
             name="title"
             required
+            [disabled]="!canEdit() || isLoading()"
             (ngModelChange)="onFieldChange('title', $event)"
           />
         </div>
@@ -31,6 +37,7 @@
             class="form-control"
             [(ngModel)]="image"
             name="image"
+            [disabled]="!canEdit() || isLoading()"
             (ngModelChange)="onFieldChange('image', $event)"
           />
         </div>
@@ -43,6 +50,7 @@
             class="form-control"
             [(ngModel)]="category"
             name="category"
+            [disabled]="!canEdit() || isLoading()"
             (ngModelChange)="onFieldChange('category', $event)"
           />
         </div>
@@ -56,6 +64,7 @@
               class="form-control"
               [(ngModel)]="duration"
               name="duration"
+              [disabled]="!canEdit() || isLoading()"
               (ngModelChange)="onFieldChange('duration', $event)"
             />
           </div>
@@ -69,6 +78,7 @@
               class="form-control"
               [(ngModel)]="button"
               name="button"
+              [disabled]="!canEdit() || isLoading()"
               (ngModelChange)="onFieldChange('button', $event)"
             />
           </div>
@@ -85,17 +95,19 @@
             [(ngModel)]="text"
             name="text"
             required
+            [disabled]="!canEdit() || isLoading()"
             (ngModelChange)="onFieldChange('text', $event)"
           ></textarea>
         </div>
 
         <div class="d-flex gap-2">
-          <button type="submit" class="btn btn-info" [disabled]="isLoading()">
+          <button type="submit" class="btn btn-info" [disabled]="!canSave()">
             @if (isLoading()) {
               <span
                 class="spinner-border spinner-border-sm me-2"
                 role="status"
-              ></span>
+                ><span class="visually-hidden">{{ isEditMode && !canEdit() ? "Loading…" : "Saving…" }}</span></span
+              >
             }
             {{ isEditMode ? "Update" : "Create" }}
           </button>
@@ -114,16 +126,18 @@
             <button
               class="btn btn-sm btn-outline-secondary me-1"
               (click)="undo()"
-              [disabled]="!canUndo()"
+              [disabled]="!canEdit() || isLoading() || !canUndo()"
               title="Undo"
+              aria-label="Undo"
             >
               <i class="fas fa-undo"></i>
             </button>
             <button
               class="btn btn-sm btn-outline-secondary"
               (click)="redo()"
-              [disabled]="!canRedo()"
+              [disabled]="!canEdit() || isLoading() || !canRedo()"
               title="Redo"
+              aria-label="Redo"
             >
               <i class="fas fa-redo"></i>
             </button>
