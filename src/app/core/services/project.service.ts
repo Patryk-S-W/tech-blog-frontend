@@ -11,7 +11,7 @@ import {
 @Injectable({ providedIn: 'root' })
 export class ProjectService {
   private readonly http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/api/Project`;
+  private readonly baseUrl = `${environment.apiUrl}/api/v1/project`;
 
   getAllProjects(): Observable<ProjectDto[]> {
     return this.http.get<ProjectDto[]>(`${environment.apiUrl}/api/v1/blog/projects`);
