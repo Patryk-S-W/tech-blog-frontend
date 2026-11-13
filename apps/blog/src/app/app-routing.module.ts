@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { authGuard } from '@blog/auth/data-access';
 import { provideAnnouncementEditor } from '@blog/articles/data-access';
+import { canDeactivatePostEditor } from './post-editor.guard';
 
 const routes: Routes = [
   { path: '', loadComponent: () => import('@blog/articles/feature').then((m) => m.HomeComponent), data: { title: 'Tech Blog' } },
@@ -13,8 +14,8 @@ const routes: Routes = [
   { path: 'ai', loadComponent: () => import('@blog/shell/feature').then((m) => m.AIComponent), data: { title: 'AI - Tech Blog' } },
   { path: 'login', loadComponent: () => import('@blog/auth/feature').then((m) => m.LoginComponent), data: { title: 'Login - Tech Blog' } },
   { path: 'admin', loadComponent: () => import('@blog/articles/feature').then((m) => m.AdminDashboardComponent), data: { title: 'Admin - Tech Blog' }, canActivate: [authGuard] },
-  { path: 'admin/new', loadComponent: () => import('@blog/articles/feature').then((m) => m.PostEditorComponent), data: { title: 'New Announcement - Tech Blog' }, canActivate: [authGuard], providers: [provideAnnouncementEditor()] },
-  { path: 'admin/edit/:id', loadComponent: () => import('@blog/articles/feature').then((m) => m.PostEditorComponent), data: { title: 'Edit Announcement - Tech Blog' }, canActivate: [authGuard], providers: [provideAnnouncementEditor()] },
+  { path: 'admin/new', loadComponent: () => import('@blog/articles/feature').then((m) => m.PostEditorComponent), data: { title: 'New Announcement - Tech Blog' }, canActivate: [authGuard], canDeactivate: [canDeactivatePostEditor], providers: [provideAnnouncementEditor()] },
+  { path: 'admin/edit/:id', loadComponent: () => import('@blog/articles/feature').then((m) => m.PostEditorComponent), data: { title: 'Edit Announcement - Tech Blog' }, canActivate: [authGuard], canDeactivate: [canDeactivatePostEditor], providers: [provideAnnouncementEditor()] },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

@@ -1,13 +1,14 @@
 import {
   Component,
   computed,
+  signal,
   OnInit,
   OnDestroy,
   inject,
   PLATFORM_ID,
 } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MarkdownPipe } from '@blog/shared/ui';
 import { AnnouncementEditorFacade, AnnouncementsFacade } from '@blog/articles/data-access';
@@ -17,7 +18,7 @@ import { UpdateAnnouncementRequest } from '@blog/articles/entity';
   selector: 'app-post-editor',
   templateUrl: './post-editor.component.html',
   styleUrls: ['./post-editor.component.scss'],
-  imports: [FormsModule, MarkdownPipe],
+  imports: [FormsModule, MarkdownPipe, RouterLink],
 })
 export class PostEditorComponent implements OnInit, OnDestroy {
   private readonly announcementsFacade = inject(AnnouncementsFacade);
@@ -39,29 +40,33 @@ export class PostEditorComponent implements OnInit, OnDestroy {
   readonly canUndo = this.editor.canUndo;
   readonly canRedo = this.editor.canRedo;
   readonly currentValues = this.editor.currentValues;
-  readonly isLoading = computed(() => this.editor.isLoading() || this.announcementsFacade.isLoading());
+  private readonly submitting = signal(false);
+  private readonly savedBaseline = signal<UpdateAnnouncementRequest | null>(null);
+  readonly isDirty = computed(() => {
+    const current = this.currentValues();
+    const baseline = this.savedBaseline();
+    return !!current && !!baseline && editableFields.some((field) => current[field] !== baseline[field]);
+  });
+  readonly isLoading = computed(() => this.editor.isLoading() || this.submitting() || this.announcementsFacade.isLoading());
   readonly error = computed(() => this.editor.error() ?? this.announcementsFacade.error());
+
+  private readonly beforeUnload = (event: BeforeUnloadEvent): void => {
+    if (!this.isDirty()) return;
+    event.preventDefault();
+    event.returnValue = '';
+  };
 
   ngOnInit(): void {
     if (!isPlatformBrowser(this.platformId)) return;
+    window.addEventListener('beforeunload', this.beforeUnload);
 
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
       this.isEditMode = true;
       this.announcementId = +id;
-      void this.editor.loadMyAnnouncementById(this.announcementId).then(() => {
-        const existing = this.editor.currentAnnouncement();
-        if (!existing) return;
-        this.editor.initialize(existing);
-        this.title = existing.title;
-        this.image = existing.image;
-        this.text = existing.text;
-        this.category = existing.category;
-        this.duration = existing.duration;
-        this.button = existing.button;
-      }).catch(() => {});
+      void this.loadExisting();
     } else {
-      this.editor.initialize({
+      const empty = {
         id: 0,
         title: '',
         image: '',
@@ -69,13 +74,53 @@ export class PostEditorComponent implements OnInit, OnDestroy {
         category: '',
         duration: '',
         button: '',
-      });
+      };
+      this.editor.initialize(empty);
+      this.savedBaseline.set(empty);
     }
   }
 
   ngOnDestroy(): void {
+    if (isPlatformBrowser(this.platformId)) window.removeEventListener('beforeunload', this.beforeUnload);
     this.editor.reset();
     this.announcementsFacade.clearCurrentAnnouncement();
+    this.savedBaseline.set(null);
+  }
+
+  canEdit(): boolean {
+    return !this.isEditMode || this.savedBaseline() !== null;
+  }
+
+  canSave(): boolean {
+    return this.canEdit() && !this.isLoading() && this.isDirty() && !!this.title && !!this.text;
+  }
+
+  canDeactivate(): boolean {
+    if (this.submitting() || this.announcementsFacade.isLoading()) return false;
+    return !this.isDirty() || !isPlatformBrowser(this.platformId) || window.confirm('You have unsaved changes. Leave this page?');
+  }
+
+  private async loadExisting(): Promise<void> {
+    try {
+      await this.editor.loadMyAnnouncementById(this.announcementId);
+      const existing = this.editor.currentAnnouncement();
+      if (!existing) return;
+      const values = this.valuesFrom(existing);
+      this.editor.initialize(values);
+      this.savedBaseline.set({ ...values });
+      this.title = values.title;
+      this.image = values.image;
+      this.text = values.text;
+      this.category = values.category;
+      this.duration = values.duration;
+      this.button = values.button;
+    } catch {
+      // The editor facade exposes the safe load error for the template.
+    }
+  }
+
+  retryLoad(): void {
+    if (this.isEditMode && !this.isLoading()) void this.loadExisting();
   }
 
   onFieldChange(field: string, value: string): void {
@@ -104,28 +149,38 @@ export class PostEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(): void {
-    if (!this.title || !this.text) return;
+  async onSubmit(): Promise<void> {
+    if (!this.canSave()) return;
+    const values = this.currentValues();
+    if (!values) return;
 
-    if (this.isEditMode) {
-      void this.announcementsFacade.updateAnnouncement({
-        id: this.announcementId,
-        title: this.title,
-        image: this.image,
-        text: this.text,
-        category: this.category,
-        duration: this.duration,
-        button: this.button,
-      }).then(() => this.router.navigate(['/admin'])).catch(() => {});
-    } else {
-      void this.announcementsFacade.createAnnouncement({
-        title: this.title,
-        image: this.image,
-        text: this.text,
-        category: this.category,
-        duration: this.duration,
-        button: this.button,
-      }).then(() => this.router.navigate(['/admin'])).catch(() => {});
+    this.submitting.set(true);
+    this.editor.clearError();
+    this.announcementsFacade.clearError();
+    try {
+      if (this.isEditMode) await this.announcementsFacade.updateAnnouncement(values);
+      else await this.announcementsFacade.createAnnouncement(values);
+      this.savedBaseline.set({ ...values });
+      this.submitting.set(false);
+      await this.router.navigate(['/admin']);
+    } catch {
+      // Keep the current form and history available for retry.
+    } finally {
+      this.submitting.set(false);
     }
   }
+
+  private valuesFrom(item: UpdateAnnouncementRequest): UpdateAnnouncementRequest {
+    return {
+      id: item.id,
+      title: item.title,
+      image: item.image,
+      text: item.text,
+      category: item.category,
+      duration: item.duration,
+      button: item.button,
+    };
+  }
 }
+
+const editableFields = ['title', 'image', 'text', 'category', 'duration', 'button'] as const;
