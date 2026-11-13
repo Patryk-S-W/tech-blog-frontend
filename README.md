@@ -87,6 +87,17 @@ service, or set `BACKEND_UPSTREAM` to the reachable backend host and port.
 For host-network deployment, use `BACKEND_UPSTREAM=127.0.0.1:18080`.
 The internal SSR listener binds to `127.0.0.1:4000` by default.
 
+SSR API calls use `BACKEND_UPSTREAM`, never the incoming request Host header.
+It accepts a host with optional port or an HTTP(S) origin, without credentials,
+paths, query strings or fragments. Direct Node runs use the same deployment
+default; for a local backend, set `BACKEND_UPSTREAM=127.0.0.1:18080` before
+`npm run serve:ssr:tech-blog`. Browser API calls remain same-origin. Public
+article detail requests opt out of HTTP transfer caching. Server hydration also
+filters every request to the configured backend origin out of transfer caching,
+including collection and project requests, so internal backend URLs are not
+embedded in transferred request metadata. Unrelated asset caching is retained;
+browser API URLs are unchanged and hydration may refetch API data.
+
 ## Commands
 
 - `npm run start` - Start the app

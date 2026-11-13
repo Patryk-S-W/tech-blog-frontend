@@ -9,6 +9,7 @@ const routes: Routes = [
   { path: 'projects', loadComponent: () => import('@blog/projects/feature').then((m) => m.ProjectsComponent), data: { title: 'Projects - Tech Blog' } },
   { path: 'projects/:id', loadComponent: () => import('@blog/projects/feature').then((m) => m.WikiComponent), data: { title: 'Project Wiki - Tech Blog' } },
   { path: 'recent-articles', loadComponent: () => import('@blog/articles/feature').then((m) => m.RecentArticlesComponent), data: { title: 'Recent articles - Tech Blog' } },
+  { path: 'blog/:id', loadComponent: () => import('@blog/articles/feature').then((m) => m.ArticleDetailComponent), data: { title: 'Article - Tech Blog' } },
   { path: 'hardware', loadComponent: () => import('@blog/shell/feature').then((m) => m.HardwareComponent), data: { title: 'Hardware - Tech Blog' } },
   { path: 'ai', loadComponent: () => import('@blog/shell/feature').then((m) => m.AIComponent), data: { title: 'AI - Tech Blog' } },
   { path: 'login', loadComponent: () => import('@blog/auth/feature').then((m) => m.LoginComponent), data: { title: 'Login - Tech Blog' } },

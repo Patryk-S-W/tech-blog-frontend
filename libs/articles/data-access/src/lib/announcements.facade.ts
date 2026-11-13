@@ -8,12 +8,16 @@ export class AnnouncementsFacade {
   readonly announcements = this.store.announcements;
   readonly ownerAnnouncements = this.store.ownerAnnouncements;
   readonly currentAnnouncement = this.store.currentAnnouncement;
+  readonly publicArticle = this.store.publicArticle;
+  readonly publicArticleStatus = this.store.publicArticleStatus;
+  readonly publicArticleError = this.store.publicArticleError;
   readonly latestFour = this.store.latestFour;
   readonly announcementCount = this.store.announcementCount;
   readonly isLoading = this.store.isLoading;
   readonly error = this.store.error;
   loadPublishedAnnouncements(): Promise<void> { return this.store.loadPublishedAnnouncements(); }
   loadPublishedById(id: number): Promise<void> { return this.store.loadPublishedById(id); }
+  loadPublicArticleById(id: number): Promise<void> { return this.store.loadPublicArticleById(id); }
   loadMyAnnouncements(): Promise<void> { return this.store.loadMyAnnouncements(); }
   createAnnouncement(request: CreateAnnouncementRequest): Promise<void> { return this.store.createAnnouncement(request); }
   updateAnnouncement(request: UpdateAnnouncementRequest): Promise<void> { return this.store.updateAnnouncement(request); }

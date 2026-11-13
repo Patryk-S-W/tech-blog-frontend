@@ -1,0 +1,67 @@
+.article-page {
+  min-height: 70vh;
+}
+
+.article-content {
+  max-width: 860px;
+  line-height: 1.8;
+}
+
+.article-content h1 {
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.article-meta {
+  color: rgba(255, 255, 255, 0.72);
+}
+
+.article-image {
+  max-height: 480px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.article-body ::ng-deep {
+  p,
+  ul,
+  ol {
+    margin-bottom: 1rem;
+  }
+
+  h2,
+  h3,
+  h4 {
+    margin: 1.75rem 0 0.75rem;
+  }
+
+  pre {
+    max-width: 100%;
+    overflow-x: auto;
+    padding: 1rem;
+    border-radius: 8px;
+    background: #1a1a2e;
+  }
+
+  code {
+    color: #0dcaf0;
+  }
+
+  pre code {
+    color: inherit;
+    white-space: pre;
+  }
+
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+
+  a {
+    color: #0dcaf0;
+  }
+}
+
+.article-state {
+  padding: 3rem 0;
+}

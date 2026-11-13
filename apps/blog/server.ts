@@ -5,9 +5,12 @@ import AppServerModule from './src/main.server';
 import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
+import { SSR_RESPONSE_STATUS } from '@blog/shared/util';
+import { SERVER_API_URL, backendApiOrigin } from './src/app/server-api.config';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
+  const apiUrl = backendApiOrigin(process.env['BACKEND_UPSTREAM']);
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
@@ -42,7 +45,11 @@ export function app(): express.Express {
         documentFilePath: indexHtml,
         url: `${protocol}://${headers.host}${originalUrl}`,
         publicPath: browserDistFolder,
-        providers: [{ provide: APP_BASE_HREF, useValue: baseUrl }],
+        providers: [
+          { provide: APP_BASE_HREF, useValue: baseUrl },
+          { provide: SERVER_API_URL, useValue: apiUrl },
+          { provide: SSR_RESPONSE_STATUS, useValue: res },
+        ],
       })
       .then((html) => res.send(html))
       .catch((err) => next(err));

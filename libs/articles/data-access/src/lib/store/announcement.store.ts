@@ -1,16 +1,44 @@
 import { computed, inject } from '@angular/core';
+import { HttpErrorResponse } from '@angular/common/http';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 import { AnnouncementDto, CreateAnnouncementRequest, UpdateAnnouncementRequest } from '@blog/articles/entity';
 import { withCallState } from '@blog/shared/util';
 import { AnnouncementService } from '../services/announcement.service';
 
+type PublicArticleStatus = 'idle' | 'loading' | 'loaded' | 'not-found' | 'error';
+
 export const AnnouncementStore = signalStore(
   { providedIn: 'root' },
   withState({ announcements: [] as AnnouncementDto[], currentAnnouncement: null as AnnouncementDto | null, ownerAnnouncements: [] as AnnouncementDto[] }),
+  withState({
+    publicArticle: null as AnnouncementDto | null,
+    publicArticleStatus: 'idle' as PublicArticleStatus,
+    publicArticleError: null as string | null,
+  }),
   withCallState(),
   withComputed((store) => ({ latestFour: computed(() => store.announcements().slice(0, 4)), announcementCount: computed(() => store.announcements().length) })),
-  withMethods((store, service = inject(AnnouncementService)) => ({
+  withMethods((store, service = inject(AnnouncementService)) => {
+    let publicRequestId = 0;
+    return {
+    async loadPublicArticleById(id: number): Promise<void> {
+      const requestId = ++publicRequestId;
+      patchState(store, { publicArticle: null, publicArticleStatus: 'loading', publicArticleError: null });
+      try {
+        const article = await firstValueFrom(service.getPublishedAnnouncementById(id));
+        if (requestId !== publicRequestId) return;
+        patchState(store, { publicArticle: article, publicArticleStatus: 'loaded' });
+      } catch (error) {
+        if (requestId !== publicRequestId) return;
+        if (error instanceof HttpErrorResponse && error.status === 404) {
+          patchState(store, { publicArticleStatus: 'not-found' });
+          return;
+        }
+        const message = 'Failed to load article';
+        patchState(store, { publicArticleStatus: 'error', publicArticleError: message });
+        throw new Error(message, { cause: error });
+      }
+    },
     async loadPublishedAnnouncements(): Promise<void> {
       store.startCall();
       try {
@@ -78,5 +106,6 @@ export const AnnouncementStore = signalStore(
       }
     },
     clearCurrentAnnouncement(): void { patchState(store, { currentAnnouncement: null }); },
-  }))
+    };
+  })
 );

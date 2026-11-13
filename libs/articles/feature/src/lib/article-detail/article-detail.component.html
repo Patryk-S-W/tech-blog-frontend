@@ -1,0 +1,59 @@
+<main class="article-page bg-dark-blog" [attr.aria-busy]="status() === 'loading'">
+  <div class="container py-4">
+    @if (invalidId()) {
+      <section class="article-state text-light" aria-labelledby="article-state-title">
+        <h1 id="article-state-title">Article not found</h1>
+        <a routerLink="/recent-articles" class="text-info">Back to articles</a>
+      </section>
+    } @else {
+      @switch (status()) {
+        @case ('loading') {
+          <section class="article-state text-light" aria-labelledby="article-state-title">
+            <h1 id="article-state-title">Loading article</h1>
+            <p role="status" aria-live="polite">Loading article…</p>
+          </section>
+        }
+        @case ('not-found') {
+          <section class="article-state text-light" aria-labelledby="article-state-title">
+            <h1 id="article-state-title">Article not found</h1>
+            <p>This article may have been removed or is not available.</p>
+            <a routerLink="/recent-articles" class="text-info">Back to articles</a>
+          </section>
+        }
+        @case ('error') {
+          <section class="article-state text-light" aria-labelledby="article-state-title">
+            <h1 id="article-state-title">Couldn't load this article</h1>
+            <p>{{ error() || 'Please try again.' }}</p>
+            <button type="button" class="btn btn-outline-info me-2" (click)="retry()">Retry</button>
+            <a routerLink="/recent-articles" class="text-info">Back to articles</a>
+          </section>
+        }
+        @case ('loaded') {
+          @if (article(); as item) {
+            <article class="article-content text-light mx-auto">
+              <a routerLink="/recent-articles" class="text-info d-inline-block mb-3">Back to articles</a>
+              <h1>{{ item.title }}</h1>
+              <div class="article-meta d-flex flex-wrap gap-3 mb-4">
+                @if (item.category) { <span>{{ item.category }}</span> }
+                @if (item.publishedAt) {
+                  <time [attr.datetime]="item.publishedAt">{{ item.publishedAt | date: 'dd.MM.yyyy' }}</time>
+                }
+                @if (item.duration) { <span>{{ item.duration }}</span> }
+              </div>
+              @if (item.image) {
+                <img class="article-image img-fluid rounded mb-4" [src]="item.image" [alt]="item.title || ''" />
+              }
+              <div class="article-body" [innerHTML]="item.text | markdown"></div>
+            </article>
+          }
+        }
+        @default {
+          <section class="article-state text-light" aria-labelledby="article-state-title">
+            <h1 id="article-state-title">Loading article</h1>
+            <p role="status" aria-live="polite">Loading article…</p>
+          </section>
+        }
+      }
+    }
+  </div>
+</main>
