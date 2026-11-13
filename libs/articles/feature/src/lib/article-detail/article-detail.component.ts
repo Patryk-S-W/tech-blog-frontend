@@ -1,22 +1,25 @@
 import { DatePipe } from '@angular/common';
-import { Component, DestroyRef, inject, signal } from '@angular/core';
+import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
 import { SSR_RESPONSE_STATUS } from '@blog/shared/util';
 import { MarkdownPipe } from '@blog/shared/ui';
+import { ArticleMetadataService } from './article-metadata.service';
 
 @Component({
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.scss'],
   imports: [DatePipe, RouterLink, MarkdownPipe],
+  providers: [ArticleMetadataService],
 })
 export class ArticleDetailComponent {
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
   private readonly facade = inject(AnnouncementsFacade);
   private readonly responseStatus = inject(SSR_RESPONSE_STATUS);
+  private readonly metadata = inject(ArticleMetadataService);
   private articleId: number | null = null;
 
   readonly article = this.facade.publicArticle;
@@ -25,6 +28,13 @@ export class ArticleDetailComponent {
   readonly invalidId = signal(false);
 
   constructor() {
+    effect(() => {
+      const status = this.status();
+      const article = this.article();
+      if (!this.invalidId() && status === 'loaded' && article) this.metadata.apply(article);
+      else this.metadata.reset(this.invalidId() || status === 'not-found' || status === 'error');
+    });
+    this.destroyRef.onDestroy(() => this.metadata.reset());
     this.route.paramMap.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((params) => {
       const rawId = params.get('id');
       const id = rawId !== null && /^[1-9]\d*$/.test(rawId) ? Number(rawId) : NaN;
