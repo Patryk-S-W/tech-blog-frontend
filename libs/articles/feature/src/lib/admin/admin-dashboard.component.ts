@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
+import { Component, OnInit, inject, PLATFORM_ID, signal } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
@@ -17,6 +17,7 @@ export class AdminDashboardComponent implements OnInit {
   readonly announcements = this.facade.ownerAnnouncements;
   readonly isLoading = this.facade.isLoading;
   readonly error = this.facade.error;
+  readonly publicationPending = signal(false);
 
   ngOnInit(): void {
     if (isPlatformBrowser(this.platformId)) {
@@ -27,6 +28,20 @@ export class AdminDashboardComponent implements OnInit {
   onDelete(id: number): void {
     if (confirm('Are you sure you want to delete this announcement?')) {
       void this.facade.deleteAnnouncement(id).catch(() => {});
+    }
+  }
+
+  async setPublished(id: number, publish: boolean): Promise<void> {
+    if (this.publicationPending() || this.isLoading()) return;
+    this.publicationPending.set(true);
+    this.facade.clearError();
+    try {
+      if (publish) await this.facade.publishAnnouncement(id);
+      else await this.facade.unpublishAnnouncement(id);
+    } catch {
+      // The facade exposes a safe error and leaves owner state unchanged on failure.
+    } finally {
+      this.publicationPending.set(false);
     }
   }
 

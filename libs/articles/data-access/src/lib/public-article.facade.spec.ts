@@ -2,9 +2,10 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AnnouncementsFacade } from './announcements.facade';
+import { AnnouncementDto } from '@blog/articles/entity';
 
 describe('public article detail', () => {
-  const article = { id: 1, title: 'Article', image: '', text: 'Body', category: 'Test', duration: '5', button: 'Read', publishedAt: null };
+  const article: AnnouncementDto = { id: 1, title: 'Article', image: '', text: 'Body', category: 'Test', duration: '5', button: 'Read', isPublished: true, publishedAt: null };
   beforeEach(() => TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] }));
   afterEach(() => TestBed.inject(HttpTestingController).verify());
 

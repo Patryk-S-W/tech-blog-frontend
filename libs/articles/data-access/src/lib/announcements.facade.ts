@@ -29,6 +29,8 @@ export class AnnouncementsFacade {
   createAnnouncement(request: CreateAnnouncementRequest): Promise<void> { return this.store.createAnnouncement(request); }
   updateAnnouncement(request: UpdateAnnouncementRequest): Promise<void> { return this.store.updateAnnouncement(request); }
   deleteAnnouncement(id: number): Promise<void> { return this.store.deleteAnnouncement(id); }
+  publishAnnouncement(id: number): Promise<void> { return this.store.publishAnnouncement(id); }
+  unpublishAnnouncement(id: number): Promise<void> { return this.store.unpublishAnnouncement(id); }
   clearCurrentAnnouncement(): void { this.store.clearCurrentAnnouncement(); }
   clearError(): void { this.store.clearError(); }
 }

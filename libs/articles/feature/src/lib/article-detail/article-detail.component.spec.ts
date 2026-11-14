@@ -28,6 +28,7 @@ describe('ArticleDetailComponent', () => {
     category: 'Tech',
     duration: '5 min',
     button: 'Read',
+    isPublished: true,
     publishedAt: '2026-11-11T12:00:00Z',
   };
 

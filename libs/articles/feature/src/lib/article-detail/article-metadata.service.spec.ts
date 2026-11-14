@@ -8,7 +8,7 @@ describe('ArticleMetadataService', () => {
   const article = {
     id: 7, title: 'Łódź & "code" <img src=x onerror=alert(1)>', image: '/images/post.png',
     text: '# Heading\n\nA **short** [summary](https://example.invalid).',
-    category: 'Tech', duration: '5', button: 'Read', publishedAt: '2026-11-11T12:00:00Z',
+    category: 'Tech', duration: '5', button: 'Read', isPublished: true, publishedAt: '2026-11-11T12:00:00Z',
   };
   beforeEach(() => TestBed.configureTestingModule({ providers: [ArticleMetadataService] }));
   afterEach(() => TestBed.inject(ArticleMetadataService).reset());

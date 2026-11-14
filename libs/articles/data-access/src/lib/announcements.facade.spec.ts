@@ -4,9 +4,10 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AnnouncementsFacade } from './announcements.facade';
 import { AnnouncementEditorFacade, provideAnnouncementEditor } from './announcement-editor.facade';
+import { AnnouncementDto } from '@blog/articles/entity';
 
 describe('announcement facades', () => {
-  const item = { id: 1, title: 'Test', image: '', text: 'Body', category: 'Test', duration: '5', button: 'Read', publishedAt: null };
+  const item: AnnouncementDto = { id: 1, title: 'Test', image: '', text: 'Body', category: 'Test', duration: '5', button: 'Read', isPublished: true, publishedAt: null };
   beforeEach(() => TestBed.configureTestingModule({
     providers: [provideHttpClient(), provideHttpClientTesting()],
   }));
