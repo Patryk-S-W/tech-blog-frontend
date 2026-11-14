@@ -1,10 +1,11 @@
-import { PLATFORM_ID } from '@angular/core';
+import { PLATFORM_ID, signal } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { ActivatedRoute, convertToParamMap, provideRouter, Router, RouterLink, UrlTree } from '@angular/router';
-import { AnnouncementEditorFacade, provideAnnouncementEditor } from '@blog/articles/data-access';
+import { AnnouncementEditorFacade, AnnouncementsFacade, provideAnnouncementEditor } from '@blog/articles/data-access';
+import { AnnouncementDto, UpdateAnnouncementRequest } from '@blog/articles/entity';
 import { PostEditorComponent } from './post-editor.component';
 
 describe('PostEditorComponent', () => {
@@ -12,7 +13,59 @@ describe('PostEditorComponent', () => {
     id: 7, title: 'Original title', image: '', text: 'Original text',
     category: 'Test', duration: '5', button: 'Read',
   };
-  const existing = { ...initialValues, publishedAt: null };
+  const existing = { ...initialValues, isPublished: true, publishedAt: null };
+
+  function usePublicationFacadeMocks() {
+    const currentAnnouncement = signal<AnnouncementDto | null>(existing);
+    const currentValues = signal<UpdateAnnouncementRequest | null>(null);
+    const canUndo = signal(false);
+    const canRedo = signal(false);
+    const isLoading = signal(false);
+    const error = signal<string | null>(null);
+    let history: UpdateAnnouncementRequest[] = [];
+    let historyIndex = -1;
+    const syncHistory = (): void => {
+      currentValues.set(historyIndex >= 0 ? history[historyIndex] : null);
+      canUndo.set(historyIndex > 0);
+      canRedo.set(historyIndex < history.length - 1);
+    };
+    const editor = {
+      currentAnnouncement,
+      currentValues,
+      canUndo,
+      canRedo,
+      isLoading,
+      error,
+      loadMyAnnouncementById: jest.fn().mockResolvedValue(undefined),
+      initialize: jest.fn((values: UpdateAnnouncementRequest) => {
+        history = [{ ...values }];
+        historyIndex = 0;
+        syncHistory();
+      }),
+      updateField: jest.fn((field: keyof UpdateAnnouncementRequest, value: string | number) => {
+        const current = history[historyIndex];
+        if (!current) return;
+        history = [...history.slice(0, historyIndex + 1), { ...current, [field]: value }];
+        historyIndex++;
+        syncHistory();
+      }),
+      undo: jest.fn(() => { if (historyIndex > 0) historyIndex--; syncHistory(); }),
+      redo: jest.fn(() => { if (historyIndex < history.length - 1) historyIndex++; syncHistory(); }),
+      reset: jest.fn(),
+      clearError: jest.fn(() => error.set(null)),
+      publishAnnouncement: jest.fn<Promise<void>, [number]>(),
+      unpublishAnnouncement: jest.fn<Promise<void>, [number]>(),
+    };
+    const announcements = {
+      isLoading: signal(false),
+      error: signal<string | null>(null),
+      clearError: jest.fn(),
+      clearCurrentAnnouncement: jest.fn(),
+    };
+    TestBed.overrideProvider(AnnouncementEditorFacade, { useValue: editor });
+    TestBed.overrideProvider(AnnouncementsFacade, { useValue: announcements });
+    return { editor, currentAnnouncement, currentValues, canUndo, canRedo, error };
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -57,6 +110,8 @@ describe('PostEditorComponent', () => {
     expect(component.currentValues()).toEqual(initialValues);
     expect(component.canUndo()).toBe(false);
     expect(component.canRedo()).toBe(false);
+    expect(fixture.nativeElement.textContent).toContain('Published');
+    expect(fixture.nativeElement.querySelector('.publication-panel time')).toBeNull();
 
     const editable = [
       ['title', 'Changed title'],
@@ -140,6 +195,76 @@ describe('PostEditorComponent', () => {
     expect(navigate).toHaveBeenCalledWith(['/admin']);
   });
 
+  it('changes publication only from a clean form after the server response', async () => {
+    const state = usePublicationFacadeMocks();
+    const fixture = TestBed.createComponent(PostEditorComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    let complete!: () => void;
+    state.editor.unpublishAnnouncement.mockImplementation(() => new Promise<void>((resolve) => {
+      complete = () => {
+        state.currentAnnouncement.set({ ...existing, isPublished: false });
+        resolve();
+      };
+    }));
+
+    const transition = component.setPublished(false);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Published');
+    expect(fixture.nativeElement.querySelector('.publication-panel button').disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('#title').disabled).toBe(true);
+    expect(fixture.nativeElement.querySelector('button[type="submit"]').disabled).toBe(true);
+    expect(component.canDeactivate()).toBe(false);
+    await component.setPublished(true);
+    expect(state.editor.unpublishAnnouncement).toHaveBeenCalledTimes(1);
+    expect(state.editor.publishAnnouncement).not.toHaveBeenCalled();
+
+    complete();
+    await transition;
+    fixture.detectChanges();
+    expect(state.currentAnnouncement()?.isPublished).toBe(false);
+    expect(fixture.nativeElement.textContent).toContain('Draft');
+    expect(component.currentValues()).toEqual(initialValues);
+    expect(component.isDirty()).toBe(false);
+    expect(component.canDeactivate()).toBe(true);
+  });
+
+  it('blocks publication while dirty and preserves text/history/status after transition failure', async () => {
+    const state = usePublicationFacadeMocks();
+    const fixture = TestBed.createComponent(PostEditorComponent);
+    const component = fixture.componentInstance;
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    component.text = 'Changed text';
+    component.onFieldChange('text', component.text);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain('Save changes before changing publication.');
+    await component.setPublished(false);
+    expect(state.editor.unpublishAnnouncement).not.toHaveBeenCalled();
+    expect(component.currentValues()?.text).toBe('Changed text');
+    component.undo();
+    expect(component.isDirty()).toBe(false);
+
+    state.editor.unpublishAnnouncement.mockImplementation(async () => {
+      state.error.set('Failed to unpublish announcement');
+      throw new Error('conflict');
+    });
+    await component.setPublished(false);
+    fixture.detectChanges();
+
+    expect(state.currentAnnouncement()?.isPublished).toBe(true);
+    expect(component.currentValues()).toEqual(initialValues);
+    expect(component.canRedo()).toBe(true);
+    expect(component.isDirty()).toBe(false);
+    expect(component.text).toBe('Original text');
+    expect(fixture.nativeElement.textContent).toContain('Failed to unpublish announcement');
+    expect(fixture.nativeElement.textContent).toContain('Published');
+  });
+
   it('activates the Cancel link through RouterLink', async () => {
     const fixture = TestBed.createComponent(PostEditorComponent);
     const router = TestBed.inject(Router);
@@ -170,6 +295,8 @@ describe('PostEditorComponent', () => {
       return true;
     });
     fixture.detectChanges();
+    expect(fixture.nativeElement.textContent).toContain("Drafts aren't public until published.");
+    expect(fixture.nativeElement.querySelector('button[type="submit"]').textContent).toContain('Create draft');
     const http = TestBed.inject(HttpTestingController);
     component.title = 'New post';
     component.text = 'New content';
@@ -194,7 +321,7 @@ describe('PostEditorComponent', () => {
     await component.onSubmit();
     const success = http.expectOne('/api/v1/announcement');
     expect(success.request.method).toBe('POST');
-    success.flush({ ...existing, id: 8, title: 'New post', text: 'New content' });
+    success.flush({ ...existing, id: 8, title: 'New post', text: 'New content', isPublished: false });
     await retry;
     expect(component.isDirty()).toBe(false);
     expect(navigate).toHaveBeenCalledTimes(1);

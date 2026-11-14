@@ -80,4 +80,12 @@ export class AnnouncementService {
   deleteAnnouncement(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/announcement/${id}`);
   }
+
+  publishAnnouncement(id: number): Observable<AnnouncementDto> {
+    return this.http.post<AnnouncementDto>(`${this.baseUrl}/announcement/${id}/publish`, null);
+  }
+
+  unpublishAnnouncement(id: number): Observable<AnnouncementDto> {
+    return this.http.post<AnnouncementDto>(`${this.baseUrl}/announcement/${id}/unpublish`, null);
+  }
 }

@@ -2,10 +2,30 @@ import { TestBed } from '@angular/core/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AnnouncementService } from './announcement.service';
+import { AnnouncementDto } from '@blog/articles/entity';
 const environment = { apiUrl: '' };
 
 
 describe('API routing', () => {
+  it.each(['publish', 'unpublish'] as const)('POSTs a null body to the protected %s endpoint and returns the server DTO', (action) => {
+    TestBed.configureTestingModule({ providers: [provideHttpClient(), provideHttpClientTesting()] });
+    const service = TestBed.inject(AnnouncementService);
+    const method = action === 'publish' ? 'publishAnnouncement' : 'unpublishAnnouncement';
+    const received = jest.fn();
+    service[method](7).subscribe(received);
+    const http = TestBed.inject(HttpTestingController);
+    const request = http.expectOne(`/api/v1/announcement/7/${action}`);
+    expect(request.request.method).toBe('POST');
+    expect(request.request.body).toBeNull();
+    const item: AnnouncementDto = {
+      id: 7, title: 'Server title', image: '', text: 'Body', category: 'Test', duration: '5', button: 'Read',
+      isPublished: action === 'publish', publishedAt: '2026-11-11T12:00:00Z',
+    };
+    request.flush(item);
+    expect(received).toHaveBeenCalledWith(item);
+    http.verify();
+  });
+
   it('keeps production URLs same-origin and preserves public API paths', () => {
     TestBed.configureTestingModule({
       providers: [provideHttpClient(), provideHttpClientTesting()],
@@ -16,7 +36,10 @@ describe('API routing', () => {
     announcements.getPublishedAnnouncements({ page: 2, pageSize: 3 }).subscribe(received);
     const list = http.expectOne(`${environment.apiUrl}/api/v1/blog/announcements?page=2&pageSize=3`);
     expect(list.request.method).toBe('GET');
-    const items = [{ id: 7, title: 'Published announcement' }];
+    const items: AnnouncementDto[] = [{
+      id: 7, title: 'Published announcement', image: '', text: 'Body', category: 'Test',
+      duration: '5', button: 'Read', isPublished: true, publishedAt: null,
+    }];
     list.flush({ items, totalCount: 4, page: 2, pageSize: 3, totalPages: 2, hasPrevious: true, hasNext: false });
     expect(received).toHaveBeenCalledWith(items);
 
@@ -44,7 +67,7 @@ describe('API routing', () => {
     const announcementCreate = http.expectOne(`${environment.apiUrl}/api/v1/announcement`);
     expect(announcementCreate.request.method).toBe('POST');
     expect(announcementCreate.request.body).toEqual(announcementBody);
-    const announcementDto = { ...announcementBody, id: 7, publishedAt: null };
+    const announcementDto: AnnouncementDto = { ...announcementBody, id: 7, isPublished: false, publishedAt: null };
     announcementCreate.flush(announcementDto, { status: 201, statusText: 'Created' });
     expect(createdAnnouncement).toHaveBeenCalledWith(announcementDto);
 

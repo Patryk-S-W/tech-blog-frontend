@@ -7,7 +7,7 @@ import {
   inject,
   PLATFORM_ID,
 } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
+import { DatePipe, isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { MarkdownPipe } from '@blog/shared/ui';
@@ -18,7 +18,7 @@ import { UpdateAnnouncementRequest } from '@blog/articles/entity';
   selector: 'app-post-editor',
   templateUrl: './post-editor.component.html',
   styleUrls: ['./post-editor.component.scss'],
-  imports: [FormsModule, MarkdownPipe, RouterLink],
+  imports: [FormsModule, MarkdownPipe, RouterLink, DatePipe],
 })
 export class PostEditorComponent implements OnInit, OnDestroy {
   private readonly announcementsFacade = inject(AnnouncementsFacade);
@@ -41,13 +41,15 @@ export class PostEditorComponent implements OnInit, OnDestroy {
   readonly canRedo = this.editor.canRedo;
   readonly currentValues = this.editor.currentValues;
   private readonly submitting = signal(false);
+  readonly publicationPending = signal(false);
   private readonly savedBaseline = signal<UpdateAnnouncementRequest | null>(null);
   readonly isDirty = computed(() => {
     const current = this.currentValues();
     const baseline = this.savedBaseline();
     return !!current && !!baseline && editableFields.some((field) => current[field] !== baseline[field]);
   });
-  readonly isLoading = computed(() => this.editor.isLoading() || this.submitting() || this.announcementsFacade.isLoading());
+  readonly currentAnnouncement = this.editor.currentAnnouncement;
+  readonly isLoading = computed(() => this.editor.isLoading() || this.submitting() || this.publicationPending() || this.announcementsFacade.isLoading());
   readonly error = computed(() => this.editor.error() ?? this.announcementsFacade.error());
 
   private readonly beforeUnload = (event: BeforeUnloadEvent): void => {
@@ -96,7 +98,7 @@ export class PostEditorComponent implements OnInit, OnDestroy {
   }
 
   canDeactivate(): boolean {
-    if (this.submitting() || this.announcementsFacade.isLoading()) return false;
+    if (this.submitting() || this.publicationPending() || this.announcementsFacade.isLoading()) return false;
     return !this.isDirty() || !isPlatformBrowser(this.platformId) || window.confirm('You have unsaved changes. Leave this page?');
   }
 
@@ -121,6 +123,22 @@ export class PostEditorComponent implements OnInit, OnDestroy {
 
   retryLoad(): void {
     if (this.isEditMode && !this.isLoading()) void this.loadExisting();
+  }
+
+  async setPublished(publish: boolean): Promise<void> {
+    const item = this.currentAnnouncement();
+    if (!this.isEditMode || !item || this.isDirty() || this.isLoading()) return;
+    this.publicationPending.set(true);
+    this.editor.clearError();
+    this.announcementsFacade.clearError();
+    try {
+      if (publish) await this.editor.publishAnnouncement(item.id);
+      else await this.editor.unpublishAnnouncement(item.id);
+    } catch {
+      // The facade keeps the current publication state and exposes the safe error.
+    } finally {
+      this.publicationPending.set(false);
+    }
   }
 
   onFieldChange(field: string, value: string): void {

@@ -7,7 +7,7 @@ import { AnnouncementsFacade } from './announcements.facade';
 describe('article archive', () => {
   const article: AnnouncementDto = {
     id: 1, title: 'Article', image: '', text: 'Body', category: 'C# & .NET',
-    duration: '5', button: 'Read', publishedAt: null,
+    duration: '5', button: 'Read', isPublished: true, publishedAt: null,
   };
   function page(number: number): PagedResult<AnnouncementDto> {
     return {

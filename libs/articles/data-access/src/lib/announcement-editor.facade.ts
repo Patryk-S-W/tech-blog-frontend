@@ -12,6 +12,8 @@ export class AnnouncementEditorFacade {
   readonly isLoading = this.store.isLoading;
   readonly error = this.store.error;
   loadMyAnnouncementById(id: number): Promise<void> { return this.store.loadMyAnnouncementById(id); }
+  publishAnnouncement(id: number): Promise<void> { return this.store.publishAnnouncement(id); }
+  unpublishAnnouncement(id: number): Promise<void> { return this.store.unpublishAnnouncement(id); }
   initialize(values: UpdateAnnouncementRequest): void { this.store.initialize(values); }
   updateField(field: keyof UpdateAnnouncementRequest, value: string | number): void { this.store.updateField(field, value); }
   undo(): void { this.store.undo(); }

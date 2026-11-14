@@ -5,6 +5,45 @@
         {{ isEditMode ? "Edit Announcement" : "New Announcement" }}
       </h2>
 
+      @if (!isEditMode) {
+        <p class="text-light mb-3">Drafts aren't public until published.</p>
+      }
+
+      @if (isEditMode && currentAnnouncement(); as item) {
+        <section class="publication-panel text-light mb-4" aria-label="Publication status">
+          <div class="d-flex flex-wrap align-items-center gap-2">
+            <span class="badge" [class.bg-success]="item.isPublished" [class.bg-secondary]="!item.isPublished">
+              {{ item.isPublished ? "Published" : "Draft" }}
+            </span>
+            @if (item.publishedAt) {
+              <time class="small" [attr.datetime]="item.publishedAt">
+                First published {{ item.publishedAt | date: "dd.MM.yyyy HH:mm" }}
+              </time>
+            }
+            <button
+              type="button"
+              class="btn btn-sm btn-outline-info ms-auto"
+              [disabled]="!canEdit() || isLoading() || isDirty()"
+              (click)="setPublished(!item.isPublished)"
+            >
+              @if (publicationPending()) {
+                <span role="status">{{ item.isPublished ? "Unpublishing…" : "Publishing…" }}</span>
+              } @else {
+                {{ item.isPublished ? "Unpublish" : "Publish" }}
+              }
+            </button>
+          </div>
+          @if (item.isPublished) {
+            <p class="small mt-2 mb-0">Changes saved here are public. Unpublish first to edit privately.</p>
+          } @else {
+            <p class="small mt-2 mb-0">Drafts aren't public until published.</p>
+          }
+          @if (isDirty()) {
+            <p class="small mt-2 mb-0">Save changes before changing publication.</p>
+          }
+        </section>
+      }
+
       @if (error()) {
         <div class="alert alert-danger" role="alert">
           {{ error() }}
@@ -109,7 +148,7 @@
                 ><span class="visually-hidden">{{ isEditMode && !canEdit() ? "Loading…" : "Saving…" }}</span></span
               >
             }
-            {{ isEditMode ? "Update" : "Create" }}
+            {{ isEditMode ? "Save changes" : "Create draft" }}
           </button>
           <a routerLink="/admin" class="btn btn-outline-secondary">Cancel</a>
         </div>

@@ -143,6 +143,30 @@ export const AnnouncementStore = signalStore(
       }
     },
     clearCurrentAnnouncement(): void { patchState(store, { currentAnnouncement: null }); },
+    async publishAnnouncement(id: number): Promise<void> {
+      store.startCall();
+      try {
+        const item = await firstValueFrom(service.publishAnnouncement(id));
+        patchState(store, { ownerAnnouncements: store.ownerAnnouncements().map((entry) => entry.id === item.id ? item : entry) });
+        store.finishCall();
+      } catch (error) {
+        const message = 'Failed to publish announcement';
+        store.failCall(message);
+        throw new Error(message, { cause: error });
+      }
+    },
+    async unpublishAnnouncement(id: number): Promise<void> {
+      store.startCall();
+      try {
+        const item = await firstValueFrom(service.unpublishAnnouncement(id));
+        patchState(store, { ownerAnnouncements: store.ownerAnnouncements().map((entry) => entry.id === item.id ? item : entry) });
+        store.finishCall();
+      } catch (error) {
+        const message = 'Failed to unpublish announcement';
+        store.failCall(message);
+        throw new Error(message, { cause: error });
+      }
+    },
     };
   })
 );

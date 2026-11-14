@@ -6,6 +6,7 @@ export interface AnnouncementDto {
   category: string;
   duration: string;
   button: string;
+  isPublished: boolean;
   publishedAt: string | null;
 }
 
