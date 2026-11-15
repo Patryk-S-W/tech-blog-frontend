@@ -58,7 +58,7 @@ describe('HomeComponent', () => {
     ]);
     fixture.detectChanges();
 
-    const lead = fixture.nativeElement.querySelector('.lead-story');
+    const lead = fixture.nativeElement.querySelector('.featured-article');
     expect(lead.classList.contains('text-only')).toBe(true);
     expect(lead.querySelector('img')).toBeNull();
     expect(lead.textContent).toContain('Banana Pi BPI-R4 Pro');

@@ -1,96 +1,91 @@
-<main role="main">
-  <section class="home">
-    <div class="container">
-      @if (isLoading()) {
-        <div class="py-5 text-light" role="status">
-          <div class="spinner-border text-info" role="status">
-            <span class="visually-hidden">Loading...</span>
-          </div>
-        </div>
-      } @else if (error()) {
-        <div class="py-5">
-          <div class="alert alert-warning">{{ error() }}</div>
-        </div>
-      } @else {
-        @if (latestFour().length > 0) {
-          <section
-            class="lead-story"
-            [class.text-only]="!latestFour()[0].image"
-            aria-label="Latest article"
-          >
-            @if (latestFour()[0].image) {
-              <div class="lead-media">
-                <img
-                  [src]="latestFour()[0].image"
-                  class="lead-image"
-                  [alt]="latestFour()[0].title"
-                />
-              </div>
-            }
+<main class="journal" role="main">
+  <div class="container journal-container">
+    <section class="intro" aria-labelledby="author-name">
+      <p class="eyebrow">TECH JOURNAL <span>·</span> WEB DEVELOPMENT <span>·</span> AI</p>
+      <h1 id="author-name">Patryk Sadowski<span class="accent">.</span></h1>
+      <p class="intro-copy">
+        Software developer from Poland, focused on web development and AI.
+      </p>
+      <a routerLink="/about-me" class="about-link">About me <span aria-hidden="true">↗</span></a>
+    </section>
 
-            <div class="lead-copy">
-              <span class="eyebrow">Latest story</span>
-              <span class="category">{{ latestFour()[0].category }}</span>
-              <h1>
-                <strong>{{ latestFour()[0].title }}</strong>
-              </h1>
-              <div
-                class="lead-preview"
-                [innerHTML]="latestFour()[0].text | markdown"
-              ></div>
-              <a
-                [routerLink]="['/blog', latestFour()[0].id]"
-                class="read-link"
-              >
-                {{ latestFour()[0].button }}
+    @if (isLoading()) {
+      <div class="loading-state" role="status" aria-live="polite">
+        <div class="spinner-border text-info" aria-hidden="true"></div>
+        <span class="visually-hidden">Loading articles…</span>
+      </div>
+    } @else if (error()) {
+      <div class="alert alert-warning" role="alert">{{ error() }}</div>
+    } @else {
+      @if (latestFour().length > 0) {
+        <section class="latest-section" aria-labelledby="latest-title">
+          <div class="section-heading">
+            <p class="eyebrow">// LATEST ARTICLE</p>
+            <a routerLink="/recent-articles">All articles <span aria-hidden="true">→</span></a>
+          </div>
+
+          <article class="featured-article" [class.text-only]="!latestFour()[0].image">
+            @if (latestFour()[0].image) {
+              <img
+                class="featured-image"
+                [src]="latestFour()[0].image"
+                [alt]="latestFour()[0].title"
+              />
+            }
+            <div class="featured-copy">
+              <div class="article-meta">
+                @if (latestFour()[0].category) {
+                  <span class="article-category">{{ latestFour()[0].category }}</span>
+                }
+                @if (latestFour()[0].publishedAt) {
+                  <time [attr.datetime]="latestFour()[0].publishedAt">
+                    {{ latestFour()[0].publishedAt | date: "dd.MM.yyyy" }}
+                  </time>
+                }
+              </div>
+              <h2 id="latest-title">
+                <a [routerLink]="['/blog', latestFour()[0].id]">{{ latestFour()[0].title }}</a>
+              </h2>
+              <div class="article-excerpt" [innerHTML]="latestFour()[0].text | markdown"></div>
+              <a class="read-link" [routerLink]="['/blog', latestFour()[0].id]">
+                {{ latestFour()[0].button }} <span aria-hidden="true">→</span>
               </a>
             </div>
-          </section>
-        }
-
-        @if (latestFour().length > 1) {
-          <section class="more-stories" aria-label="More articles">
-            <div class="section-label">More to explore</div>
-            <div class="story-grid">
-              @for (
-                article of latestFour().slice(1);
-                track trackById($index, article)
-              ) {
-                <article class="story" [class.text-only]="!article.image">
-                  @if (article.image) {
-                    <img
-                      [src]="article.image"
-                      [alt]="article.title"
-                      class="story-image"
-                    />
-                  }
-                  <div class="story-copy">
-                    <div class="story-meta">
-                      <a [routerLink]="['/blog', article.id]" class="text-info">
-                        <i class="fas fa-code" aria-hidden="true"></i>
-                        {{ article.category }}
-                      </a>
-                      <time [attr.datetime]="article.publishedAt">
-                        {{ article.publishedAt | date: "dd.MM.yyyy" }}
-                      </time>
-                    </div>
-                    <a
-                      [routerLink]="['/blog', article.id]"
-                      class="story-title"
-                    >
-                      <h2>{{ article.title }}</h2>
-                      <div
-                        class="story-preview"
-                        [innerHTML]="article.text | markdown"
-                      ></div>
-                    </a>
-                  </div>
-                </article>
-              }
-            </div>
-          </section>
-        }
+          </article>
+        </section>
+      } @else {
+        <section class="empty-journal" aria-live="polite">
+          <p class="eyebrow">// THE JOURNAL</p>
+          <h2>No articles published yet.</h2>
+        </section>
       }
-    </div>
-  </section>
+
+      @if (latestFour().length > 1) {
+        <section class="more-stories" aria-labelledby="more-title">
+          <div class="section-heading">
+            <p class="eyebrow" id="more-title">// MORE TO READ</p>
+          </div>
+          <div class="story-list">
+            @for (article of latestFour().slice(1); track trackById($index, article)) {
+              <article class="story" [class.text-only]="!article.image">
+                @if (article.image) {
+                  <img [src]="article.image" [alt]="article.title" />
+                }
+                <div class="story-copy">
+                  <div class="article-meta">
+                    @if (article.category) { <span class="article-category">{{ article.category }}</span> }
+                    @if (article.publishedAt) {
+                      <time [attr.datetime]="article.publishedAt">{{ article.publishedAt | date: "dd.MM.yyyy" }}</time>
+                    }
+                  </div>
+                  <h3><a [routerLink]="['/blog', article.id]">{{ article.title }}</a></h3>
+                  <div class="story-excerpt" [innerHTML]="article.text | markdown"></div>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      }
+    }
+  </div>
 </main>

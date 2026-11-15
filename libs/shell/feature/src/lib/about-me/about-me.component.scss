@@ -1,0 +1,51 @@
+:host { display: block; }
+
+.about-page {
+  min-height: 72vh;
+  padding: clamp(3rem, 8vw, 7rem) 0;
+  color: #e9eaf0;
+  background: radial-gradient(ellipse at 82% 8%, #202d36 0, transparent 38%), #111216;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+
+.about-container { max-width: 1060px; }
+
+.profile-card {
+  max-width: 850px;
+  padding: clamp(1.5rem, 5vw, 4rem);
+  border: 1px solid #ffffff20;
+  background: #191b21;
+}
+
+.eyebrow {
+  margin: 0;
+  color: #65e0c1;
+  font: 600 .72rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
+  letter-spacing: .12em;
+}
+
+.profile-card h1 {
+  margin: .9rem 0 .7rem;
+  color: #f3f3f7;
+  font-size: clamp(2.8rem, 8vw, 5rem);
+  font-weight: 650;
+  letter-spacing: -.065em;
+  line-height: .98;
+}
+
+.profile-card h1 span { color: #65e0c1; }
+.profile-intro { max-width: 640px; margin: 0; color: #b8bec9; font-size: clamp(1.05rem, 2vw, 1.3rem); line-height: 1.7; }
+.profile-topics { display: flex; flex-wrap: wrap; gap: .6rem; margin-top: 1.6rem; }
+
+.profile-topics span {
+  padding: .45rem .7rem;
+  border: 1px solid #ffffff25;
+  color: #cbd0d8;
+  font: .75rem ui-monospace, SFMono-Regular, Consolas, monospace;
+}
+
+.profile-links { display: flex; flex-wrap: wrap; gap: 1.3rem; margin-top: 2rem; padding-top: 1.2rem; border-top: 1px solid #ffffff20; }
+.profile-links a { color: #e9eaf0; font-size: .9rem; font-weight: 600; text-decoration: none; }
+.profile-links a span { color: #65e0c1; }
+.profile-links a:hover { color: #65e0c1; }
+.profile-links a:focus-visible { outline: 2px solid #65e0c1; outline-offset: 4px; }

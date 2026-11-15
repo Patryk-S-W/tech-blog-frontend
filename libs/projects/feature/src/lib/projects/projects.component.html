@@ -1,6 +1,9 @@
-<section class="bg-dark-blog">
-  <div class="container py-4">
-    <h1 class="h1 text-center text-white mb-4">Projects</h1>
+<main class="projects-page">
+  <div class="container projects-container">
+    <header class="projects-heading">
+      <p class="eyebrow">// SELECTED WORK</p>
+      <h1>Projects</h1>
+    </header>
 
     @if (isLoading()) {
       <div class="text-center py-5">
@@ -12,37 +15,32 @@
       <div class="alert alert-warning">{{ error() }}</div>
     } @else {
       @if (projects().length === 0) {
-        <div class="text-center text-light py-5">
-          <p>No projects yet.</p>
+        <div class="empty-projects" role="status">
+          <p class="eyebrow">// PROJECTS</p>
+          <p>No published projects yet.</p>
         </div>
       } @else {
-        <div class="row">
+        <div class="project-grid">
           @for (project of projects(); track trackById($index, project)) {
-            <div class="col-md-4 mb-4">
-              <a
-                [routerLink]="['/projects', project.id]"
-                class="text-decoration-none"
-              >
-                <div class="card bg-dark text-light h-100 project-card">
+            <article class="project-card">
+              <a [routerLink]="['/projects', project.id]" class="project-link">
+                @if (project.image) {
                   <img
                     [src]="project.image"
-                    class="card-img-top"
+                    class="project-image"
                     [alt]="project.title"
-                    style="height: 200px; object-fit: cover"
                   />
-                  <div class="card-body">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text text-muted">
-                      {{ project.shortDescription }}
-                    </p>
-                    <span class="badge bg-info">{{ project.author }}</span>
-                  </div>
+                }
+                <div class="project-copy">
+                  <h2>{{ project.title }}</h2>
+                  <p>{{ project.shortDescription }}</p>
+                  <span class="project-author">{{ project.author }}</span>
                 </div>
               </a>
-            </div>
+            </article>
           }
         </div>
       }
     }
   </div>
-</section>
+</main>

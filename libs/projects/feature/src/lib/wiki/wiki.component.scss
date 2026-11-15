@@ -1,58 +1,36 @@
-.wiki-content {
-  line-height: 1.8;
+:host { display: block; }
+
+.wiki-page {
+  min-height: 72vh;
+  padding: clamp(2.5rem, 6vw, 5rem) 0;
+  color: #e9eaf0;
+  background: radial-gradient(ellipse at 82% 8%, #202d36 0, transparent 38%), #111216;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
+
+.wiki-container { max-width: 1060px; }
+.wiki-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .36fr); gap: 2rem; }
+.wiki-main > a { color: #65e0c1 !important; }
+.wiki-main h1 { margin: .7rem 0 1rem; color: #f3f3f7; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 650; letter-spacing: -.05em; line-height: 1.04; }
+.wiki-main .badge { padding: .45rem .7rem; border: 1px solid #ffffff25; border-radius: 0; background: #191b21; color: #65e0c1; }
+.wiki-image { display: block; width: 100%; max-height: 460px; margin: 1.5rem 0; object-fit: cover; }
+.wiki-content { color: #c4c8d0; line-height: 1.8; }
 
 .wiki-content ::ng-deep {
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    color: #fff;
-    margin-top: 1.5rem;
-    margin-bottom: 0.75rem;
-  }
-
-  p {
-    margin-bottom: 1rem;
-  }
-
-  code {
-    background-color: #1a1a2e;
-    padding: 0.2rem 0.4rem;
-    border-radius: 4px;
-    color: #0dcaf0;
-  }
-
-  pre {
-    background-color: #1a1a2e;
-    padding: 1rem;
-    border-radius: 8px;
-    overflow-x: auto;
-
-    code {
-      background-color: transparent;
-      padding: 0;
-    }
-  }
-
-  a {
-    color: #0dcaf0;
-  }
-
-  img {
-    max-width: 100%;
-    border-radius: 8px;
-  }
-
-  ul,
-  ol {
-    margin-bottom: 1rem;
-  }
+  h2, h3, h4, h5, h6 { margin: 2rem 0 .8rem; color: #f3f3f7; }
+  p, ul, ol { margin-bottom: 1rem; }
+  a { color: #65e0c1; text-underline-offset: .2em; }
+  code { padding: .15rem .35rem; background: #20232b; color: #65e0c1; }
+  pre { max-width: 100%; overflow-x: auto; padding: 1rem; border: 1px solid #ffffff20; background: #191b21; }
+  pre code { padding: 0; background: transparent; color: inherit; }
+  img { max-width: 100%; height: auto; }
 }
 
-.card {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+.project-info { padding: 1.2rem; border: 1px solid #ffffff20; background: #191b21; }
+.project-info h2 { margin: 0 0 1rem; color: #65e0c1; font: 600 .72rem ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .1em; text-transform: uppercase; }
+.project-info p { overflow-wrap: anywhere; color: #b8bec9; font-size: .85rem; }
+.project-info a { color: #65e0c1; }
+
+@media (max-width: 767px) {
+  .wiki-grid { grid-template-columns: 1fr; }
 }
