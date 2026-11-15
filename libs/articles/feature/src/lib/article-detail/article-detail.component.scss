@@ -1,25 +1,33 @@
 .article-page {
   min-height: 70vh;
+  padding: clamp(2rem, 6vw, 5rem) 0;
+  background: radial-gradient(ellipse at 85% 0, #28353a 0, transparent 35%), #101513;
 }
 
 .article-content {
-  max-width: 860px;
-  line-height: 1.8;
+  max-width: 760px;
+  font-family: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+  line-height: 1.85;
 }
 
 .article-content h1 {
-  line-height: 1.2;
-  margin-bottom: 1rem;
+  color: #f5f1e9;
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  line-height: 1.04;
+  letter-spacing: -.045em;
+  margin: 0 0 1.25rem;
 }
 
 .article-meta {
-  color: rgba(255, 255, 255, 0.72);
+  color: #c4c9c2;
+  font: .8rem system-ui,sans-serif;
 }
 
 .article-image {
-  max-height: 480px;
+  max-height: 520px;
   width: 100%;
   object-fit: cover;
+  border-radius: 0 !important;
 }
 
 .article-body ::ng-deep {
@@ -40,11 +48,12 @@
     overflow-x: auto;
     padding: 1rem;
     border-radius: 8px;
-    background: #1a1a2e;
+    background: #1b2420;
+    border: 1px solid #ffffff20;
   }
 
   code {
-    color: #0dcaf0;
+    color: #e8b777;
   }
 
   pre code {
@@ -58,9 +67,14 @@
   }
 
   a {
-    color: #0dcaf0;
+    color: #e8b777;
+    text-decoration: underline;
+    text-underline-offset: .2em;
   }
 }
+
+.article-content > a { color:#e8b777; font: .8rem system-ui,sans-serif; }
+.article-content > a:focus-visible { outline:2px solid #e8b777; outline-offset:4px; }
 
 .article-state {
   padding: 3rem 0;
