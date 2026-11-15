@@ -20,7 +20,7 @@
       @if (latestFour().length > 0) {
         <section class="latest-section" aria-labelledby="latest-title">
           <div class="section-heading">
-            <p class="eyebrow">// LATEST ARTICLE</p>
+            <p class="eyebrow">LATEST ARTICLE</p>
             <a routerLink="/recent-articles">All articles <span aria-hidden="true">→</span></a>
           </div>
 
@@ -55,7 +55,7 @@
         </section>
       } @else {
         <section class="empty-journal" aria-live="polite">
-          <p class="eyebrow">// THE JOURNAL</p>
+          <p class="eyebrow">THE JOURNAL</p>
           <h2>No articles published yet.</h2>
         </section>
       }
@@ -63,7 +63,7 @@
       @if (latestFour().length > 1) {
         <section class="more-stories" aria-labelledby="more-title">
           <div class="section-heading">
-            <p class="eyebrow" id="more-title">// MORE TO READ</p>
+            <p class="eyebrow" id="more-title">MORE TO READ</p>
           </div>
           <div class="story-list">
             @for (article of latestFour().slice(1); track trackById($index, article)) {

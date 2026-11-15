@@ -1,7 +1,7 @@
 .article-page {
   min-height: 70vh;
   padding: clamp(2rem, 6vw, 5rem) 0;
-  background: radial-gradient(ellipse at 82% 8%, #202d36 0, transparent 38%), #111216;
+  background: #212529;
 }
 
 .article-content {
@@ -54,7 +54,7 @@
   }
 
   code {
-    color: #65e0c1;
+    color: #e8b777;
   }
 
   pre code {
@@ -68,14 +68,14 @@
   }
 
   a {
-    color: #65e0c1;
+    color: #e8b777;
     text-decoration: underline;
     text-underline-offset: .2em;
   }
 }
 
-.article-content > a { color:#65e0c1; font: .8rem system-ui,sans-serif; }
-.article-content > a:focus-visible { outline:2px solid #65e0c1; outline-offset:4px; }
+.article-content > a { color:#e8b777; font: .8rem system-ui,sans-serif; }
+.article-content > a:focus-visible { outline:2px solid #e8b777; outline-offset:4px; }
 
 .article-state {
   padding: 3rem 0;

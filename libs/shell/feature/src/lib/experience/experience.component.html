@@ -1,0 +1,66 @@
+<main class="experience-page">
+  <div class="container experience-container">
+    @if (caseStudy(); as study) {
+      <a class="back-link" routerLink="/about-me">← About me</a>
+
+      <article class="case-study">
+        <header class="case-header">
+          <p class="eyebrow">{{ study.category }} <span>·</span> EXAMPLE CASE STUDY</p>
+          <h1>{{ study.title }}</h1>
+          <p class="case-summary">{{ study.summary }}</p>
+          <p class="example-notice">Illustrative scenario — not a claim of completed client work.</p>
+        </header>
+
+        <section class="case-section" aria-labelledby="problem-title">
+          <p class="eyebrow">THE CHALLENGE</p>
+          <h2 id="problem-title">The problem</h2>
+          <p>{{ study.problem }}</p>
+        </section>
+
+        <section class="case-section" aria-labelledby="approach-title">
+          <p class="eyebrow">A PRACTICAL RESPONSE</p>
+          <h2 id="approach-title">Proposed approach</h2>
+          <ol>
+            @for (item of study.approach; track item) {
+              <li>{{ item }}</li>
+            }
+          </ol>
+        </section>
+
+        <section class="case-section" aria-labelledby="scope-title">
+          <p class="eyebrow">SCOPE</p>
+          <h2 id="scope-title">What the work covers</h2>
+          <ul class="scope-list">
+            @for (item of study.scope; track item) {
+              <li>{{ item }}</li>
+            }
+          </ul>
+        </section>
+
+        <section class="case-section validation-section" aria-labelledby="validation-title">
+          <p class="eyebrow">CHECK THE RESULT</p>
+          <h2 id="validation-title">How to validate it</h2>
+          <p>{{ study.validation }}</p>
+        </section>
+
+        <footer class="case-footer">
+          <div>
+            <p class="eyebrow">TECHNOLOGIES</p>
+            <ul class="technology-list">
+              @for (technology of study.technologies; track technology) {
+                <li>{{ technology }}</li>
+              }
+            </ul>
+          </div>
+          <a routerLink="/about-me" class="about-link">More about me <span aria-hidden="true">↗</span></a>
+        </footer>
+      </article>
+    } @else {
+      <section class="not-found" aria-labelledby="not-found-title">
+        <p class="eyebrow">EXPERIENCE</p>
+        <h1 id="not-found-title">This example is not available.</h1>
+        <a routerLink="/about-me" class="about-link">Back to About me <span aria-hidden="true">→</span></a>
+      </section>
+    }
+  </div>
+</main>

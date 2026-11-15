@@ -16,12 +16,17 @@
 body {
   font-size: 16px;
   color: #ffffff;
+  background: #212529;
   text-rendering: optimizeLegibility;
   font-weight: initial;
 }
 
+app-root > router-outlet + * {
+  flex: 1 0 auto;
+}
+
 .bg-dark-blog {
-  background: #110f16;
+  background: #212529;
 }
 
 .bg-darker-blog {
@@ -260,12 +265,12 @@ footer a {
   padding: 3px 10px;
   border: 1px solid rgba(27, 31, 35, 0.2);
   border-radius: 3px;
-  background-image: linear-gradient(-180deg, #fafbfc, #eff3f6 90%);
+  background: #f5f7fa;
   margin-left: 4px;
   font-weight: 600;
 
   &:hover {
-    background-image: linear-gradient(-180deg, #f0f3f6, #e6ebf1 90%);
+    background: #e6ebf1;
     border-color: rgba(27, 31, 35, 0.35);
     background-position: -0.5em;
   }
@@ -316,8 +321,8 @@ svg#clouds {
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
 
-$main-blue: #0076bd !default;
-$main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
+$main-blue: #e8b777 !default;
+$main-blue-rgb-015: rgba(232, 183, 119, 0.1) !default;
 
 #pageHeaderTitle {
   margin: 2rem 0;
@@ -426,7 +431,7 @@ $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(-70deg, #424242, transparent 50%);
+    background-image: none;
     opacity: 1;
     border-radius: 10px;
   }
@@ -528,32 +533,20 @@ $main-blue-rgb-015: rgba(0, 118, 189, 0.1) !default;
 }
 
 .blue::before {
-  background-image: linear-gradient(
-    -30deg,
-    $main-blue-rgb-015,
-    transparent 50%
-  );
+  background-image: none;
 }
 
 .blue:nth-child(2n)::before {
-  background-image: linear-gradient(30deg, $main-blue-rgb-015, transparent 50%);
+  background-image: none;
 }
 
 @media screen and (min-width: 769px) {
   .blue::before {
-    background-image: linear-gradient(
-      -80deg,
-      $main-blue-rgb-015,
-      transparent 50%
-    );
+    background-image: none;
   }
 
   .blue:nth-child(2n)::before {
-    background-image: linear-gradient(
-      80deg,
-      $main-blue-rgb-015,
-      transparent 50%
-    );
+    background-image: none;
   }
 }
 
