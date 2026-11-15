@@ -1,121 +1,94 @@
-.category-filter {
-  min-width: min(100%, 16rem);
-}
-
-.archive-pagination {
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-@media (max-width: 575px) {
-  .archive-pagination p { text-align: center; }
-}
+:host { display: block; }
 
 .bg-dark-blog {
   min-height: 72vh;
   padding: clamp(2.5rem, 6vw, 5rem) 0;
-  background: radial-gradient(ellipse at 88% 0, #29363a 0, transparent 34%), #101513;
-  color: #f5f1e9;
+  color: #e9eaf0;
+  background: radial-gradient(ellipse at 82% 8%, #202d36 0, transparent 38%), #111216;
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
-.bg-dark-blog > .container { max-width: 1040px; }
+.bg-dark-blog > .container { max-width: 1060px; }
 
 #pageHeaderTitle {
-  margin: 0 0 2.5rem;
-  color: #f5f1e9;
+  margin: 0 0 2rem;
+  color: #f3f3f7;
   text-align: left;
-  font: 500 clamp(2.5rem, 6vw, 4.5rem)/1 "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  letter-spacing: -.045em;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  font-weight: 650;
+  letter-spacing: -.055em;
   text-transform: none;
 }
 
-.archive-controls { padding-bottom: 1.25rem; border-bottom: 1px solid #ffffff25; }
+.archive-controls { padding-bottom: 1.25rem; border-bottom: 1px solid #ffffff20; }
 .category-filter { min-width: min(100%, 16rem); }
-
-.category-filter .form-select {
-  color: #f5f1e9;
-  background-color: #171e1b;
-  border-color: #ffffff35;
-}
+.category-filter .form-select { border-color: #ffffff30; background-color: #191b21; color: #e9eaf0; }
+.category-filter .form-select:focus { border-color: #65e0c1; box-shadow: 0 0 0 .2rem #65e0c133; }
+.category-filter .form-select option { color: #e9eaf0; background: #191b21; }
 
 .postcard {
   display: grid;
-  grid-template-columns: minmax(240px, .8fr) 1.2fr;
-  margin: 1.4rem 0;
+  grid-template-columns: minmax(220px, .65fr) 1.35fr;
+  margin: 1.25rem 0;
   overflow: hidden;
-  border: 1px solid #ffffff24;
+  border: 1px solid #ffffff20;
   border-radius: 0;
-  background: #171e1b;
-  color: #f5f1e9;
+  background: #191b21;
+  color: #e9eaf0;
   box-shadow: none;
 }
 
 .postcard::before { display: none; }
-.postcard.text-only { grid-template-columns: 1fr; }
-.postcard.text-only .postcard__text { max-width: 820px; }
+.postcard.text-only { display: block; min-height: 0; }
+.postcard.text-only .postcard__text,
+.postcard.text-only .postcard__preview-txt { height: auto; min-height: 0; }
 .postcard__img_link { display: block; overflow: hidden; }
-
-.postcard .postcard__img {
-  width: 100%;
-  height: 100%;
-  min-height: 250px;
-  max-height: none;
-  object-fit: cover;
-  filter: saturate(.72);
-  transition: transform .35s ease;
-}
-
+.postcard .postcard__img { display: block; width: 100%; height: 100%; min-height: 240px; object-fit: cover; filter: saturate(.76); transition: transform .3s ease; }
 .postcard:hover .postcard__img { transform: scale(1.025); }
 
 .postcard__text {
-  z-index: 1;
   display: flex;
+  min-width: 0;
   flex-direction: column;
-  justify-content: center;
-  padding: clamp(1.4rem, 4vw, 3rem);
-}
-
-.postcard__title {
-  margin: 0 0 .65rem;
-  font: 500 clamp(1.6rem, 3vw, 2.45rem)/1.08 "Iowan Old Style", "Palatino Linotype", Georgia, serif;
-  letter-spacing: -.025em;
-}
-
-.postcard__title a { color: #f5f1e9; }
-.postcard__title a:hover, .postcard__tagbox a { color: #e8b777; }
-
-.postcard__subtitle, .postcard__preview-txt {
-  color: #b8c0b9;
-  font: .9rem/1.75 system-ui, sans-serif;
-}
-
-.postcard__bar { width: 2.5rem; height: 2px; margin: 1.1rem 0; border-radius: 0; background: #d9a86c; }
-.postcard__preview-txt { max-height: 8.75rem; overflow: hidden; text-align: left; }
-
-.postcard__tagbox {
   justify-content: flex-start;
-  gap: .5rem;
-  margin: 1.25rem 0 0;
-  list-style: none;
-  font: .75rem system-ui, sans-serif;
+  padding: clamp(1.25rem, 3.5vw, 2.4rem);
 }
 
-.postcard__tagbox .tag__item {
-  margin: 0;
-  padding: .4rem .65rem;
-  border: 1px solid #ffffff27;
-  border-radius: 0;
-  background: #ffffff08;
-  color: #d2d7d1;
+.postcard.text-only .postcard__text { max-width: 850px; }
+.postcard__title { margin: .25rem 0 .65rem; font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 620; letter-spacing: -.035em; line-height: 1.12; }
+.postcard__title a { color: #f3f3f7; text-decoration: none; }
+.postcard__title a:hover { color: #65e0c1; }
+.postcard__subtitle { color: #9da5b1; font: .75rem system-ui, sans-serif; }
+.postcard__bar { width: 2rem; height: 2px; margin: .9rem 0; border-radius: 0; background: #65e0c1; }
+
+.postcard__preview-txt {
+  display: -webkit-box;
+  max-height: none;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  color: #bdc2cb;
+  font: .9rem/1.7 system-ui, sans-serif;
+  text-align: left;
 }
 
-.postcard__tagbox .play { border-color: #d9a86c; }
-.archive-pagination { padding: 1.2rem 0; border-top: 1px solid #ffffff25; }
-.bg-dark-blog :focus-visible { outline: 2px solid #e8b777; outline-offset: 4px; }
+.postcard__preview-txt p { margin: 0 0 .65rem; }
+.postcard__tagbox { display: flex; flex-flow: row wrap; justify-content: flex-start; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none; font: .75rem system-ui, sans-serif; }
+.postcard__tagbox .tag__item { margin: 0; padding: .4rem .65rem; border: 1px solid #ffffff25; border-radius: 0; background: #ffffff08; color: #cbd0d8; }
+.postcard__tagbox .play { border-color: #65e0c1; }
+.postcard__tagbox .play a { color: #65e0c1; }
+.archive-pagination { gap: 1rem; margin-top: 2rem; padding: 1.2rem 0; border-top: 1px solid #ffffff20; }
+.archive-pagination p { color: #b8bec9 !important; }
+.bg-dark-blog :focus-visible { outline: 2px solid #65e0c1; outline-offset: 4px; }
 
 @media (max-width: 767px) {
   .postcard { grid-template-columns: 1fr; }
-  .postcard .postcard__img { min-height: 0; max-height: 260px; aspect-ratio: 1.8; }
+  .postcard .postcard__img { height: auto; min-height: 0; max-height: 300px; aspect-ratio: 1.7; }
+}
+
+@media (max-width: 575px) {
+  .archive-pagination { flex-wrap: wrap; }
+  .archive-pagination p { order: -1; width: 100%; text-align: center; }
 }
 
 @media (prefers-reduced-motion: reduce) {
