@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AboutMeComponent } from './about-me.component';
+import { provideRouter } from '@angular/router';
 
 describe('AboutMeComponent', () => {
   let component: AboutMeComponent;
@@ -9,6 +10,7 @@ describe('AboutMeComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [AboutMeComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AboutMeComponent);
@@ -18,5 +20,15 @@ describe('AboutMeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('shows all three technology categories and example experience links together', () => {
+    const element: HTMLElement = fixture.nativeElement;
+
+    expect(element.querySelectorAll('.technology-card').length).toBe(3);
+    expect(element.textContent).toContain('Angular & web');
+    expect(element.textContent).toContain('.NET');
+    expect(element.textContent).toContain('Python');
+    expect(element.querySelectorAll('.experience-card').length).toBe(3);
   });
 });

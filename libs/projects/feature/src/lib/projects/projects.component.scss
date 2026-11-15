@@ -4,7 +4,7 @@
   min-height: 72vh;
   padding: clamp(3rem, 8vw, 6rem) 0;
   color: #e9eaf0;
-  background: radial-gradient(ellipse at 82% 8%, #202d36 0, transparent 38%), #111216;
+  background: #212529;
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -12,7 +12,7 @@
 
 .eyebrow {
   margin: 0;
-  color: #65e0c1;
+  color: #e8b777;
   font: 600 .72rem/1.6 ui-monospace, SFMono-Regular, Consolas, monospace;
   letter-spacing: .12em;
 }
@@ -22,16 +22,16 @@
 
 .project-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1rem; }
 .project-card { overflow: hidden; border: 1px solid #ffffff20; background: #191b21; transition: border-color .2s ease, transform .2s ease; }
-.project-card:hover { transform: translateY(-3px); border-color: #65e0c1; }
+.project-card:hover { transform: translateY(-3px); border-color: #e8b777; }
 .project-link { display: flex; height: 100%; flex-direction: column; color: inherit; text-decoration: none; }
 .project-image { display: block; width: 100%; aspect-ratio: 1.8; object-fit: cover; }
 .project-copy { display: flex; flex: 1; flex-direction: column; align-items: flex-start; padding: 1.4rem; }
 .project-copy h2 { margin: 0 0 .6rem; color: #f3f3f7; font-size: 1.45rem; font-weight: 620; letter-spacing: -.025em; }
 .project-copy p { margin: 0 0 1rem; color: #b8bec9; line-height: 1.65; }
-.project-author { margin-top: auto; color: #65e0c1; font: .72rem ui-monospace, SFMono-Regular, Consolas, monospace; }
+.project-author { margin-top: auto; color: #e8b777; font: .72rem ui-monospace, SFMono-Regular, Consolas, monospace; }
 .empty-projects { max-width: 680px; padding: 2rem; border: 1px solid #ffffff20; background: #191b21; }
 .empty-projects > p:last-child { margin: .55rem 0 0; color: #b8bec9; }
-.project-link:focus-visible { outline: 2px solid #65e0c1; outline-offset: 4px; }
+.project-link:focus-visible { outline: 2px solid #e8b777; outline-offset: 4px; }
 
 @media (max-width: 640px) {
   .project-grid { grid-template-columns: 1fr; }
