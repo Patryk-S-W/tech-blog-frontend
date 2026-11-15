@@ -16,7 +16,6 @@
 body {
   font-size: 16px;
   color: #ffffff;
-  background: #212529;
   text-rendering: optimizeLegibility;
   font-weight: initial;
 }
@@ -320,6 +319,10 @@ svg#clouds {
 
 /* Importing Bootstrap SCSS file. */
 @import "bootstrap/scss/bootstrap";
+
+body {
+  background-color: #212529;
+}
 
 $main-blue: #e8b777 !default;
 $main-blue-rgb-015: rgba(232, 183, 119, 0.1) !default;
