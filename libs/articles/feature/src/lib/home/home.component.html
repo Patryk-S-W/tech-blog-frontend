@@ -1,8 +1,8 @@
 <main role="main">
-  <section class="jumbotron text-center bg-darker-blog">
+  <section class="home">
     <div class="container">
       @if (isLoading()) {
-        <div class="py-5 text-light">
+        <div class="py-5 text-light" role="status">
           <div class="spinner-border text-info" role="status">
             <span class="visually-hidden">Loading...</span>
           </div>
@@ -13,84 +13,79 @@
         </div>
       } @else {
         @if (latestFour().length > 0) {
-          <section class="py-4">
-            <div class="row gx-5">
-              <div class="col-md-6 mb-4">
-                <div
-                  class="bg-image ripple shadow-2-strong rounded-5"
-                  data-mdb-ripple-color="light"
-                >
-                  <img
-                    [src]="latestFour()[0].image"
-                    class="img-fluid"
-                    [alt]="latestFour()[0].title"
-                  />
-                </div>
+          <section
+            class="lead-story"
+            [class.text-only]="!latestFour()[0].image"
+            aria-label="Latest article"
+          >
+            @if (latestFour()[0].image) {
+              <div class="lead-media">
+                <img
+                  [src]="latestFour()[0].image"
+                  class="lead-image"
+                  [alt]="latestFour()[0].title"
+                />
               </div>
+            }
 
-              <div class="col-md-6 mb-4 text-light">
-                <h4>
-                  <strong>{{ latestFour()[0].title }}</strong>
-                </h4>
-                <span class="badge bg-info mb-2">{{
-                  latestFour()[0].category
-                }}</span>
-                <div [innerHTML]="latestFour()[0].text | markdown"></div>
-                <a
-                  [routerLink]="['/blog', latestFour()[0].id]"
-                  class="btn btn-light mt-3"
-                >
-                  {{ latestFour()[0].button }}
-                </a>
-              </div>
+            <div class="lead-copy">
+              <span class="eyebrow">Latest story</span>
+              <span class="category">{{ latestFour()[0].category }}</span>
+              <h1>
+                <strong>{{ latestFour()[0].title }}</strong>
+              </h1>
+              <div
+                class="lead-preview"
+                [innerHTML]="latestFour()[0].text | markdown"
+              ></div>
+              <a
+                [routerLink]="['/blog', latestFour()[0].id]"
+                class="read-link"
+              >
+                {{ latestFour()[0].button }}
+              </a>
             </div>
           </section>
         }
 
         @if (latestFour().length > 1) {
-          <section>
-            <div class="row gx-lg-5">
+          <section class="more-stories" aria-label="More articles">
+            <div class="section-label">More to explore</div>
+            <div class="story-grid">
               @for (
                 article of latestFour().slice(1);
                 track trackById($index, article)
               ) {
-                <div class="col-lg-4 col-md-6 mb-4 mb-lg-0">
-                  <div>
-                    <div
-                      class="bg-image shadow-1-strong ripple rounded-5 mb-4"
-                      data-mdb-ripple-color="light"
-                    >
-                      <img
-                        [src]="article.image"
-                        [alt]="article.title"
-                        class="img-fluid"
-                      />
-                    </div>
-
-                    <div class="row mb-3">
-                      <div class="col-6">
-                        <a
-                          [routerLink]="['/blog', article.id]"
-                          class="text-info"
-                        >
-                          <i class="fas fa-code"></i>
-                          {{ article.category }}
-                        </a>
-                      </div>
-                      <div class="col-6 text-end text-light">
+                <article class="story" [class.text-only]="!article.image">
+                  @if (article.image) {
+                    <img
+                      [src]="article.image"
+                      [alt]="article.title"
+                      class="story-image"
+                    />
+                  }
+                  <div class="story-copy">
+                    <div class="story-meta">
+                      <a [routerLink]="['/blog', article.id]" class="text-info">
+                        <i class="fas fa-code" aria-hidden="true"></i>
+                        {{ article.category }}
+                      </a>
+                      <time [attr.datetime]="article.publishedAt">
                         {{ article.publishedAt | date: "dd.MM.yyyy" }}
-                      </div>
+                      </time>
                     </div>
-
                     <a
                       [routerLink]="['/blog', article.id]"
-                      class="text-light text-decoration-none"
+                      class="story-title"
                     >
-                      <h5>{{ article.title }}</h5>
-                      <div [innerHTML]="article.text | markdown"></div>
+                      <h2>{{ article.title }}</h2>
+                      <div
+                        class="story-preview"
+                        [innerHTML]="article.text | markdown"
+                      ></div>
                     </a>
                   </div>
-                </div>
+                </article>
               }
             </div>
           </section>

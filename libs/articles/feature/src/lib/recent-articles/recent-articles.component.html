@@ -49,10 +49,12 @@
           <p class="text-center text-light py-5">No articles found.</p>
         } @else {
           @for (article of page.items; track trackById($index, article)) {
-            <article class="postcard bg-dark-blog blue">
-              <a class="postcard__img_link" [routerLink]="['/blog', article.id]">
-                <img class="postcard__img" [alt]="article.title" [src]="article.image" />
-              </a>
+            <article class="postcard bg-dark-blog blue" [class.text-only]="!article.image">
+              @if (article.image) {
+                <a class="postcard__img_link" [routerLink]="['/blog', article.id]">
+                  <img class="postcard__img" [alt]="article.title" [src]="article.image" />
+                </a>
+              }
               <div class="postcard__text">
                 <h2 class="postcard__title blue">
                   <a [routerLink]="['/blog', article.id]">{{ article.title }}</a>
