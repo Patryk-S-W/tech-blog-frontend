@@ -4,19 +4,24 @@ import { Router, ActivatedRoute, RouterLink } from '@angular/router';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MarkdownPipe } from '@blog/shared/ui';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
+import { UiPreferencesService } from '@blog/shared/util';
+import { distinctUntilChanged } from 'rxjs';
 import { DatePipe } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-recent-articles',
   templateUrl: './recent-articles.component.html',
   styleUrls: ['./recent-articles.component.scss'],
-  imports: [FormsModule, RouterLink, MarkdownPipe, DatePipe],
+  imports: [FormsModule, RouterLink, MarkdownPipe, DatePipe, TranslocoModule],
 })
 export class RecentArticlesComponent implements OnInit {
   private readonly announcementsFacade = inject(AnnouncementsFacade);
   private readonly route = inject(ActivatedRoute);
   private readonly router = inject(Router);
   private readonly destroyRef = inject(DestroyRef);
+  private readonly preferences = inject(UiPreferencesService);
+  private validQuery = false;
 
   readonly archivePage = this.announcementsFacade.archivePage;
   readonly isLoading = this.announcementsFacade.archiveIsLoading;
@@ -29,8 +34,14 @@ export class RecentArticlesComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.queryParamMap
-      .pipe(takeUntilDestroyed(this.destroyRef))
+      .pipe(
+        distinctUntilChanged((before, after) => before.get('page') === after.get('page') && before.get('category') === after.get('category')),
+        takeUntilDestroyed(this.destroyRef),
+      )
       .subscribe((params) => this.applyQuery(params.get('page'), params.get('category')));
+    this.preferences.languageChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      if (this.validQuery) void this.loadPage(this.currentPage(), this.selectedCategory() || undefined);
+    });
     void this.retryCategories();
   }
 
@@ -71,6 +82,7 @@ export class RecentArticlesComponent implements OnInit {
   }
 
   private applyQuery(rawPage: string | null, category: string | null): void {
+    this.validQuery = false;
     this.selectedCategory.set(category ?? '');
     const parsedPage = rawPage === null ? 1 : /^\d+$/.test(rawPage) ? Number(rawPage) : NaN;
     if (!Number.isSafeInteger(parsedPage) || parsedPage < 1 || parsedPage > MAX_PAGE) {
@@ -79,16 +91,18 @@ export class RecentArticlesComponent implements OnInit {
       return;
     }
     this.currentPage.set(parsedPage);
+    this.validQuery = true;
     void this.loadPage(parsedPage, category || undefined);
   }
 
   private async loadPage(page: number, category?: string): Promise<void> {
+    const language = this.preferences.language();
     try {
       await this.announcementsFacade.loadArchive(page, category);
     } catch {
       return;
     }
-    if (this.currentPage() !== page || this.selectedCategory() !== (category ?? '')) return;
+    if (language !== this.preferences.language() || this.currentPage() !== page || this.selectedCategory() !== (category ?? '')) return;
     const result = this.archivePage();
     if (result && page > Math.max(1, result.totalPages)) this.setPage(1, true);
   }

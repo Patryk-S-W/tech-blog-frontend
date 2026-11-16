@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
 import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
-import { SSR_RESPONSE_STATUS } from '@blog/shared/util';
+import { SSR_RESPONSE_STATUS, UiPreferencesService } from '@blog/shared/util';
 import { MarkdownPipe } from '@blog/shared/ui';
 import { ArticleMetadataService } from './article-metadata.service';
 
@@ -11,7 +12,7 @@ import { ArticleMetadataService } from './article-metadata.service';
   selector: 'app-article-detail',
   templateUrl: './article-detail.component.html',
   styleUrls: ['./article-detail.component.scss'],
-  imports: [DatePipe, RouterLink, MarkdownPipe],
+  imports: [DatePipe, RouterLink, MarkdownPipe, TranslocoModule],
   providers: [ArticleMetadataService],
 })
 export class ArticleDetailComponent {
@@ -20,6 +21,7 @@ export class ArticleDetailComponent {
   private readonly facade = inject(AnnouncementsFacade);
   private readonly responseStatus = inject(SSR_RESPONSE_STATUS);
   private readonly metadata = inject(ArticleMetadataService);
+  private readonly preferences = inject(UiPreferencesService);
   private articleId: number | null = null;
 
   readonly article = this.facade.publicArticle;
@@ -46,6 +48,10 @@ export class ArticleDetailComponent {
       }
       this.articleId = id;
       void this.loadArticle(id);
+    });
+    this.preferences.languageChanges.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
+      this.metadata.reset(this.invalidId());
+      if (this.articleId !== null) void this.loadArticle(this.articleId);
     });
   }
 

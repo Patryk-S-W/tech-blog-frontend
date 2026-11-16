@@ -1,27 +1,27 @@
 <main class="journal" role="main">
   <div class="container journal-container">
     <section class="intro" aria-labelledby="author-name">
-      <p class="eyebrow">TECH JOURNAL <span>·</span> WEB DEVELOPMENT <span>·</span> AI</p>
+      <p class="eyebrow">{{ 'home.eyebrow' | transloco }}</p>
       <h1 id="author-name">Patryk Sadowski<span class="accent">.</span></h1>
       <p class="intro-copy">
-        Software developer from Poland, focused on web development and AI.
+        {{ 'home.intro' | transloco }}
       </p>
-      <a routerLink="/about-me" class="about-link">About me <span aria-hidden="true">↗</span></a>
+      <a routerLink="/about-me" queryParamsHandling="preserve" class="about-link">{{ 'home.about' | transloco }} <span aria-hidden="true">↗</span></a>
     </section>
 
     @if (isLoading()) {
       <div class="loading-state" role="status" aria-live="polite">
         <div class="spinner-border text-info" aria-hidden="true"></div>
-        <span class="visually-hidden">Loading articles…</span>
+        <span class="visually-hidden">{{ 'articles.loading' | transloco }}</span>
       </div>
     } @else if (error()) {
-      <div class="alert alert-warning" role="alert">{{ error() }}</div>
+      <div class="alert alert-warning" role="alert">{{ 'common.loadError' | transloco }}</div>
     } @else {
       @if (latestFour().length > 0) {
         <section class="latest-section" aria-labelledby="latest-title">
           <div class="section-heading">
-            <p class="eyebrow">LATEST ARTICLE</p>
-            <a routerLink="/recent-articles">All articles <span aria-hidden="true">→</span></a>
+            <p class="eyebrow">{{ 'home.latest' | transloco }}</p>
+            <a routerLink="/recent-articles" queryParamsHandling="preserve">{{ 'home.allArticles' | transloco }} <span aria-hidden="true">→</span></a>
           </div>
 
           <article class="featured-article" [class.text-only]="!latestFour()[0].image">
@@ -44,26 +44,26 @@
                 }
               </div>
               <h2 id="latest-title">
-                <a [routerLink]="['/blog', latestFour()[0].id]">{{ latestFour()[0].title }}</a>
+                <a [routerLink]="['/blog', latestFour()[0].id]" queryParamsHandling="preserve">{{ latestFour()[0].title }}</a>
               </h2>
               <div class="article-excerpt" [innerHTML]="latestFour()[0].text | markdown"></div>
-              <a class="read-link" [routerLink]="['/blog', latestFour()[0].id]">
-                {{ latestFour()[0].button }} <span aria-hidden="true">→</span>
+              <a class="read-link" [routerLink]="['/blog', latestFour()[0].id]" queryParamsHandling="preserve">
+                {{ 'home.read' | transloco }} <span aria-hidden="true">→</span>
               </a>
             </div>
           </article>
         </section>
       } @else {
         <section class="empty-journal" aria-live="polite">
-          <p class="eyebrow">THE JOURNAL</p>
-          <h2>No articles published yet.</h2>
+          <p class="eyebrow">{{ 'home.journal' | transloco }}</p>
+          <h2>{{ 'home.noArticles' | transloco }}</h2>
         </section>
       }
 
       @if (latestFour().length > 1) {
         <section class="more-stories" aria-labelledby="more-title">
           <div class="section-heading">
-            <p class="eyebrow" id="more-title">MORE TO READ</p>
+            <p class="eyebrow" id="more-title">{{ 'home.more' | transloco }}</p>
           </div>
           <div class="story-list">
             @for (article of latestFour().slice(1); track trackById($index, article)) {

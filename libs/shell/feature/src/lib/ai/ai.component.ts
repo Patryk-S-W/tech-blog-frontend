@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-ai',
   templateUrl: './ai.component.html',
-  imports: [],
+  imports: [TranslocoModule],
 })
 export class AIComponent {
   articles = [

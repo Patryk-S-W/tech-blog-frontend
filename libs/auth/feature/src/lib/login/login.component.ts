@@ -2,12 +2,13 @@ import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthFacade } from '@blog/auth/data-access';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
-  imports: [FormsModule],
+  imports: [FormsModule, TranslocoModule],
 })
 export class LoginComponent {
   private readonly auth = inject(AuthFacade);

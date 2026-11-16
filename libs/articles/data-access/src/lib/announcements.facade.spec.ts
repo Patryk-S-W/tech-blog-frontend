@@ -19,7 +19,7 @@ describe('announcement facades', () => {
     const published = facade.loadPublishedAnnouncements();
     expect(facade.isLoading()).toBe(true);
     expect(facade.announcements()).toEqual([]);
-    http.expectOne('/api/v1/blog/announcements').flush({ items: [item] });
+    http.expectOne('/api/v1/blog/announcements?language=pl').flush({ items: [item] });
     await published;
     expect(facade.isLoading()).toBe(false);
     const owned = facade.loadMyAnnouncements();

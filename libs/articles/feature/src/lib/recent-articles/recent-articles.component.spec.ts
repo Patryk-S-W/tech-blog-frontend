@@ -5,6 +5,8 @@ import { BehaviorSubject } from 'rxjs';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
 import { AnnouncementDto } from '@blog/articles/entity';
 import { RecentArticlesComponent } from './recent-articles.component';
+import { INITIAL_UI_LANGUAGE, LANGUAGE_STORAGE_KEY, UiPreferencesService } from '@blog/shared/util';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 interface ArchivePage {
   items: AnnouncementDto[];
@@ -44,6 +46,7 @@ describe('RecentArticlesComponent', () => {
   };
 
   beforeEach(async () => {
+    localStorage.removeItem(LANGUAGE_STORAGE_KEY);
     facade = {
       archivePage: signal<ArchivePage | null>(null),
       archiveIsLoading: signal(false),
@@ -65,11 +68,18 @@ describe('RecentArticlesComponent', () => {
     };
     routeParams = new BehaviorSubject(convertToParamMap({}));
     await TestBed.configureTestingModule({
-      imports: [RecentArticlesComponent],
+      imports: [RecentArticlesComponent, TranslocoTestingModule.forRoot({
+        langs: { en: { articles: {
+          notFound: 'No articles found.', retry: 'Retry', retryCategories: 'Retry categories',
+          archiveError: "Couldn't load articles. Please try again.", categoriesError: "Couldn't load categories.",
+        } }, pl: {} },
+        translocoConfig: { availableLangs: ['pl', 'en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
       providers: [
         provideRouter([]),
         { provide: ActivatedRoute, useValue: { queryParamMap: routeParams.asObservable() } },
         { provide: AnnouncementsFacade, useValue: facade },
+        { provide: INITIAL_UI_LANGUAGE, useValue: 'pl' },
       ],
     }).compileComponents();
   });
@@ -104,6 +114,28 @@ describe('RecentArticlesComponent', () => {
     routeParams.next(convertToParamMap({ category: 'AI' }));
     await fixture.whenStable();
     expect(facade.loadArchive).toHaveBeenLastCalledWith(1, 'AI');
+  });
+
+  it('refetches the current filtered page on language change without duplicating lang-only URL updates', async () => {
+    render({ page: '2', category: 'AI' });
+    await fixture.whenStable();
+    const preferences = TestBed.inject(UiPreferencesService);
+    preferences.setLanguage('en');
+    expect(facade.loadArchive).toHaveBeenCalledTimes(2);
+    expect(facade.loadArchive).toHaveBeenLastCalledWith(2, 'AI');
+    routeParams.next(convertToParamMap({ page: '2', category: 'AI', lang: 'en' }));
+    expect(facade.loadArchive).toHaveBeenCalledTimes(2);
+    expect(facade.loadCategories).toHaveBeenCalledTimes(1);
+    expect(facade.categories()).toEqual(['AI', 'Hardware']);
+    fixture.destroy();
+    preferences.setLanguage('pl');
+    expect(facade.loadArchive).toHaveBeenCalledTimes(2);
+  });
+
+  it('retains invalid-page normalization rather than loading it on a language change', () => {
+    render({ page: 'not-a-page', category: 'AI' });
+    TestBed.inject(UiPreferencesService).setLanguage('en');
+    expect(facade.loadArchive).not.toHaveBeenCalled();
   });
 
   it('keeps known and unknown bookmarked categories selected as options load asynchronously', async () => {
@@ -162,7 +194,7 @@ describe('RecentArticlesComponent', () => {
     await expect(facade.loadArchive.mock.results[0].value).rejects.toThrow('offline');
     await fixture.whenStable();
     fixture.detectChanges();
-    expect(fixture.nativeElement.textContent).toContain('Failed to load articles');
+    expect(fixture.nativeElement.textContent).toContain("Couldn't load articles. Please try again.");
     expect(fixture.nativeElement.querySelector('button').textContent).toContain('Retry');
 
     fixture.componentInstance.retryArchive();

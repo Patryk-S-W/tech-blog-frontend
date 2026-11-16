@@ -4,7 +4,8 @@ import { ActivatedRoute, convertToParamMap } from '@angular/router';
 import { Subject } from 'rxjs';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
 import { AnnouncementDto } from '@blog/articles/entity';
-import { SSR_RESPONSE_STATUS } from '@blog/shared/util';
+import { INITIAL_UI_LANGUAGE, LANGUAGE_STORAGE_KEY, SSR_RESPONSE_STATUS, UiPreferencesService } from '@blog/shared/util';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 import { ArticleDetailComponent } from './article-detail.component';
 import { DOCUMENT } from '@angular/common';
 import { Meta, Title } from '@angular/platform-browser';
@@ -33,6 +34,7 @@ describe('ArticleDetailComponent', () => {
   };
 
   beforeEach(async () => {
+    localStorage.removeItem(LANGUAGE_STORAGE_KEY);
     routeParams = new Subject();
     responseStatus = { statusCode: 200 };
     facade = {
@@ -42,11 +44,15 @@ describe('ArticleDetailComponent', () => {
       loadPublicArticleById: jest.fn().mockResolvedValue(undefined),
     };
     await TestBed.configureTestingModule({
-      imports: [ArticleDetailComponent],
+      imports: [ArticleDetailComponent, TranslocoTestingModule.forRoot({
+        langs: { en: { articles: { detailNotFound: 'Article not found', loading: 'Loading article…', retry: 'Retry', back: 'Back to articles' } }, pl: {} },
+        translocoConfig: { availableLangs: ['pl', 'en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
       providers: [
         { provide: ActivatedRoute, useValue: { paramMap: routeParams.asObservable() } },
         { provide: AnnouncementsFacade, useValue: facade },
         { provide: SSR_RESPONSE_STATUS, useValue: responseStatus },
+        { provide: INITIAL_UI_LANGUAGE, useValue: 'pl' },
       ],
     }).compileComponents();
     fixture = TestBed.createComponent(ArticleDetailComponent);
@@ -71,6 +77,35 @@ describe('ArticleDetailComponent', () => {
     expect(TestBed.inject(Title).getTitle()).toBe(`A post - ${DEFAULT_SITE_TITLE}`);
     expect(TestBed.inject(DOCUMENT).querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`${PUBLIC_SITE_ORIGIN}/blog/12`);
     expect(TestBed.inject(Meta).getTag('name="robots"')?.content).toBe('index, follow');
+  });
+
+  it('refetches the current ID and replaces metadata when language changes', async () => {
+    const preferences = TestBed.inject(UiPreferencesService);
+    facade.loadPublicArticleById.mockImplementation(async () => {
+      facade.publicArticle.set({ ...article, title: preferences.language() === 'en' ? 'English headline' : 'Polski tytuł' });
+      facade.publicArticleStatus.set('loaded');
+    });
+    navigate('12');
+    await facade.loadPublicArticleById.mock.results[0].value;
+    fixture.detectChanges();
+    expect(TestBed.inject(Title).getTitle()).toContain('Polski tytuł');
+    preferences.setLanguage('en');
+    await facade.loadPublicArticleById.mock.results[1].value;
+    fixture.detectChanges();
+    expect(facade.loadPublicArticleById).toHaveBeenLastCalledWith(12);
+    expect(TestBed.inject(Title).getTitle()).toContain('English headline');
+    expect(TestBed.inject(DOCUMENT).documentElement.lang).toBe('en');
+    expect(TestBed.inject(DOCUMENT).querySelector('link[rel="canonical"]')?.getAttribute('href')).toBe(`${PUBLIC_SITE_ORIGIN}/blog/12`);
+    fixture.destroy();
+    preferences.setLanguage('pl');
+    expect(facade.loadPublicArticleById).toHaveBeenCalledTimes(2);
+  });
+
+  it('does not refetch an invalid route when language changes', () => {
+    navigate('0');
+    TestBed.inject(UiPreferencesService).setLanguage('en');
+    expect(facade.loadPublicArticleById).not.toHaveBeenCalled();
+    expect(responseStatus.statusCode).toBe(404);
   });
 
   it('shows loading state', () => {

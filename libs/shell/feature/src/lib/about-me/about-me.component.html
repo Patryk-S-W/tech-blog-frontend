@@ -1,18 +1,18 @@
 <main class="about-page">
   <div class="container about-container">
     <article class="profile-card">
-      <p class="eyebrow">ABOUT ME</p>
+      <p class="eyebrow">{{ 'about.eyebrow' | transloco }}</p>
       <h1>Patryk Sadowski<span>.</span></h1>
       <p class="profile-intro">
-        I am a software developer from Poland, focused on web development and AI.
+        {{ 'about.bio' | transloco }}
       </p>
 
-      <div class="profile-topics" aria-label="Topics">
-        <span>Web development</span>
+      <div class="profile-topics" [attr.aria-label]="'about.topics' | transloco">
+        <span>{{ 'about.web' | transloco }}</span>
         <span>AI</span>
       </div>
 
-      <div class="profile-links" aria-label="Find me online">
+      <div class="profile-links" [attr.aria-label]="'about.findMe' | transloco">
         <a href="https://www.linkedin.com/in/patryksadowski/" target="_blank" rel="noopener noreferrer">
           LinkedIn <span aria-hidden="true">↗</span>
         </a>
@@ -24,13 +24,13 @@
 
     <section class="portfolio-section" aria-labelledby="technology-title">
       <header class="section-heading">
-        <p class="eyebrow">TECHNOLOGIES</p>
-        <h2 id="technology-title">Technologies I work with</h2>
+        <p class="eyebrow">{{ 'about.technologiesLabel' | transloco }}</p>
+        <h2 id="technology-title">{{ 'about.technologiesTitle' | transloco }}</h2>
       </header>
 
       <div class="technology-grid">
         <article class="technology-card">
-          <p class="technology-kicker">01 / FRONTEND</p>
+          <p class="technology-kicker">01 / {{ 'about.frontend' | transloco }}</p>
           <h3>Angular &amp; web</h3>
           <ul>
             <li>Nx</li>
@@ -48,7 +48,7 @@
         </article>
 
         <article class="technology-card">
-          <p class="technology-kicker">02 / BACKEND</p>
+          <p class="technology-kicker">02 / {{ 'about.backend' | transloco }}</p>
           <h3>.NET</h3>
           <ul>
             <li>C#</li>
@@ -60,7 +60,7 @@
         </article>
 
         <article class="technology-card">
-          <p class="technology-kicker">03 / BACKEND</p>
+          <p class="technology-kicker">03 / {{ 'about.backend' | transloco }}</p>
           <h3>Python</h3>
           <ul>
             <li>Python</li>
@@ -69,34 +69,34 @@
           </ul>
         </article>
       </div>
-      <p class="technology-note">Web accessibility, semantic web and responsive design are part of how I approach frontend work.</p>
+      <p class="technology-note">{{ 'about.technologyNote' | transloco }}</p>
     </section>
 
     <section class="portfolio-section experience-section" aria-labelledby="experience-title">
       <header class="section-heading">
-        <p class="eyebrow">EXPERIENCE</p>
-        <h2 id="experience-title">Example problems, practical approaches</h2>
-        <p>Sample case studies, not descriptions of completed client work.</p>
+        <p class="eyebrow">{{ 'about.experienceLabel' | transloco }}</p>
+        <h2 id="experience-title">{{ 'about.experienceTitle' | transloco }}</h2>
+        <p>{{ 'about.experienceNote' | transloco }}</p>
       </header>
 
       <div class="experience-grid">
-        <a class="experience-card" routerLink="/experience/angular-forms">
-          <span class="case-label">EXAMPLE CASE STUDY</span>
-          <h3>When a complex form loses its way</h3>
-          <p>Keep validation, user input and server responses clear across a multi-step flow.</p>
-          <span class="case-link">View example <span aria-hidden="true">→</span></span>
+        <a class="experience-card" routerLink="/experience/angular-forms" queryParamsHandling="preserve">
+          <span class="case-label">{{ 'about.example' | transloco }}</span>
+          <h3>{{ 'about.cases.forms.title' | transloco }}</h3>
+          <p>{{ 'about.cases.forms.summary' | transloco }}</p>
+          <span class="case-link">{{ 'about.viewExample' | transloco }} <span aria-hidden="true">→</span></span>
         </a>
-        <a class="experience-card" routerLink="/experience/ksef-integration">
-          <span class="case-label">EXAMPLE CASE STUDY</span>
-          <h3>Reliable KSeF invoice delivery</h3>
-          <p>Plan for validation errors, retries and duplicate delivery in an integration flow.</p>
-          <span class="case-link">View example <span aria-hidden="true">→</span></span>
+        <a class="experience-card" routerLink="/experience/ksef-integration" queryParamsHandling="preserve">
+          <span class="case-label">{{ 'about.example' | transloco }}</span>
+          <h3>{{ 'about.cases.ksef.title' | transloco }}</h3>
+          <p>{{ 'about.cases.ksef.summary' | transloco }}</p>
+          <span class="case-link">{{ 'about.viewExample' | transloco }} <span aria-hidden="true">→</span></span>
         </a>
-        <a class="experience-card" routerLink="/experience/python-imports">
-          <span class="case-label">EXAMPLE CASE STUDY</span>
-          <h3>Safer recurring data imports</h3>
-          <p>Make repeated file imports easier to validate, review and run again safely.</p>
-          <span class="case-link">View example <span aria-hidden="true">→</span></span>
+        <a class="experience-card" routerLink="/experience/python-imports" queryParamsHandling="preserve">
+          <span class="case-label">{{ 'about.example' | transloco }}</span>
+          <h3>{{ 'about.cases.imports.title' | transloco }}</h3>
+          <p>{{ 'about.cases.imports.summary' | transloco }}</p>
+          <span class="case-link">{{ 'about.viewExample' | transloco }} <span aria-hidden="true">→</span></span>
         </a>
       </div>
     </section>

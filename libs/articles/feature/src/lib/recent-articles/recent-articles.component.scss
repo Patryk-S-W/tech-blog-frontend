@@ -3,8 +3,8 @@
 section.bg-dark-blog {
   min-height: 72vh;
   padding: clamp(2.5rem, 6vw, 5rem) 0;
-  color: #e9eaf0;
-  background: #212529;
+  color: var(--text);
+  background: var(--page);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
@@ -12,7 +12,7 @@ section.bg-dark-blog {
 
 #pageHeaderTitle {
   margin: 0 0 2rem;
-  color: #f3f3f7;
+  color: var(--text);
   text-align: left;
   font-size: clamp(2.4rem, 6vw, 4rem);
   font-weight: 650;
@@ -20,21 +20,21 @@ section.bg-dark-blog {
   text-transform: none;
 }
 
-.archive-controls { padding-bottom: 1.25rem; border-bottom: 1px solid #ffffff20; }
+.archive-controls { padding-bottom: 1.25rem; border-bottom: 1px solid var(--border); }
 .category-filter { min-width: min(100%, 16rem); }
-.category-filter .form-select { border-color: #ffffff30; background-color: #191b21; color: #e9eaf0; }
-.category-filter .form-select:focus { border-color: #e8b777; box-shadow: 0 0 0 .2rem #e8b77733; }
-.category-filter .form-select option { color: #e9eaf0; background: #191b21; }
+.category-filter .form-select { border-color: var(--border); background-color: var(--input); color: var(--text); }
+.category-filter .form-select:focus { border-color: var(--accent); box-shadow: 0 0 0 .2rem color-mix(in srgb, var(--accent) 20%, transparent); }
+.category-filter .form-select option { color: var(--text); background: var(--input); }
 
 .postcard {
   display: grid;
   grid-template-columns: minmax(220px, .65fr) 1.35fr;
   margin: 1.25rem 0;
   overflow: hidden;
-  border: 1px solid #ffffff20;
+  border: 1px solid var(--border);
   border-radius: 0;
-  background: #191b21;
-  color: #e9eaf0;
+  background: var(--surface);
+  color: var(--text);
   box-shadow: none;
 }
 
@@ -54,10 +54,10 @@ section.bg-dark-blog {
 
 .postcard.text-only .postcard__text { max-width: 850px; }
 .postcard__title { margin: .25rem 0 .65rem; font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 620; letter-spacing: -.035em; line-height: 1.12; }
-.postcard__title a { color: #f3f3f7; text-decoration: none; }
-.postcard__title a:hover { color: #e8b777; }
-.postcard__subtitle { color: #9da5b1; font: .75rem system-ui, sans-serif; }
-.postcard__bar { width: 2rem; height: 2px; margin: .9rem 0; border-radius: 0; background: #e8b777; }
+.postcard__title a { color: var(--text); text-decoration: none; }
+.postcard__title a:hover { color: var(--link); }
+.postcard__subtitle { color: var(--muted); font: .75rem system-ui, sans-serif; }
+.postcard__bar { width: 2rem; height: 2px; margin: .9rem 0; border-radius: 0; background: var(--accent); }
 
 .postcard__preview-txt {
   display: -webkit-box;
@@ -65,19 +65,19 @@ section.bg-dark-blog {
   overflow: hidden;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
-  color: #bdc2cb;
+  color: var(--muted);
   font: .9rem/1.7 system-ui, sans-serif;
   text-align: left;
 }
 
 .postcard__preview-txt p { margin: 0 0 .65rem; }
 .postcard__tagbox { display: flex; flex-flow: row wrap; justify-content: flex-start; gap: .5rem; margin: 1rem 0 0; padding: 0; list-style: none; font: .75rem system-ui, sans-serif; }
-.postcard__tagbox .tag__item { margin: 0; padding: .4rem .65rem; border: 1px solid #ffffff25; border-radius: 0; background: #ffffff08; color: #cbd0d8; }
-.postcard__tagbox .play { border-color: #e8b777; }
-.postcard__tagbox .play a { color: #e8b777; }
-.archive-pagination { gap: 1rem; margin-top: 2rem; padding: 1.2rem 0; border-top: 1px solid #ffffff20; }
-.archive-pagination p { color: #b8bec9 !important; }
-section.bg-dark-blog :focus-visible { outline: 2px solid #e8b777; outline-offset: 4px; }
+.postcard__tagbox .tag__item { margin: 0; padding: .4rem .65rem; border: 1px solid var(--border); border-radius: 0; background: var(--surface-raised); color: var(--text); }
+.postcard__tagbox .play { border-color: var(--accent); }
+.postcard__tagbox .play a { color: var(--link); }
+.archive-pagination { gap: 1rem; margin-top: 2rem; padding: 1.2rem 0; border-top: 1px solid var(--border); }
+.archive-pagination p { color: var(--muted); }
+section.bg-dark-blog :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
 
 @media (max-width: 767px) {
   .postcard { grid-template-columns: 1fr; }

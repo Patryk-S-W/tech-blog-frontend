@@ -1,1 +1,164 @@
-{}
+{
+  "nav": {
+    "home": "Start",
+    "projects": "Projekty",
+    "articles": "Artykuły",
+    "recentArticles": "Najnowsze artykuły",
+    "hardware": "Sprzęt",
+    "ai": "AI",
+    "about": "O mnie",
+    "login": "Logowanie",
+    "admin": "Panel",
+    "logout": "Wyloguj",
+    "toggle": "Przełącz nawigację"
+  },
+  "preferences": {
+    "language": "Język",
+    "polish": "Polski",
+    "english": "Angielski",
+    "theme": "Motyw",
+    "dark": "Ciemny",
+    "light": "Jasny",
+    "switchLight": "Włącz jasny motyw",
+    "switchDark": "Włącz ciemny motyw"
+  },
+  "home": {
+    "eyebrow": "DZIENNIK TECHNOLOGICZNY · WEB DEVELOPMENT · AI",
+    "intro": "Programista z Polski. Skupiam się na tworzeniu aplikacji webowych i AI.",
+    "about": "O mnie",
+    "latest": "NAJNOWSZY ARTYKUŁ",
+    "read": "Czytaj artykuł",
+    "allArticles": "Wszystkie artykuły",
+    "journal": "DZIENNIK",
+    "noArticles": "Nie ma jeszcze opublikowanych artykułów.",
+    "more": "WIĘCEJ DO CZYTANIA"
+  },
+  "articles": {
+    "archiveTitle": "Najnowsze artykuły",
+    "category": "Kategoria",
+    "allCategories": "Wszystkie kategorie",
+    "categoriesError": "Nie udało się wczytać kategorii.",
+    "archiveError": "Nie udało się wczytać artykułów. Spróbuj ponownie.",
+    "retryCategories": "Spróbuj ponownie",
+    "retry": "Ponów próbę",
+    "loading": "Wczytywanie artykułów…",
+    "notFound": "Nie znaleziono artykułów.",
+    "pageLabel": "Strona",
+    "previous": "Poprzednia",
+    "next": "Następna",
+    "of": "z",
+    "count": "Liczba artykułów: {{count}}",
+    "pagesLabel": "Strony z artykułami",
+    "detailNotFound": "Nie znaleziono artykułu",
+    "detailUnavailable": "Ten artykuł mógł zostać usunięty lub jest niedostępny.",
+    "detailLoadError": "Nie udało się wczytać artykułu",
+    "retryHint": "Spróbuj ponownie za chwilę.",
+    "loadErrorHint": "Spróbuj ponownie za chwilę.",
+    "back": "Wróć do artykułów"
+  },
+  "projects": {
+    "eyebrow": "WYBRANE PRACE",
+    "title": "Projekty",
+    "label": "PROJEKTY",
+    "empty": "Nie ma jeszcze opublikowanych projektów.",
+    "visit": "Otwórz projekt",
+    "info": "Informacje o projekcie",
+    "author": "Autor",
+    "url": "Adres",
+    "loadError": "Nie udało się wczytać projektu. Spróbuj ponownie."
+  },
+  "about": {
+    "eyebrow": "O MNIE",
+    "bio": "Jestem programistą z Polski i skupiam się na tworzeniu aplikacji webowych oraz AI.",
+    "topics": "Obszary zainteresowań",
+    "web": "Tworzenie aplikacji webowych",
+    "findMe": "Znajdź mnie w sieci",
+    "technologiesLabel": "TECHNOLOGIE",
+    "technologiesTitle": "Technologie, z którymi pracuję",
+    "frontend": "FRONTEND",
+    "backend": "BACKEND",
+    "technologyNote": "Dostępność, semantyka i responsywność uwzględniam podczas projektowania interfejsów.",
+    "experienceLabel": "DOŚWIADCZENIE",
+    "experienceTitle": "Przykładowe problemy i praktyczne podejścia",
+    "experienceNote": "Przykładowe case studies — nie opisy zrealizowanych projektów dla klientów.",
+    "example": "PRZYKŁADOWE CASE STUDY",
+    "viewExample": "Zobacz przykład",
+    "cases": {
+      "forms": {
+        "title": "Formularz wieloetapowy, który pamięta postęp",
+        "summary": "Przykładowe podejście do formularza, w którym błędy walidacji i serwera nie powinny usuwać wpisanych danych.",
+        "problem": "Długi formularz jest podzielony na kroki. Błąd walidacji lub nieudany zapis odsyła użytkownika do poprzednich pól, a nie wiadomo, co poprawić ani czy wpisane dane są zachowane.",
+        "approach": [
+          "Jawnie opisać stan formularza i zasady walidacji dla każdego kroku.",
+          "Pokazać błędy przy polach i czytelne podsumowanie odpowiedzi serwera.",
+          "Zachować wpisane dane po błędzie i jasno wskazać możliwość ponowienia zapisu."
+        ],
+        "scope": ["Dostępne etykiety i komunikaty błędów", "Stany wczytywania, powodzenia i błędu", "Obsługa klawiaturą i kontrola wąskiego ekranu"],
+        "validation": "Sprawdzić, czy dane pozostają po błędach walidacji i sieci oraz czy błędy można znaleźć i poprawić klawiaturą lub czytnikiem ekranu."
+      },
+      "ksef": {
+        "title": "Pewniejszy przepływ integracji KSeF",
+        "summary": "Przykładowy projekt integracji obsługującej walidację faktur, chwilowe awarie i bezpieczne ponawianie wysyłki.",
+        "problem": "System fakturowania wysyła dokumenty do zewnętrznej usługi. Żądania mogą zostać odrzucone lub usługa może być chwilowo niedostępna, a automatyczna ponowna wysyłka może wysłać ten sam dokument drugi raz.",
+        "approach": [
+          "Walidować dane przed wysłaniem i zachować szczegóły odrzucenia dla operatora.",
+          "Kolejkować pracę i podejmować decyzje o ponowieniu na podstawie odpowiedzi usługi.",
+          "Zapisywać stały identyfikator dokumentu i stan obsługi, aby ponowienia były idempotentne."
+        ],
+        "scope": ["Wysyłka dokumentów", "Ponawianie i ochrona przed duplikatami", "Widoczny status i komunikaty możliwe do obsłużenia"],
+        "validation": "Przetestować scenariusze akceptacji, odrzucenia, opóźnienia i powtórzonego żądania w środowisku testowym przed wdrożeniem produkcyjnym."
+      },
+      "imports": {
+        "title": "Powtarzalny import plików z danymi",
+        "summary": "Przykładowy przepływ importu cyklicznych plików, który ujawnia błędne wiersze i ogranicza duplikaty.",
+        "problem": "Zespół regularnie otrzymuje pliki z danymi. Zmiana nazw kolumn, puste wartości lub formaty dat sprawiają, że ręczny import jest niespójny i trudny do powtórzenia.",
+        "approach": [
+          "Normalizować i sprawdzać każdy wiersz przed zapisaniem danych.",
+          "Zwracać raport wskazujący problematyczne wiersze zamiast ogólnego błędu.",
+          "Umożliwić bezpieczne ponowne uruchomienie i oddzielić poprawne dane od odrzuconych."
+        ],
+        "scope": ["Walidacja i normalizacja danych wejściowych", "Czytelne błędy dla poszczególnych wierszy", "Bezpieczne ponowne uruchomienie i testy automatyczne"],
+        "validation": "Przetestować poprawne, błędne, zduplikowane i częściowo niepoprawne pliki, a następnie sprawdzić, czy ponowny import nie tworzy duplikatów."
+      }
+    }
+  },
+  "experience": {
+    "back": "← O mnie",
+    "example": "PRZYKŁADOWE CASE STUDY",
+    "notice": "Scenariusz przykładowy — nie jest opisem zrealizowanej pracy dla klienta.",
+    "challenge": "WYZWANIE",
+    "problem": "Problem",
+    "response": "PRAKTYCZNE PODEJŚCIE",
+    "approach": "Proponowane podejście",
+    "scopeLabel": "ZAKRES",
+    "scope": "Co obejmuje praca",
+    "validationLabel": "SPRAWDZENIE REZULTATU",
+    "validation": "Jak to zweryfikować",
+    "technologies": "TECHNOLOGIE",
+    "moreAbout": "Więcej o mnie",
+    "notFoundLabel": "DOŚWIADCZENIE",
+    "notFound": "Ten przykład nie jest dostępny.",
+    "backAbout": "Wróć do strony O mnie"
+  },
+  "login": {
+    "title": "Logowanie",
+    "username": "Nazwa użytkownika",
+    "password": "Hasło",
+    "submit": "Zaloguj się",
+    "loading": "Logowanie…",
+    "error": "Nie udało się zalogować. Sprawdź dane i spróbuj ponownie."
+  },
+  "hardware": {
+    "title": "Sprzęt",
+    "imageAlt": "Ilustracja artykułu"
+  },
+  "ai": {
+    "title": "AI",
+    "imageAlt": "Ilustracja artykułu"
+  },
+  "footer": {
+    "social": "Media społecznościowe",
+    "copyright": "Prawa autorskie"
+  },
+  "common": { "loadError": "Wystąpił błąd. Spróbuj ponownie.", "loading": "Wczytywanie…" }
+}

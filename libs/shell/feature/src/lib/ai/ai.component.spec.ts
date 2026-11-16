@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AIComponent } from './ai.component';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 describe('AIComponent', () => {
   let component: AIComponent;
@@ -8,7 +9,10 @@ describe('AIComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AIComponent],
+      imports: [AIComponent, TranslocoTestingModule.forRoot({
+        langs: { en: { ai: { title: 'AI', imageAlt: 'Article illustration' } } },
+        translocoConfig: { availableLangs: ['en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AIComponent);

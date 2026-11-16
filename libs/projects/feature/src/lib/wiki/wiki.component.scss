@@ -3,33 +3,34 @@
 .wiki-page {
   min-height: 72vh;
   padding: clamp(2.5rem, 6vw, 5rem) 0;
-  color: #e9eaf0;
-  background: #212529;
+  color: var(--text);
+  background: var(--page);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 .wiki-container { max-width: 1060px; }
 .wiki-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(220px, .36fr); gap: 2rem; }
-.wiki-main > a { color: #e8b777 !important; }
-.wiki-main h1 { margin: .7rem 0 1rem; color: #f3f3f7; font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 650; letter-spacing: -.05em; line-height: 1.04; }
-.wiki-main .badge { padding: .45rem .7rem; border: 1px solid #ffffff25; border-radius: 0; background: #191b21; color: #e8b777; }
+.wiki-main { color: var(--text); background: var(--surface); }
+.wiki-main > a { color: var(--link) !important; }
+.wiki-main h1 { margin: .7rem 0 1rem; color: var(--text); font-size: clamp(2.4rem, 5vw, 4rem); font-weight: 650; letter-spacing: -.05em; line-height: 1.04; }
+.wiki-main .badge { padding: .45rem .7rem; border: 1px solid var(--border); border-radius: 0; background: var(--surface); color: var(--text); }
 .wiki-image { display: block; width: 100%; max-height: 460px; margin: 1.5rem 0; object-fit: cover; }
-.wiki-content { color: #c4c8d0; line-height: 1.8; }
+.wiki-content { color: var(--text); line-height: 1.8; }
 
 .wiki-content ::ng-deep {
-  h2, h3, h4, h5, h6 { margin: 2rem 0 .8rem; color: #f3f3f7; }
+  h2, h3, h4, h5, h6 { margin: 2rem 0 .8rem; color: var(--text); }
   p, ul, ol { margin-bottom: 1rem; }
-  a { color: #e8b777; text-underline-offset: .2em; }
-  code { padding: .15rem .35rem; background: #20232b; color: #e8b777; }
-  pre { max-width: 100%; overflow-x: auto; padding: 1rem; border: 1px solid #ffffff20; background: #191b21; }
+  a { color: var(--link); text-underline-offset: .2em; }
+  code { padding: .15rem .35rem; background: var(--code); color: var(--accent-strong); }
+  pre { max-width: 100%; overflow-x: auto; padding: 1rem; border: 1px solid var(--border); background: var(--code); }
   pre code { padding: 0; background: transparent; color: inherit; }
   img { max-width: 100%; height: auto; }
 }
 
-.project-info { padding: 1.2rem; border: 1px solid #ffffff20; background: #191b21; }
-.project-info h2 { margin: 0 0 1rem; color: #e8b777; font: 600 .72rem ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .1em; text-transform: uppercase; }
-.project-info p { overflow-wrap: anywhere; color: #b8bec9; font-size: .85rem; }
-.project-info a { color: #e8b777; }
+.project-info { padding: 1.2rem; border: 1px solid var(--border); background: var(--surface); }
+.project-info h2 { margin: 0 0 1rem; color: var(--accent); font: 600 .72rem ui-monospace, SFMono-Regular, Consolas, monospace; letter-spacing: .1em; text-transform: uppercase; }
+.project-info p { overflow-wrap: anywhere; color: var(--text); font-size: .85rem; }
+.project-info a { color: var(--link); }
 
 @media (max-width: 767px) {
   .wiki-grid { grid-template-columns: 1fr; }

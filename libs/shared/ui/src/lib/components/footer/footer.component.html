@@ -4,7 +4,7 @@
       @for (icon of icons; track trackById($index, icon)) {
         <a
           mdbRipple
-          aria-label="Social Media"
+          [attr.aria-label]="icon.icon === 'fa-linkedin-in' ? 'LinkedIn' : 'GitHub'"
           class="btn text-white btn-outline-secondary btn-floating m-1"
           role="button"
           [href]="icon.link"
@@ -14,7 +14,7 @@
     </section>
   </div>
   <div class="text-center p-3 d-flex">
-    © Copyright&nbsp;&bull;&nbsp;<a href="/"
+    © {{ 'footer.copyright' | transloco }}&nbsp;&bull;&nbsp;<a routerLink="/" queryParamsHandling="preserve"
     ><span class="text-white">Patryk Sadowski</span></a
     >
   </div>

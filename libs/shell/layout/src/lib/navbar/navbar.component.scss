@@ -1,5 +1,5 @@
 .topbar {
-  background-color: #212529;
+  background-color: var(--page);
   padding: 0;
 }
 
@@ -9,15 +9,17 @@
 }
 
 ul.social-network li {
-  display: inline;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   margin: 0 5px;
-  border: 0px solid #110f16;
+  border: 0px solid var(--border);
   padding: 5px 0 0;
   width: 32px;
   text-align: center;
   height: 32px;
   vertical-align: baseline;
-  color: #000;
+  color: var(--text);
 }
 
 ul.social-network {
@@ -25,6 +27,12 @@ ul.social-network {
   margin: 5px 0 10px -25px;
   float: right;
 }
+
+.preference-item { width: auto !important; height: auto !important; padding: 0 !important; }
+.language-switch { display: inline-flex; border: 1px solid var(--border); border-radius: 999px; overflow: hidden; }
+.preference-button { border: 0; background: transparent; color: var(--text); padding: .28rem .55rem; font-size: .75rem; line-height: 1.2; cursor: pointer; }
+.preference-button[aria-pressed='true'] { background: var(--accent); color: var(--on-accent); font-weight: 700; }
+.theme-switch { display: inline-flex; gap: .4rem; align-items: center; border: 1px solid var(--border); border-radius: 999px; min-height: 30px; }
 
 .waves-effect {
   position: relative;
@@ -39,9 +47,11 @@ ul.social-network {
   z-index: 1;
   will-change: opacity, transform;
   transition: 0.3s ease-out;
-  color: #fff;
+  color: var(--text);
 }
 
 .mx-background-top-linear {
-  background: #212529;
+  background: var(--page);
 }
+
+@media (max-width: 575px) { ul.social-network { margin-left: 0; } }

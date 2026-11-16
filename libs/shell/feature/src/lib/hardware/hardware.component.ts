@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-hardware',
   templateUrl: './hardware.component.html',
-  imports: [],
+  imports: [TranslocoModule],
 })
 export class HardwareComponent {
   articles = [
