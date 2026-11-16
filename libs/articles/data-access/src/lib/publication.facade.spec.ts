@@ -32,14 +32,14 @@ describe('announcement publication', () => {
     await owned;
     const publicItem = { ...published, id: 20 };
     const home = facade.loadPublishedAnnouncements();
-    http.expectOne('/api/v1/blog/announcements').flush({ items: [publicItem] });
+    http.expectOne('/api/v1/blog/announcements?language=pl').flush({ items: [publicItem] });
     await home;
     const detail = facade.loadPublicArticleById(20);
-    http.expectOne('/api/v1/blog/announcements/20').flush(publicItem);
+    http.expectOne('/api/v1/blog/announcements/20?language=pl').flush(publicItem);
     await detail;
     const page = { items: [publicItem], totalCount: 1, page: 1, pageSize: 10, totalPages: 1, hasPrevious: false, hasNext: false };
     const archive = facade.loadArchive(1);
-    http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10').flush(page);
+    http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10&language=pl').flush(page);
     await archive;
 
     const method = action === 'publish' ? 'publishAnnouncement' : 'unpublishAnnouncement';

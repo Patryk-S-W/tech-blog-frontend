@@ -7,6 +7,7 @@ import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
 import { ProjectsFacade } from '@blog/projects/data-access';
 import { ProjectDto } from '@blog/projects/entity';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 describe('ProjectsComponent', () => {
   let component: ProjectsComponent;
@@ -15,7 +16,10 @@ describe('ProjectsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [ProjectsComponent],
+      imports: [ProjectsComponent, TranslocoTestingModule.forRoot({
+        langs: { en: { projects: { title: 'Projects', empty: 'No published projects yet.', visit: 'Visit project', info: 'Project info' } } },
+        translocoConfig: { availableLangs: ['en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),

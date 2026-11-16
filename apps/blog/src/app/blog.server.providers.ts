@@ -1,5 +1,5 @@
 import { EnvironmentProviders, Provider, inject, provideZoneChangeDetection } from '@angular/core';
-import { API_URL, SSR_RESPONSE_STATUS } from '@blog/shared/util';
+import { API_URL, INITIAL_UI_LANGUAGE, SSR_RESPONSE_STATUS } from '@blog/shared/util';
 import { SERVER_API_URL, backendApiOrigin } from './server-api.config';
 
 export function provideBlogServer(): (Provider | EnvironmentProviders)[] {
@@ -14,6 +14,10 @@ export function provideBlogServer(): (Provider | EnvironmentProviders)[] {
       provide: SSR_RESPONSE_STATUS,
       // Read the per-render platform response instead of the browser token's root default.
       useFactory: () => inject(SSR_RESPONSE_STATUS, { skipSelf: true, optional: true }),
+    },
+    {
+      provide: INITIAL_UI_LANGUAGE,
+      useFactory: () => inject(INITIAL_UI_LANGUAGE, { skipSelf: true, optional: true }) ?? 'pl',
     },
   ];
 }

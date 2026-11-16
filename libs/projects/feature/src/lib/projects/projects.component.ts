@@ -2,12 +2,13 @@ import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { ProjectsFacade } from '@blog/projects/data-access';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss'],
-  imports: [RouterLink],
+  imports: [RouterLink, TranslocoModule],
 })
 export class ProjectsComponent implements OnInit {
   private readonly projectsFacade = inject(ProjectsFacade);

@@ -10,12 +10,13 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MarkdownPipe } from '@blog/shared/ui';
 import { ProjectsFacade } from '@blog/projects/data-access';
 import { DatePipe } from '@angular/common';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-wiki',
   templateUrl: './wiki.component.html',
   styleUrls: ['./wiki.component.scss'],
-  imports: [RouterLink, MarkdownPipe, DatePipe],
+  imports: [RouterLink, MarkdownPipe, DatePipe, TranslocoModule],
 })
 export class WikiComponent implements OnInit, OnDestroy {
   private readonly projectsFacade = inject(ProjectsFacade);

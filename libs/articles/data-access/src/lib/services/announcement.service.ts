@@ -1,7 +1,7 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Observable, map } from 'rxjs';
-import { API_URL } from '@blog/shared/util';
+import { API_URL, UiLanguage, UiPreferencesService } from '@blog/shared/util';
 import {
   AnnouncementDto,
   CreateAnnouncementRequest,
@@ -14,16 +14,19 @@ import {
 export class AnnouncementService {
   private readonly http = inject(HttpClient);
   private readonly apiUrl = inject(API_URL);
+  private readonly preferences = inject(UiPreferencesService);
   private readonly baseUrl = `${this.apiUrl}/api/v1`;
 
   getPublishedAnnouncements(
-    params?: PaginationParams
+    params?: PaginationParams,
+    language: UiLanguage = this.preferences.language(),
   ): Observable<AnnouncementDto[]> {
     let httpParams = new HttpParams();
     if (params?.page)
       httpParams = httpParams.set('page', params.page.toString());
     if (params?.pageSize)
       httpParams = httpParams.set('pageSize', params.pageSize.toString());
+    httpParams = httpParams.set('language', language);
 
     return this.http.get<{ items: AnnouncementDto[] }>(
       `${this.baseUrl}/blog/announcements`,
@@ -31,16 +34,17 @@ export class AnnouncementService {
     ).pipe(map((response) => response.items));
   }
 
-  getPublishedAnnouncementById(id: number): Observable<AnnouncementDto> {
+  getPublishedAnnouncementById(id: number, language: UiLanguage = this.preferences.language()): Observable<AnnouncementDto> {
     return this.http.get<AnnouncementDto>(
       `${this.baseUrl}/blog/announcements/${id}`,
-      { transferCache: false }
+      { params: { language }, transferCache: false }
     );
   }
 
-  getPublishedAnnouncementsPage(page: number, category?: string): Observable<PagedResult<AnnouncementDto>> {
+  getPublishedAnnouncementsPage(page: number, category?: string, language: UiLanguage = this.preferences.language()): Observable<PagedResult<AnnouncementDto>> {
     let params = new HttpParams().set('page', page).set('pageSize', 10);
     if (category) params = params.set('category', category);
+    params = params.set('language', language);
     return this.http.get<PagedResult<AnnouncementDto>>(
       `${this.baseUrl}/blog/announcements`,
       { params, transferCache: false }
@@ -48,7 +52,7 @@ export class AnnouncementService {
   }
 
   getCategories(): Observable<string[]> {
-    return this.http.get<string[]>(`${this.baseUrl}/blog/categories`, { transferCache: false });
+    return this.http.get<string[]>(`${this.baseUrl}/blog/categories`, { params: { language: this.preferences.language() }, transferCache: false });
   }
 
   getMyAnnouncements(): Observable<AnnouncementDto[]> {

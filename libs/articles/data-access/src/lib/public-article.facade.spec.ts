@@ -15,7 +15,7 @@ describe('public article detail', () => {
     expect(facade.publicArticleStatus()).toBe('idle');
     const first = facade.loadPublicArticleById(1);
     expect(facade.publicArticleStatus()).toBe('loading');
-    const request = http.expectOne('/api/v1/blog/announcements/1');
+    const request = http.expectOne('/api/v1/blog/announcements/1?language=pl');
     expect(request.request.method).toBe('GET');
     expect(request.request.transferCache).toBe(false);
     request.flush(article);
@@ -25,7 +25,7 @@ describe('public article detail', () => {
     const second = facade.loadPublicArticleById(2);
     expect(facade.publicArticle()).toBeNull();
     expect(facade.publicArticleError()).toBeNull();
-    http.expectOne('/api/v1/blog/announcements/2').flush({ ...article, id: 2 });
+    http.expectOne('/api/v1/blog/announcements/2?language=pl').flush({ ...article, id: 2 });
     await second;
     expect(facade.publicArticle()?.id).toBe(2);
     expect(facade.currentAnnouncement()).toBeNull();
@@ -36,7 +36,7 @@ describe('public article detail', () => {
   it('resolves a public 404 as not-found without a protected fallback', async () => {
     const facade = TestBed.inject(AnnouncementsFacade);
     const pending = facade.loadPublicArticleById(1);
-    TestBed.inject(HttpTestingController).expectOne('/api/v1/blog/announcements/1')
+    TestBed.inject(HttpTestingController).expectOne('/api/v1/blog/announcements/1?language=pl')
       .flush({}, { status: 404, statusText: 'Not Found' });
     await expect(pending).resolves.toBeUndefined();
     expect(facade.publicArticle()).toBeNull();
@@ -49,7 +49,7 @@ describe('public article detail', () => {
     const http = TestBed.inject(HttpTestingController);
     const failed = facade.loadPublicArticleById(1);
     const rejected = expect(failed).rejects.toThrow('Failed to load article');
-    http.expectOne('/api/v1/blog/announcements/1')
+    http.expectOne('/api/v1/blog/announcements/1?language=pl')
       .flush({ message: 'untrusted backend message' }, { status: 500, statusText: 'Server Error' });
     await rejected;
     expect(facade.publicArticleStatus()).toBe('error');
@@ -57,7 +57,7 @@ describe('public article detail', () => {
     const retry = facade.loadPublicArticleById(2);
     expect(facade.publicArticleStatus()).toBe('loading');
     expect(facade.publicArticleError()).toBeNull();
-    http.expectOne('/api/v1/blog/announcements/2').flush({ ...article, id: 2 });
+    http.expectOne('/api/v1/blog/announcements/2?language=pl').flush({ ...article, id: 2 });
     await retry;
     expect(facade.publicArticleStatus()).toBe('loaded');
   });
@@ -67,8 +67,8 @@ describe('public article detail', () => {
     const http = TestBed.inject(HttpTestingController);
     const older = facade.loadPublicArticleById(1);
     const newer = facade.loadPublicArticleById(2);
-    const oldRequest = http.expectOne('/api/v1/blog/announcements/1');
-    http.expectOne('/api/v1/blog/announcements/2').flush({ ...article, id: 2 });
+    const oldRequest = http.expectOne('/api/v1/blog/announcements/1?language=pl');
+    http.expectOne('/api/v1/blog/announcements/2?language=pl').flush({ ...article, id: 2 });
     await newer;
     oldRequest.flush(article, { status, statusText: status === 200 ? 'OK' : 'Error' });
     await older;
@@ -83,9 +83,9 @@ describe('public article detail', () => {
     const older = facade.loadPublicArticleById(1);
     const newer = facade.loadPublicArticleById(2);
     const rejected = expect(newer).rejects.toThrow('Failed to load article');
-    http.expectOne('/api/v1/blog/announcements/2').flush({}, { status: 500, statusText: 'Server Error' });
+    http.expectOne('/api/v1/blog/announcements/2?language=pl').flush({}, { status: 500, statusText: 'Server Error' });
     await rejected;
-    http.expectOne('/api/v1/blog/announcements/1').flush(article);
+    http.expectOne('/api/v1/blog/announcements/1?language=pl').flush(article);
     await older;
     expect(facade.publicArticle()).toBeNull();
     expect(facade.publicArticleStatus()).toBe('error');

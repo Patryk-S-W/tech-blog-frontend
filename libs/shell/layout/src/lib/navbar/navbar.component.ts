@@ -6,15 +6,18 @@ import {
 import { Component, inject } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthFacade } from '@blog/auth/data-access';
+import { UiPreferencesService } from '@blog/shared/util';
+import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss'],
-  imports: [RouterModule, NgbCollapseModule, NgbDropdownModule],
+  imports: [RouterModule, NgbCollapseModule, NgbDropdownModule, TranslocoModule],
 })
 export class NavbarComponent {
   private readonly auth = inject(AuthFacade);
+  readonly preferences = inject(UiPreferencesService);
 
   isNavbarCollapsed = true;
 
@@ -23,33 +26,33 @@ export class NavbarComponent {
 
   links = [
     {
-      title: 'Home',
+      titleKey: 'nav.home',
       fragment: '/',
     },
     {
-      title: 'Projects',
+      titleKey: 'nav.projects',
       fragment: '/projects',
     },
     {
-      title: 'Articles',
+      titleKey: 'nav.articles',
       fragment: '/recent-articles',
       dropdown: [
         {
-          title: 'Recent articles',
+          titleKey: 'nav.recentArticles',
           fragment: '/recent-articles',
         },
         {
-          title: 'Hardware',
+          titleKey: 'nav.hardware',
           fragment: '/hardware',
         },
         {
-          title: 'AI',
+          titleKey: 'nav.ai',
           fragment: '/ai',
         },
       ],
     },
     {
-      title: 'About me',
+      titleKey: 'nav.about',
       fragment: '/about-me',
     },
   ];

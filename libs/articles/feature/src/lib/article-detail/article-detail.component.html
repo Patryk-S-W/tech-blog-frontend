@@ -2,36 +2,36 @@
   <div class="container py-4">
     @if (invalidId()) {
       <section class="article-state text-light" aria-labelledby="article-state-title">
-        <h1 id="article-state-title">Article not found</h1>
-        <a routerLink="/recent-articles" class="text-info">Back to articles</a>
+        <h1 id="article-state-title">{{ 'articles.detailNotFound' | transloco }}</h1>
+        <a routerLink="/recent-articles" queryParamsHandling="preserve" class="text-info">{{ 'articles.back' | transloco }}</a>
       </section>
     } @else {
       @switch (status()) {
         @case ('loading') {
           <section class="article-state text-light" aria-labelledby="article-state-title">
-            <h1 id="article-state-title">Loading article</h1>
-            <p role="status" aria-live="polite">Loading article…</p>
+            <h1 id="article-state-title">{{ 'articles.loading' | transloco }}</h1>
+            <p role="status" aria-live="polite">{{ 'articles.loading' | transloco }}</p>
           </section>
         }
         @case ('not-found') {
           <section class="article-state text-light" aria-labelledby="article-state-title">
-            <h1 id="article-state-title">Article not found</h1>
-            <p>This article may have been removed or is not available.</p>
-            <a routerLink="/recent-articles" class="text-info">Back to articles</a>
+            <h1 id="article-state-title">{{ 'articles.detailNotFound' | transloco }}</h1>
+            <p>{{ 'articles.detailUnavailable' | transloco }}</p>
+            <a routerLink="/recent-articles" queryParamsHandling="preserve" class="text-info">{{ 'articles.back' | transloco }}</a>
           </section>
         }
         @case ('error') {
           <section class="article-state text-light" aria-labelledby="article-state-title">
-            <h1 id="article-state-title">Couldn't load this article</h1>
-            <p>{{ error() || 'Please try again.' }}</p>
-            <button type="button" class="btn btn-outline-info me-2" (click)="retry()">Retry</button>
-            <a routerLink="/recent-articles" class="text-info">Back to articles</a>
+            <h1 id="article-state-title">{{ 'articles.detailLoadError' | transloco }}</h1>
+            <p>{{ 'articles.loadErrorHint' | transloco }}</p>
+            <button type="button" class="btn btn-outline-info me-2" (click)="retry()">{{ 'articles.retry' | transloco }}</button>
+            <a routerLink="/recent-articles" queryParamsHandling="preserve" class="text-info">{{ 'articles.back' | transloco }}</a>
           </section>
         }
         @case ('loaded') {
           @if (article(); as item) {
             <article class="article-content text-light mx-auto">
-              <a routerLink="/recent-articles" class="text-info d-inline-block mb-3">Back to articles</a>
+              <a routerLink="/recent-articles" queryParamsHandling="preserve" class="text-info d-inline-block mb-3">{{ 'articles.back' | transloco }}</a>
               <h1>{{ item.title }}</h1>
               <div class="article-meta d-flex flex-wrap gap-3 mb-4">
                 @if (item.category) { <span>{{ item.category }}</span> }
@@ -49,8 +49,8 @@
         }
         @default {
           <section class="article-state text-light" aria-labelledby="article-state-title">
-            <h1 id="article-state-title">Loading article</h1>
-            <p role="status" aria-live="polite">Loading article…</p>
+            <h1 id="article-state-title">{{ 'articles.loading' | transloco }}</h1>
+            <p role="status" aria-live="polite">{{ 'articles.loading' | transloco }}</p>
           </section>
         }
       }

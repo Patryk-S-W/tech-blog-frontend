@@ -1,9 +1,10 @@
 import { computed, inject } from '@angular/core';
 import { HttpErrorResponse } from '@angular/common/http';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 import { AnnouncementDto, CreateAnnouncementRequest, PagedResult, UpdateAnnouncementRequest } from '@blog/articles/entity';
-import { withCallState } from '@blog/shared/util';
+import { UiPreferencesService, withCallState } from '@blog/shared/util';
 import { AnnouncementService } from '../services/announcement.service';
 
 type PublicArticleStatus = 'idle' | 'loading' | 'loaded' | 'not-found' | 'error';
@@ -25,20 +26,31 @@ export const AnnouncementStore = signalStore(
     categoriesError: null as string | null,
   }),
   withComputed((store) => ({ latestFour: computed(() => store.announcements().slice(0, 4)), announcementCount: computed(() => store.announcements().length) })),
-  withMethods((store, service = inject(AnnouncementService)) => {
+  withMethods((store, service = inject(AnnouncementService), preferences = inject(UiPreferencesService)) => {
+    let homeRequestId = 0;
     let publicRequestId = 0;
     let archiveRequestId = 0;
     let categoriesRequestId = 0;
+    preferences.languageChanges.pipe(takeUntilDestroyed()).subscribe(() => {
+      ++homeRequestId;
+      ++publicRequestId;
+      ++archiveRequestId;
+      patchState(store, {
+        announcements: [], publicArticle: null, publicArticleStatus: 'idle', publicArticleError: null,
+        archivePage: null, archiveIsLoading: false, archiveError: null,
+      });
+    });
     return {
     async loadArchive(page: number, category?: string): Promise<void> {
       const requestId = ++archiveRequestId;
+      const language = preferences.language();
       patchState(store, { archivePage: null, archiveIsLoading: true, archiveError: null });
       try {
-        const result = await firstValueFrom(service.getPublishedAnnouncementsPage(page, category));
-        if (requestId !== archiveRequestId) return;
+        const result = await firstValueFrom(service.getPublishedAnnouncementsPage(page, category, language));
+        if (requestId !== archiveRequestId || language !== preferences.language()) return;
         patchState(store, { archivePage: result, archiveIsLoading: false });
       } catch (error) {
-        if (requestId !== archiveRequestId) return;
+        if (requestId !== archiveRequestId || language !== preferences.language()) return;
         const message = 'Failed to load article archive';
         patchState(store, { archiveIsLoading: false, archiveError: message });
         throw new Error(message, { cause: error });
@@ -60,13 +72,14 @@ export const AnnouncementStore = signalStore(
     },
     async loadPublicArticleById(id: number): Promise<void> {
       const requestId = ++publicRequestId;
+      const language = preferences.language();
       patchState(store, { publicArticle: null, publicArticleStatus: 'loading', publicArticleError: null });
       try {
-        const article = await firstValueFrom(service.getPublishedAnnouncementById(id));
-        if (requestId !== publicRequestId) return;
+        const article = await firstValueFrom(service.getPublishedAnnouncementById(id, language));
+        if (requestId !== publicRequestId || language !== preferences.language()) return;
         patchState(store, { publicArticle: article, publicArticleStatus: 'loaded' });
       } catch (error) {
-        if (requestId !== publicRequestId) return;
+        if (requestId !== publicRequestId || language !== preferences.language()) return;
         if (error instanceof HttpErrorResponse && error.status === 404) {
           patchState(store, { publicArticleStatus: 'not-found' });
           return;
@@ -77,23 +90,31 @@ export const AnnouncementStore = signalStore(
       }
     },
     async loadPublishedAnnouncements(): Promise<void> {
+      const requestId = ++homeRequestId;
+      const language = preferences.language();
+      patchState(store, { announcements: [] });
       store.startCall();
       try {
-        const result = await firstValueFrom(service.getPublishedAnnouncements());
+        const result = await firstValueFrom(service.getPublishedAnnouncements(undefined, language));
+        if (requestId !== homeRequestId || language !== preferences.language()) return;
         patchState(store, { announcements: result });
         store.finishCall();
       } catch {
+        if (requestId !== homeRequestId || language !== preferences.language()) return;
         store.failCall('Failed to load announcements');
         throw new Error('Failed to load announcements');
       }
     },
     async loadPublishedById(id: number): Promise<void> {
+      const language = preferences.language();
       store.startCall();
       try {
-        const result = await firstValueFrom(service.getPublishedAnnouncementById(id));
+        const result = await firstValueFrom(service.getPublishedAnnouncementById(id, language));
+        if (language !== preferences.language()) return;
         patchState(store, { currentAnnouncement: result });
         store.finishCall();
       } catch {
+        if (language !== preferences.language()) return;
         store.failCall('Failed to load announcement');
         throw new Error('Failed to load announcement');
       }

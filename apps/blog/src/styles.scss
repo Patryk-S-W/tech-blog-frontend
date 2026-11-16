@@ -1,5 +1,37 @@
 @use "@angular/material" as mat;
 
+:root {
+  color-scheme: dark;
+  --page: #212529;
+  --surface: #292e33;
+  --surface-raised: #30363c;
+  --text: #f3f1ed;
+  --muted: #c3c0ba;
+  --border: #454a4e;
+  --accent: #e8b777;
+  --accent-strong: #e8b777;
+  --on-accent: #212529;
+  --link: #f0c98f;
+  --input: #292e33;
+  --code: #181c20;
+}
+
+:root[data-theme='light'] {
+  color-scheme: light;
+  --page: #f4f1eb;
+  --surface: #fffdf8;
+  --surface-raised: #ebe5da;
+  --text: #292823;
+  --muted: #5f5b52;
+  --border: #c9c1b4;
+  --accent: #9a5a13;
+  --accent-strong: #77430b;
+  --on-accent: #fffdf8;
+  --link: #75430d;
+  --input: #fffdf8;
+  --code: #e9e3d8;
+}
+
 @include mat.elevation-classes();
 @include mat.app-background();
 
@@ -15,7 +47,7 @@
 
 body {
   font-size: 16px;
-  color: #ffffff;
+  color: var(--text);
   text-rendering: optimizeLegibility;
   font-weight: initial;
 }
@@ -25,7 +57,7 @@ app-root > router-outlet + * {
 }
 
 .bg-dark-blog {
-  background: #212529;
+  background: var(--page);
 }
 
 .bg-darker-blog {
@@ -34,6 +66,7 @@ app-root > router-outlet + * {
 
 a,
 a:hover {
+  color: var(--link);
   text-decoration: none;
   transition: color 0.3s ease-in-out;
 }
@@ -321,8 +354,51 @@ svg#clouds {
 @import "bootstrap/scss/bootstrap";
 
 body {
-  background-color: #212529;
+  background-color: var(--page);
+  color: var(--text);
 }
+
+:root[data-theme='light'] {
+  .text-white, .text-light { color: var(--text) !important; }
+  .bg-dark, .bg-dark-blog, .bg-darker-blog { background-color: var(--page) !important; }
+  .card, .postcard, .project-card, .wiki-main, .profile-card, .experience-card,
+  .article-state, .login-container .card { background-color: var(--surface) !important; color: var(--text); border-color: var(--border); }
+  .form-control, .form-select { color: var(--text); background-color: var(--input); border-color: var(--border); }
+  .form-control:focus, .form-select:focus { color: var(--text); background-color: var(--input); border-color: var(--accent); }
+  .article-body pre, .article-body code, pre, code { background-color: var(--code); color: var(--text); }
+  .btn-outline-info { color: var(--accent-strong); border-color: var(--accent); }
+  .btn-outline-info:hover { color: #fff; background-color: var(--accent-strong); }
+  .alert-warning { color: #5c3b08; background-color: #fff0ca; border-color: #d8b66d; }
+  .journal, .about-page, .experience-page, .projects-page, .wiki-page, .article-page,
+  .login-container, .bg-dark-blog, .postcard { background-color: var(--page) !important; color: var(--text) !important; }
+  .intro, .featured-article, .story, .project-card, .wiki-main, .profile-card,
+  .technology-card, .experience-card, .case-section, .article-content, .article-state,
+  .postcard__text { background-color: var(--surface) !important; color: var(--text) !important; border-color: var(--border) !important; }
+  .eyebrow, .article-meta, .intro-copy, .project-author, .technology-note, .profile-intro,
+  .case-summary, .experience-card p, .article-state p { color: var(--muted) !important; }
+  .navbar, .topbar { background-color: var(--page) !important; }
+  .nav-link, .navbar-brand, .navbar-nav .nav-link.active { color: var(--text) !important; }
+  .dropdown-menu { background-color: var(--surface); border-color: var(--border); }
+  .dropdown-item { color: var(--text) !important; }
+  .dropdown-item:hover { background-color: var(--surface-raised); }
+  footer { background-color: var(--surface) !important; color: var(--text) !important; }
+  .journal, .about-page, .experience-page, .projects-page, .wiki-page, .article-page,
+  .login-container, section.bg-dark-blog { color: var(--text) !important; }
+  .journal .intro, .journal .featured-article, .journal .story, .empty-journal,
+  .projects-heading h1, .project-copy h2, .wiki-main h1, .wiki-main h2,
+  .profile-card h1, .section-heading h2, .technology-card h3, .experience-card h3,
+  .case-header h1, .case-section h2, .not-found h1, .article-content,
+  .article-content h1, .article-content h2, .article-content h3, .postcard__title a { color: var(--text) !important; }
+  .postcard, .postcard.dark { background-color: var(--surface) !important; color: var(--text) !important; }
+  .postcard__text::before { background: var(--surface) !important; }
+  .project-info, .wiki-main .badge, .article-content .article-body pre,
+  .case-study, .not-found { background-color: var(--surface) !important; color: var(--text) !important; border-color: var(--border) !important; }
+  .article-content .article-body code, .wiki-main .markdown-body code { background-color: var(--code) !important; color: var(--accent-strong) !important; }
+  .article-content .article-body pre code { color: var(--text) !important; }
+  .technology-card li, .scope-list li, .technology-list li, .postcard__tagbox .tag__item { color: var(--text) !important; border-color: var(--border) !important; background: var(--surface-raised) !important; }
+}
+
+button:focus-visible, a:focus-visible, select:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 
 $main-blue: #e8b777 !default;
 $main-blue-rgb-015: rgba(232, 183, 119, 0.1) !default;

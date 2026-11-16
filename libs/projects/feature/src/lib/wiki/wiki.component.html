@@ -3,32 +3,32 @@
   @if (isLoading()) {
     <div class="text-center py-5">
       <div class="spinner-border text-info" role="status">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden">{{ 'common.loading' | transloco }}</span>
       </div>
     </div>
   } @else if (error()) {
-    <div class="alert alert-warning">{{ error() }}</div>
+    <div class="alert alert-warning" role="alert">{{ 'projects.loadError' | transloco }}</div>
   } @else if (project()) {
     <div class="wiki-grid">
       <article class="wiki-main">
         <a
-          routerLink="/projects"
+          routerLink="/projects" queryParamsHandling="preserve"
           class="text-info text-decoration-none mb-3 d-inline-block"
         >
-          <i class="fas fa-arrow-left me-2"></i>Back to Projects
+          <i class="fas fa-arrow-left me-2"></i>{{ 'projects.title' | transloco }}
         </a>
 
         <h1>{{ project()!.title }}</h1>
 
         <div class="d-flex gap-2 mb-4">
-          <span class="badge bg-info">{{ project()!.author }}</span>
+            <span class="badge bg-info">{{ 'projects.author' | transloco }}: {{ project()!.author }}</span>
           @if (project()!.url) {
             <a
               [href]="project()!.url"
               target="_blank"
               class="badge bg-outline-info text-info text-decoration-none"
             >
-              <i class="fas fa-external-link-alt me-1"></i>Visit Project
+              <i class="fas fa-external-link-alt me-1"></i>{{ 'projects.visit' | transloco }}
             </a>
           }
         </div>
@@ -49,12 +49,12 @@
 
       <aside class="wiki-aside">
         <div class="project-info">
-          <h2>Project info</h2>
+          <h2>{{ 'projects.info' | transloco }}</h2>
           <div>
-            <p><strong>Author:</strong> {{ project()!.author }}</p>
+            <p><strong>{{ 'projects.author' | transloco }}:</strong> {{ project()!.author }}</p>
             @if (project()!.url) {
               <p>
-                <strong>URL:</strong>
+                <strong>{{ 'projects.url' | transloco }}:</strong>
                 <a [href]="project()!.url" target="_blank" class="text-info">{{
                   project()!.url
                 }}</a>

@@ -4,15 +4,15 @@
       <div class="col-md-6 col-lg-4">
         <div class="card bg-dark text-light mt-5">
           <div class="card-body p-4">
-            <h3 class="card-title text-center mb-4">Login</h3>
+            <h3 class="card-title text-center mb-4">{{ 'login.title' | transloco }}</h3>
 
             @if (error()) {
-              <div class="alert alert-danger">{{ error() }}</div>
+              <div class="alert alert-danger" role="alert">{{ 'login.error' | transloco }}</div>
             }
 
             <form (ngSubmit)="onSubmit()">
               <div class="mb-3">
-                <label for="username" class="form-label">Username</label>
+                <label for="username" class="form-label">{{ 'login.username' | transloco }}</label>
                 <input
                   type="text"
                   id="username"
@@ -25,7 +25,7 @@
               </div>
 
               <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
+                <label for="password" class="form-label">{{ 'login.password' | transloco }}</label>
                 <input
                   type="password"
                   id="password"
@@ -48,7 +48,7 @@
                     role="status"
                   ></span>
                 }
-                Sign in
+                {{ isLoading() ? ('login.loading' | transloco) : ('login.submit' | transloco) }}
               </button>
             </form>
           </div>

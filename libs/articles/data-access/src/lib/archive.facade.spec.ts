@@ -42,8 +42,8 @@ describe('article archive', () => {
     const http = TestBed.inject(HttpTestingController);
     const older = facade.loadArchive(1);
     const newer = facade.loadArchive(2);
-    const oldRequest = http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10');
-    const newRequest = http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10');
+    const oldRequest = http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10&language=pl');
+    const newRequest = http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10&language=pl');
     expect(newRequest.request.params.has('category')).toBe(false);
     newRequest.flush(page(2));
     await newer;
@@ -60,10 +60,10 @@ describe('article archive', () => {
     const older = facade.loadArchive(1);
     const newer = facade.loadArchive(2);
     const rejected = expect(newer).rejects.toThrow('Failed to load article archive');
-    http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10')
+    http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10&language=pl')
       .flush({ message: 'untrusted upstream detail' }, { status: 500, statusText: 'Server Error' });
     await rejected;
-    http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10').flush(page(1));
+    http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10&language=pl').flush(page(1));
     await older;
     expect(facade.archivePage()).toBeNull();
     expect(facade.archiveError()).toBe('Failed to load article archive');
@@ -71,7 +71,7 @@ describe('article archive', () => {
     const retry = facade.loadArchive(2);
     expect(facade.archiveError()).toBeNull();
     expect(facade.archiveIsLoading()).toBe(true);
-    http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10').flush(page(2));
+    http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10&language=pl').flush(page(2));
     await retry;
     expect(facade.archivePage()).toEqual(page(2));
   });
@@ -82,20 +82,20 @@ describe('article archive', () => {
     const archive = facade.loadArchive(1);
     const categories = facade.loadCategories();
     const rejected = expect(categories).rejects.toThrow('Failed to load article categories');
-    const failed = http.expectOne('/api/v1/blog/categories');
+    const failed = http.expectOne('/api/v1/blog/categories?language=pl');
     expect(failed.request.method).toBe('GET');
     expect(failed.request.transferCache).toBe(false);
     failed.flush({}, { status: 500, statusText: 'Server Error' });
     await rejected;
     expect(facade.archiveIsLoading()).toBe(true);
     expect(facade.archiveError()).toBeNull();
-    http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10').flush(page(1));
+    http.expectOne('/api/v1/blog/announcements?page=1&pageSize=10&language=pl').flush(page(1));
     await archive;
     expect(facade.archivePage()).toEqual(page(1));
     expect(facade.categoriesError()).toBe('Failed to load article categories');
     const retry = facade.loadCategories();
     expect(facade.categoriesError()).toBeNull();
-    http.expectOne('/api/v1/blog/categories').flush([article.category, 'Hardware']);
+    http.expectOne('/api/v1/blog/categories?language=pl').flush([article.category, 'Hardware']);
     await retry;
     expect(facade.categories()).toEqual([article.category, 'Hardware']);
     expect(facade.archivePage()).toEqual(page(1));
@@ -105,9 +105,9 @@ describe('article archive', () => {
     const facade = TestBed.inject(AnnouncementsFacade);
     const http = TestBed.inject(HttpTestingController);
     const older = facade.loadCategories();
-    const oldRequest = http.expectOne('/api/v1/blog/categories');
+    const oldRequest = http.expectOne('/api/v1/blog/categories?language=pl');
     const newer = facade.loadCategories();
-    http.expectOne('/api/v1/blog/categories').flush(['Tech']);
+    http.expectOne('/api/v1/blog/categories?language=pl').flush(['Tech']);
     await newer;
     oldRequest.flush({}, { status: 500, statusText: 'Server Error' });
     await older;
@@ -119,16 +119,16 @@ describe('article archive', () => {
     const facade = TestBed.inject(AnnouncementsFacade);
     const http = TestBed.inject(HttpTestingController);
     const home = facade.loadPublishedAnnouncements();
-    http.expectOne('/api/v1/blog/announcements').flush({ items: [article] });
+    http.expectOne('/api/v1/blog/announcements?language=pl').flush({ items: [article] });
     await home;
     const owner = facade.loadMyAnnouncements();
     http.expectOne('/api/v1/announcement').flush([{ ...article, id: 8 }]);
     await owner;
     const detail = facade.loadPublicArticleById(9);
-    http.expectOne('/api/v1/blog/announcements/9').flush({ ...article, id: 9 });
+    http.expectOne('/api/v1/blog/announcements/9?language=pl').flush({ ...article, id: 9 });
     await detail;
     const archive = facade.loadArchive(2);
-    http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10').flush(page(2));
+    http.expectOne('/api/v1/blog/announcements?page=2&pageSize=10&language=pl').flush(page(2));
     await archive;
     expect(facade.announcements()).toEqual([article]);
     expect(facade.ownerAnnouncements()[0].id).toBe(8);

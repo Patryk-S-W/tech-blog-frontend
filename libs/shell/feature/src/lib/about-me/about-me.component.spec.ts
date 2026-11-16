@@ -2,6 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AboutMeComponent } from './about-me.component';
 import { provideRouter } from '@angular/router';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 describe('AboutMeComponent', () => {
   let component: AboutMeComponent;
@@ -9,7 +10,10 @@ describe('AboutMeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AboutMeComponent],
+      imports: [AboutMeComponent, TranslocoTestingModule.forRoot({
+        langs: { en: { about: { frontend: 'FRONTEND', backend: 'BACKEND', technologiesTitle: 'Technologies I work with', experienceTitle: 'Example problems, practical approaches' } } },
+        translocoConfig: { availableLangs: ['en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
       providers: [provideRouter([])],
     }).compileComponents();
 

@@ -1,29 +1,29 @@
 <main class="projects-page">
   <div class="container projects-container">
     <header class="projects-heading">
-      <p class="eyebrow">SELECTED WORK</p>
-      <h1>Projects</h1>
+      <p class="eyebrow">{{ 'projects.eyebrow' | transloco }}</p>
+      <h1>{{ 'projects.title' | transloco }}</h1>
     </header>
 
     @if (isLoading()) {
       <div class="text-center py-5">
         <div class="spinner-border text-info" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">{{ 'common.loading' | transloco }}</span>
         </div>
       </div>
     } @else if (error()) {
-      <div class="alert alert-warning">{{ error() }}</div>
+      <div class="alert alert-warning" role="alert">{{ 'projects.loadError' | transloco }}</div>
     } @else {
       @if (projects().length === 0) {
         <div class="empty-projects" role="status">
-          <p class="eyebrow">PROJECTS</p>
-          <p>No published projects yet.</p>
+          <p class="eyebrow">{{ 'projects.label' | transloco }}</p>
+          <p>{{ 'projects.empty' | transloco }}</p>
         </div>
       } @else {
         <div class="project-grid">
           @for (project of projects(); track trackById($index, project)) {
             <article class="project-card">
-              <a [routerLink]="['/projects', project.id]" class="project-link">
+              <a [routerLink]="['/projects', project.id]" queryParamsHandling="preserve" class="project-link">
                 @if (project.image) {
                   <img
                     [src]="project.image"

@@ -11,6 +11,24 @@
               ><i class="fab fa-linkedin-in"></i
             ></a>
           </li>
+          <li class="preference-item">
+            <div class="language-switch" role="group" [attr.aria-label]="'preferences.language' | transloco">
+              <button type="button" class="preference-button" [attr.aria-pressed]="preferences.language() === 'pl'" [attr.aria-label]="'preferences.polish' | transloco" (click)="preferences.setLanguage('pl')">PL</button>
+              <button type="button" class="preference-button" [attr.aria-pressed]="preferences.language() === 'en'" [attr.aria-label]="'preferences.english' | transloco" (click)="preferences.setLanguage('en')">EN</button>
+            </div>
+          </li>
+          <li class="preference-item">
+            <button
+              type="button"
+              class="preference-button theme-switch"
+              [attr.aria-label]="(preferences.theme() === 'dark' ? 'preferences.switchLight' : 'preferences.switchDark') | transloco"
+              [attr.aria-pressed]="preferences.theme() === 'light'"
+              (click)="preferences.toggleTheme()"
+            >
+              <i class="fas" [class.fa-sun]="preferences.theme() === 'dark'" [class.fa-moon]="preferences.theme() === 'light'" aria-hidden="true"></i>
+              <span>{{ (preferences.theme() === 'dark' ? 'preferences.dark' : 'preferences.light') | transloco }}</span>
+            </button>
+          </li>
           <li>
             <a
               class="waves-effect waves-dark"
@@ -27,7 +45,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
   <div class="container">
     <span class="navbar-brand">
-      <a routerLink="/">
+      <a routerLink="/" queryParamsHandling="preserve">
         <img
           class="logo-blog"
           width="40"
@@ -41,7 +59,7 @@
       type="button"
       (click)="isNavbarCollapsed = !isNavbarCollapsed"
       aria-expanded="true"
-      aria-label="Toggle navigation"
+      [attr.aria-label]="'nav.toggle' | transloco"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -54,9 +72,7 @@
         @for (link of links; track trackByFragment($index, link)) {
           @if (link.dropdown) {
             <li class="nav-item dropdown" ngbDropdown>
-              <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{
-                link.title
-              }}</a>
+              <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{ link.titleKey | transloco }}</a>
               <div class="dropdown-menu" aria-labelledby="id01" ngbDropdownMenu>
                 @for (
                   item of link.dropdown;
@@ -65,7 +81,8 @@
                   <a
                     class="dropdown-item text-dark"
                     [routerLink]="item.fragment"
-                    >{{ item.title }}</a
+                    queryParamsHandling="preserve"
+                    >{{ item.titleKey | transloco }}</a
                   >
                 }
               </div>
@@ -73,9 +90,7 @@
           }
           @if (!link.dropdown) {
             <li class="nav-item">
-              <a class="nav-link active" [routerLink]="link.fragment">{{
-                link.title
-              }}</a>
+                  <a class="nav-link active" [routerLink]="link.fragment" queryParamsHandling="preserve">{{ link.titleKey | transloco }}</a>
             </li>
           }
         }
@@ -91,9 +106,10 @@
             <a
               class="nav-link text-light"
               routerLink="/admin"
+              queryParamsHandling="preserve"
               style="cursor: pointer"
             >
-              <i class="fas fa-cog me-1"></i>Admin
+              <i class="fas fa-cog me-1"></i>{{ 'nav.admin' | transloco }}
             </a>
           </li>
           <li class="nav-item">
@@ -102,13 +118,13 @@
               (click)="logout()"
               style="cursor: pointer"
             >
-              <i class="fas fa-sign-out-alt me-1"></i>Logout
+              <i class="fas fa-sign-out-alt me-1"></i>{{ 'nav.logout' | transloco }}
             </a>
           </li>
         } @else {
           <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/login">
-              <i class="fas fa-sign-in-alt me-1"></i>Login
+            <a class="nav-link text-light" routerLink="/login" queryParamsHandling="preserve">
+              <i class="fas fa-sign-in-alt me-1"></i>{{ 'nav.login' | transloco }}
             </a>
           </li>
         }

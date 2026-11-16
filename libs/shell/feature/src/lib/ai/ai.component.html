@@ -1,6 +1,6 @@
 <section class="bg-dark-blog">
   <div class="container py-4">
-    <h1 class="h1 text-center text-white" id="pageHeaderTitle">AI</h1>
+    <h1 class="h1 text-center text-white" id="pageHeaderTitle">{{ 'ai.title' | transloco }}</h1>
 
     @for (article of articles; track trackById($index, article)) {
       <article
@@ -9,7 +9,7 @@
         <a class="postcard__img_link" href="#">
           <img
             class="postcard__img"
-            alt="Article image"
+            [alt]="'ai.imageAlt' | transloco"
             src="{{ article.image }}"
             />
           </a>

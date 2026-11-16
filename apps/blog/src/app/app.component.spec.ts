@@ -5,11 +5,15 @@ import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { provideRouter } from '@angular/router';
 import { AuthFacade } from '@blog/auth/data-access';
 import { signal } from '@angular/core';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 describe('AppComponent', () => {
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [AppComponent],
+      imports: [AppComponent, TranslocoTestingModule.forRoot({
+        langs: { en: { nav: { home: 'Home', projects: 'Projects', articles: 'Articles' }, footer: { social: 'Social media', copyright: 'Copyright' } } },
+        translocoConfig: { availableLangs: ['en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),

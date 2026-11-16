@@ -1,1 +1,164 @@
-{}
+{
+  "nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "articles": "Articles",
+    "recentArticles": "Recent articles",
+    "hardware": "Hardware",
+    "ai": "AI",
+    "about": "About me",
+    "login": "Login",
+    "admin": "Admin",
+    "logout": "Log out",
+    "toggle": "Toggle navigation"
+  },
+  "preferences": {
+    "language": "Language",
+    "polish": "Polish",
+    "english": "English",
+    "theme": "Theme",
+    "dark": "Dark",
+    "light": "Light",
+    "switchLight": "Use light theme",
+    "switchDark": "Use dark theme"
+  },
+  "home": {
+    "eyebrow": "TECH JOURNAL · WEB DEVELOPMENT · AI",
+    "intro": "Software developer from Poland, focused on web development and AI.",
+    "about": "About me",
+    "latest": "LATEST ARTICLE",
+    "read": "Read article",
+    "allArticles": "All articles",
+    "journal": "THE JOURNAL",
+    "noArticles": "No articles published yet.",
+    "more": "MORE TO READ"
+  },
+  "articles": {
+    "archiveTitle": "Recent articles",
+    "category": "Category",
+    "allCategories": "All categories",
+    "categoriesError": "Couldn't load categories.",
+    "archiveError": "Couldn't load articles. Please try again.",
+    "retryCategories": "Retry categories",
+    "retry": "Retry",
+    "loading": "Loading articles…",
+    "notFound": "No articles found.",
+    "pageLabel": "Page",
+    "previous": "Previous",
+    "next": "Next",
+    "of": "of",
+    "count": "{{count}} articles",
+    "pagesLabel": "Article pages",
+    "detailNotFound": "Article not found",
+    "detailUnavailable": "This article may have been removed or is not available.",
+    "detailLoadError": "Couldn't load this article",
+    "retryHint": "Please try again in a moment.",
+    "loadErrorHint": "Please try again in a moment.",
+    "back": "Back to articles"
+  },
+  "projects": {
+    "eyebrow": "SELECTED WORK",
+    "title": "Projects",
+    "label": "PROJECTS",
+    "empty": "No published projects yet.",
+    "visit": "Visit project",
+    "info": "Project info",
+    "author": "Author",
+    "url": "URL",
+    "loadError": "Couldn't load the project. Please try again."
+  },
+  "about": {
+    "eyebrow": "ABOUT ME",
+    "bio": "I am a software developer from Poland, focused on web development and AI.",
+    "topics": "Areas of interest",
+    "web": "Web development",
+    "findMe": "Find me online",
+    "technologiesLabel": "TECHNOLOGIES",
+    "technologiesTitle": "Technologies I work with",
+    "frontend": "FRONTEND",
+    "backend": "BACKEND",
+    "technologyNote": "Accessibility, semantics and responsive behavior are part of how I approach interface design.",
+    "experienceLabel": "EXPERIENCE",
+    "experienceTitle": "Example problems, practical approaches",
+    "experienceNote": "Example case studies — not descriptions of completed client projects.",
+    "example": "EXAMPLE CASE STUDY",
+    "viewExample": "View example",
+    "cases": {
+      "forms": {
+        "title": "A multi-step form that keeps its state",
+        "summary": "An example approach to form flows where validation and server errors should not erase a person’s work.",
+        "problem": "A long form is split into steps. A validation error or a failed save sends the user back through the flow, and it is unclear which fields need attention or whether the entered data is still safe.",
+        "approach": [
+          "Keep form state and validation rules explicit for each step.",
+          "Show field-level feedback and a clear summary for errors returned by the server.",
+          "Preserve entered values when a request fails and make retry actions clear."
+        ],
+        "scope": ["Accessible labels and error announcements", "Loading, success and failure states", "Keyboard and narrow-screen checks"],
+        "validation": "Check that values survive validation and network failures, and that each error can be found and corrected using a keyboard or screen reader."
+      },
+      "ksef": {
+        "title": "A more reliable KSeF integration flow",
+        "summary": "An illustrative integration design for handling invoice validation, temporary failures and repeated delivery safely.",
+        "problem": "An invoicing system sends documents to an external service. Requests can be rejected or temporarily unavailable, while an automatic retry may accidentally send the same document twice.",
+        "approach": [
+          "Validate outgoing data before sending and keep rejection details available to the operator.",
+          "Queue work and make retry decisions from the service response instead of retrying blindly.",
+          "Record a stable document reference and processing state so retries can be idempotent."
+        ],
+        "scope": ["Outbound document flow", "Retry and duplicate handling", "Status visibility and actionable errors"],
+        "validation": "Exercise accepted, rejected, delayed and repeated-request scenarios in a test environment before any production rollout."
+      },
+      "imports": {
+        "title": "Repeatable imports from data files",
+        "summary": "An example workflow for importing recurring files without hiding malformed rows or creating avoidable duplicates.",
+        "problem": "A team receives data files on a schedule. Small changes in column names, empty values or date formats make manual imports inconsistent and difficult to repeat.",
+        "approach": [
+          "Normalize and validate each row before it reaches the application data.",
+          "Return a useful report that points to the affected rows instead of failing without context.",
+          "Make repeat runs safe and separate rejected records from accepted ones."
+        ],
+        "scope": ["Input validation and normalization", "Clear row-level error reporting", "Safe reruns and automated checks"],
+        "validation": "Test valid, malformed, duplicate and partially invalid files, then confirm that rerunning the same input does not create duplicate records."
+      }
+    }
+  },
+  "experience": {
+    "back": "← About me",
+    "example": "EXAMPLE CASE STUDY",
+    "notice": "Illustrative scenario — not a claim of completed client work.",
+    "challenge": "THE CHALLENGE",
+    "problem": "The problem",
+    "response": "A PRACTICAL RESPONSE",
+    "approach": "Proposed approach",
+    "scopeLabel": "SCOPE",
+    "scope": "What the work covers",
+    "validationLabel": "CHECK THE RESULT",
+    "validation": "How to validate it",
+    "technologies": "TECHNOLOGIES",
+    "moreAbout": "More about me",
+    "notFoundLabel": "EXPERIENCE",
+    "notFound": "This example is not available.",
+    "backAbout": "Back to About me"
+  },
+  "login": {
+    "title": "Login",
+    "username": "Username",
+    "password": "Password",
+    "submit": "Sign in",
+    "loading": "Signing in…",
+    "error": "Couldn't sign in. Check your details and try again."
+  },
+  "hardware": {
+    "title": "Hardware",
+    "imageAlt": "Article illustration"
+  },
+  "ai": {
+    "title": "AI",
+    "imageAlt": "Article illustration"
+  },
+  "footer": {
+    "social": "Social media",
+    "copyright": "Copyright"
+  },
+  "common": { "loadError": "Something went wrong. Please try again.", "loading": "Loading…" }
+}

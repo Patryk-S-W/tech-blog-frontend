@@ -7,26 +7,35 @@ import { provideRouter } from '@angular/router';
 import { signal } from '@angular/core';
 import { AnnouncementsFacade } from '@blog/articles/data-access';
 import { AnnouncementDto } from '@blog/articles/entity';
+import { INITIAL_UI_LANGUAGE, LANGUAGE_STORAGE_KEY, UiPreferencesService } from '@blog/shared/util';
+import { TranslocoTestingModule } from '@ngneat/transloco';
 
 describe('HomeComponent', () => {
   let component: HomeComponent;
   let fixture: ComponentFixture<HomeComponent>;
   let latestFour: ReturnType<typeof signal<AnnouncementDto[]>>;
+  let loadPublished: jest.Mock;
 
   beforeEach(async () => {
+    localStorage.removeItem(LANGUAGE_STORAGE_KEY);
+    loadPublished = jest.fn().mockResolvedValue(undefined);
     await TestBed.configureTestingModule({
-      imports: [HomeComponent],
+      imports: [HomeComponent, TranslocoTestingModule.forRoot({
+        langs: { pl: {}, en: {} },
+        translocoConfig: { availableLangs: ['pl', 'en'], defaultLang: 'en' }, preloadLangs: true,
+      })],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         provideRouter([]),
+        { provide: INITIAL_UI_LANGUAGE, useValue: 'pl' },
         {
           provide: AnnouncementsFacade,
           useValue: {
             latestFour: (latestFour = signal<AnnouncementDto[]>([])),
             isLoading: signal(false),
             error: signal(null),
-            loadPublishedAnnouncements: () => Promise.resolve(),
+            loadPublishedAnnouncements: loadPublished,
           },
         },
       ],
@@ -39,6 +48,20 @@ describe('HomeComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('refetches on language changes without remounting and unsubscribes on destruction', () => {
+    const preferences = TestBed.inject(UiPreferencesService);
+    expect(loadPublished).toHaveBeenCalledTimes(1);
+    preferences.setLanguage('en');
+    expect(loadPublished).toHaveBeenCalledTimes(2);
+    preferences.setLanguage('en');
+    expect(loadPublished).toHaveBeenCalledTimes(2);
+    preferences.setLanguage('pl');
+    expect(loadPublished).toHaveBeenCalledTimes(3);
+    fixture.destroy();
+    preferences.setLanguage('en');
+    expect(loadPublished).toHaveBeenCalledTimes(3);
   });
 
   it('renders the published text-only article without an empty image slot', () => {

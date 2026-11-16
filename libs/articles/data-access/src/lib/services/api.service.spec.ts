@@ -34,7 +34,7 @@ describe('API routing', () => {
     const announcements = TestBed.inject(AnnouncementService);
     const received = jest.fn();
     announcements.getPublishedAnnouncements({ page: 2, pageSize: 3 }).subscribe(received);
-    const list = http.expectOne(`${environment.apiUrl}/api/v1/blog/announcements?page=2&pageSize=3`);
+    const list = http.expectOne(`${environment.apiUrl}/api/v1/blog/announcements?page=2&pageSize=3&language=pl`);
     expect(list.request.method).toBe('GET');
     const items: AnnouncementDto[] = [{
       id: 7, title: 'Published announcement', image: '', text: 'Body', category: 'Test',
@@ -44,7 +44,7 @@ describe('API routing', () => {
     expect(received).toHaveBeenCalledWith(items);
 
     announcements.getPublishedAnnouncementById(7).subscribe();
-    const announcement = http.expectOne(`${environment.apiUrl}/api/v1/blog/announcements/7`);
+    const announcement = http.expectOne(`${environment.apiUrl}/api/v1/blog/announcements/7?language=pl`);
     expect(announcement.request.method).toBe('GET');
     expect(announcement.request.transferCache).toBe(false);
     announcement.flush(items[0]);
