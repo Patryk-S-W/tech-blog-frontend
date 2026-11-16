@@ -1,17 +1,19 @@
 .article-page {
   min-height: 70vh;
   padding: clamp(2rem, 6vw, 5rem) 0;
-  background: #212529;
+  background: var(--page);
 }
 
 .article-content {
   max-width: 760px;
+  color: var(--text);
+  background: var(--surface);
   font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
   line-height: 1.85;
 }
 
 .article-content h1 {
-  color: #f3f3f7;
+  color: var(--text);
   font-size: clamp(2.35rem, 5.5vw, 4.25rem);
   font-weight: 650;
   line-height: 1.04;
@@ -20,7 +22,7 @@
 }
 
 .article-meta {
-  color: #aab1bd;
+  color: var(--muted);
   font: .8rem system-ui,sans-serif;
 }
 
@@ -49,12 +51,12 @@
     overflow-x: auto;
     padding: 1rem;
     border-radius: 8px;
-    background: #191b21;
-    border: 1px solid #ffffff20;
+    background: var(--code);
+    border: 1px solid var(--border);
   }
 
   code {
-    color: #e8b777;
+    color: var(--accent-strong);
   }
 
   pre code {
@@ -68,15 +70,17 @@
   }
 
   a {
-    color: #e8b777;
+    color: var(--link);
     text-decoration: underline;
     text-underline-offset: .2em;
   }
 }
 
-.article-content > a { color:#e8b777; font: .8rem system-ui,sans-serif; }
-.article-content > a:focus-visible { outline:2px solid #e8b777; outline-offset:4px; }
+.article-content > a { color:var(--link); font: .8rem system-ui,sans-serif; }
+.article-content > a:focus-visible { outline:2px solid var(--accent); outline-offset:4px; }
 
 .article-state {
   padding: 3rem 0;
+  color: var(--text);
+  background: var(--surface);
 }

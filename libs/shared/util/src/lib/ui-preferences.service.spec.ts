@@ -29,12 +29,16 @@ describe('UI preferences', () => {
     expect(uiLanguage(value)).toBe('pl');
   });
 
-  it.each(['pl', 'en'] as const)('takes explicit URL %s before saved language', (language) => {
+  it.each(['pl', 'en'] as const)('takes explicit URL %s before saved language', async (language) => {
     history.replaceState(null, '', `/?lang=${language}`);
     localStorage.setItem(LANGUAGE_STORAGE_KEY, language === 'pl' ? 'en' : 'pl');
     const preferences = TestBed.inject(UiPreferencesService);
     expect(preferences.language()).toBe(language);
     expect(document.documentElement.lang).toBe(language);
+    const fixture = TestBed.createComponent(PreferencesHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(preferences.language()).toBe(language);
   });
 
   it('defaults SSR to Polish without reading browser storage', () => {
@@ -89,6 +93,46 @@ describe('UI preferences', () => {
     expect(preferences.language()).toBe('pl');
     expect(transloco.setActiveLang).toHaveBeenLastCalledWith('pl');
     expect(router.navigateByUrl).toHaveBeenCalledTimes(2);
+  });
+
+  it.each([
+    ['/about-me?category=Hardware#skills', '/about-me?category=Hardware&lang=en#skills'],
+    ['/blog/1?page=2&category=Hardware#body', '/blog/1?page=2&category=Hardware&lang=en#body'],
+  ])('preserves bare initial route %s while restoring saved language', async (initialUrl, expectedUrl) => {
+    history.replaceState(null, '', initialUrl);
+    localStorage.setItem(LANGUAGE_STORAGE_KEY, 'en');
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    const parser = TestBed.inject(Router);
+    const router = {
+      url: '/', navigated: false, events: new Subject<NavigationEnd>(),
+      parseUrl: parser.parseUrl.bind(parser), navigateByUrl: jest.fn().mockResolvedValue(true),
+    };
+    const transloco = { setActiveLang: jest.fn(), load: jest.fn(() => of({})) };
+    const preferences = TestBed.inject(UiPreferencesService);
+    expect(preferences.language()).toBe('pl');
+    await preferences.initialize(router as unknown as Router, transloco as unknown as TranslocoService);
+    const fixture = TestBed.createComponent(PreferencesHostComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    expect(preferences.language()).toBe('en');
+    expect(router.navigateByUrl).toHaveBeenCalledTimes(1);
+    expect(parser.serializeUrl(router.navigateByUrl.mock.calls[0][0])).toBe(expectedUrl);
+    expect(router.navigateByUrl.mock.calls[0][1]).toEqual({ replaceUrl: true });
+  });
+
+  it('uses the resolved router URL after initial navigation rather than the browser location', async () => {
+    history.replaceState(null, '', '/about-me');
+    TestBed.configureTestingModule({ providers: [provideRouter([])] });
+    const parser = TestBed.inject(Router);
+    const router = {
+      url: '/recent-articles?page=3#list', navigated: true, events: new Subject<NavigationEnd>(),
+      parseUrl: parser.parseUrl.bind(parser), navigateByUrl: jest.fn().mockResolvedValue(true),
+    };
+    const transloco = { setActiveLang: jest.fn(), load: jest.fn(() => of({})) };
+    const preferences = TestBed.inject(UiPreferencesService);
+    await preferences.initialize(router as unknown as Router, transloco as unknown as TranslocoService);
+    preferences.setLanguage('en');
+    expect(parser.serializeUrl(router.navigateByUrl.mock.calls[0][0])).toBe('/recent-articles?page=3&lang=en#list');
   });
 
   it('adopts the pre-painted theme, persists changes and tolerates blocked storage', () => {

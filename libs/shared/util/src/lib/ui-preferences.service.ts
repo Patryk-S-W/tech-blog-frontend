@@ -93,7 +93,9 @@ export class UiPreferencesService {
 
   private updateLanguageUrl(language: UiLanguage): void {
     if (!this.browser || !this.router) return;
-    const url = this.router.parseUrl(this.router.url);
+    const location = this.router.navigated === false ? this.document.defaultView?.location : undefined;
+    const currentUrl = location ? `${location.pathname}${location.search}${location.hash}` : this.router.url;
+    const url = this.router.parseUrl(currentUrl);
     if (url.queryParams['lang'] === language) return;
     url.queryParams = { ...url.queryParams, lang: language };
     void this.router.navigateByUrl(url, { replaceUrl: true }).catch(() => {});
