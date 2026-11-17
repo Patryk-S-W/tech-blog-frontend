@@ -1,6 +1,5 @@
-import { Component, OnInit, inject, PLATFORM_ID } from '@angular/core';
-import { isPlatformBrowser } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { ProjectsFacade } from '@blog/projects/data-access';
 import { TranslocoModule } from '@ngneat/transloco';
 
@@ -12,19 +11,21 @@ import { TranslocoModule } from '@ngneat/transloco';
 })
 export class ProjectsComponent implements OnInit {
   private readonly projectsFacade = inject(ProjectsFacade);
-  private readonly platformId = inject(PLATFORM_ID);
+  readonly isWiki = inject(ActivatedRoute).snapshot.data['wiki'] === true;
 
   readonly projects = this.projectsFacade.projects;
   readonly isLoading = this.projectsFacade.isLoading;
   readonly error = this.projectsFacade.error;
 
   ngOnInit(): void {
-    if (isPlatformBrowser(this.platformId)) {
-      void this.projectsFacade.loadProjects().catch(() => {});
-    }
+    void this.projectsFacade.loadProjects().catch(() => {});
   }
 
   trackById(index: number, item: { id: number }): number {
     return item.id;
+  }
+
+  projectLink(id: number): string[] {
+    return [this.isWiki ? '/wiki' : '/projects', String(id)];
   }
 }

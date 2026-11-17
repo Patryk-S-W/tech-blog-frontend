@@ -53,6 +53,16 @@ describe('NavbarComponent', () => {
     expect(component).toBeTruthy();
   });
 
+  it('reactively builds category links from app-supplied API labels', () => {
+    fixture.componentRef.setInput('categories', ['Hardware', 'Custom topic']);
+    fixture.detectChanges();
+    const categories = component.links().find((link) => link.fragment === '/recent-articles')?.dropdown;
+    expect(categories).toContainEqual({ titleKey: 'categories.hardware', label: 'Hardware', fragment: '/recent-articles/hardware' });
+    expect(categories).toContainEqual({ titleKey: '', label: 'Custom topic', fragment: '/recent-articles/custom-topic' });
+    fixture.componentRef.setInput('categories', ['AI']);
+    expect(component.links().find((link) => link.fragment === '/recent-articles')?.dropdown).not.toContainEqual(expect.objectContaining({ label: 'Hardware' }));
+  });
+
   it('exposes persistent language and theme controls with current pressed state', () => {
     expect(fixture.nativeElement.querySelector('[aria-label="Polish"]').getAttribute('aria-pressed')).toBe('true');
     expect(fixture.nativeElement.querySelector('[aria-label="English"]').getAttribute('aria-pressed')).toBe('false');

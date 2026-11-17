@@ -5,7 +5,7 @@ import AppServerModule from './src/main.server';
 import { CommonEngine } from '@angular/ssr/node';
 import express from 'express';
 import { fileURLToPath } from 'node:url';
-import { INITIAL_UI_LANGUAGE, SSR_RESPONSE_STATUS, uiLanguage } from '@blog/shared/util';
+import { INITIAL_UI_LANGUAGE, SSR_RESPONSE_STATUS } from '@blog/shared/util';
 import { SERVER_API_URL, backendApiOrigin } from './src/app/server-api.config';
 import { registerPublicFeeds } from './public-feeds';
 
@@ -51,7 +51,7 @@ export function app(): express.Express {
           { provide: APP_BASE_HREF, useValue: baseUrl },
           { provide: SERVER_API_URL, useValue: apiUrl },
           { provide: SSR_RESPONSE_STATUS, useValue: res },
-          { provide: INITIAL_UI_LANGUAGE, useValue: uiLanguage(new URL(originalUrl, 'http://localhost').searchParams.get('lang')) },
+          { provide: INITIAL_UI_LANGUAGE, useValue: 'pl' },
         ],
       })
       .then((html) => res.send(html))

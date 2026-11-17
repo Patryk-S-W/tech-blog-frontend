@@ -14,10 +14,16 @@
         >
           <option value="">{{ 'articles.allCategories' | transloco }}</option>
           @if (selectedCategory() && !categories().includes(selectedCategory())) {
-            <option [value]="selectedCategory()">{{ selectedCategory() }}</option>
+             <option [value]="selectedCategory()">
+               @let selectedKey = categoryTranslationKey(selectedCategory());
+               {{ selectedKey ? (selectedKey | transloco) : selectedCategory() }}
+             </option>
           }
           @for (category of categories(); track category) {
-            <option [value]="category">{{ category }}</option>
+           <option [value]="category">
+             @let categoryKey = categoryTranslationKey(category);
+             {{ categoryKey ? (categoryKey | transloco) : category }}
+           </option>
           }
         </select>
       </div>
@@ -43,7 +49,9 @@
       </div>
     }
 
-    @if (archivePage(); as page) {
+    @if (invalidCategory()) {
+      <p class="text-center text-light py-5">{{ 'articles.notFound' | transloco }}</p>
+    } @else if (archivePage(); as page) {
       @if (!isLoading()) {
         @if (page.items.length === 0) {
           <p class="text-center text-light py-5">{{ 'articles.notFound' | transloco }}</p>
@@ -51,13 +59,13 @@
           @for (article of page.items; track trackById($index, article)) {
             <article class="postcard bg-dark-blog blue" [class.text-only]="!article.image">
               @if (article.image) {
-                <a class="postcard__img_link" [routerLink]="['/blog', article.id]" queryParamsHandling="preserve">
+                <a class="postcard__img_link" [routerLink]="['/blog', article.id]">
                   <img class="postcard__img" [alt]="article.title" [src]="article.image" />
                 </a>
               }
               <div class="postcard__text">
                 <h2 class="postcard__title blue">
-                  <a [routerLink]="['/blog', article.id]" queryParamsHandling="preserve">{{ article.title }}</a>
+                  <a [routerLink]="['/blog', article.id]">{{ article.title }}</a>
                 </h2>
                 <div class="postcard__subtitle small">
                   @if (article.publishedAt) {
@@ -70,14 +78,18 @@
                 <div class="postcard__preview-txt" [innerHTML]="article.text | markdown"></div>
                 <ul class="postcard__tagbox">
                   @if (article.category) {
-                    <li class="tag__item"><i class="fas fa-tag mx-1" aria-hidden="true"></i>{{ article.category }}</li>
+                    <li class="tag__item">
+                      <i class="fas fa-tag mx-1" aria-hidden="true"></i>
+                      @let categoryKey = categoryTranslationKey(article.category);
+                      {{ categoryKey ? (categoryKey | transloco) : article.category }}
+                    </li>
                   }
                   @if (article.duration) {
                     <li class="tag__item"><i class="fas fa-clock mx-1" aria-hidden="true"></i>{{ article.duration }}</li>
                   }
                   @if (article.button) {
                     <li class="tag__item play blue">
-                      <a [routerLink]="['/blog', article.id]" queryParamsHandling="preserve"><i class="fas fa-play mx-1" aria-hidden="true"></i>{{ article.button }}</a>
+                      <a [routerLink]="['/blog', article.id]"><i class="fas fa-play mx-1" aria-hidden="true"></i>{{ article.button }}</a>
                     </li>
                   }
                 </ul>

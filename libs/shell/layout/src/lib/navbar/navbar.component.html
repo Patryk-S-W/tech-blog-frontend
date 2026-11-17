@@ -45,7 +45,7 @@
 <nav class="navbar navbar-expand-lg navbar-dark mx-background-top-linear">
   <div class="container">
     <span class="navbar-brand">
-      <a routerLink="/" queryParamsHandling="preserve">
+      <a routerLink="/">
         <img
           class="logo-blog"
           width="40"
@@ -69,7 +69,7 @@
       [ngbCollapse]="isNavbarCollapsed"
     >
       <ul class="navbar-nav ml-auto">
-        @for (link of links; track trackByFragment($index, link)) {
+        @for (link of links(); track trackByFragment($index, link)) {
           @if (link.dropdown) {
             <li class="nav-item dropdown" ngbDropdown>
               <a class="nav-link active dropdown-toggle" ngbDropdownToggle>{{ link.titleKey | transloco }}</a>
@@ -81,8 +81,8 @@
                   <a
                     class="dropdown-item text-dark"
                     [routerLink]="item.fragment"
-                    queryParamsHandling="preserve"
-                    >{{ item.titleKey | transloco }}</a
+                   
+                    >{{ item.titleKey ? (item.titleKey | transloco) : $any(item).label }}</a
                   >
                 }
               </div>
@@ -90,7 +90,7 @@
           }
           @if (!link.dropdown) {
             <li class="nav-item">
-                  <a class="nav-link active" [routerLink]="link.fragment" queryParamsHandling="preserve">{{ link.titleKey | transloco }}</a>
+                  <a class="nav-link active" [routerLink]="link.fragment">{{ link.titleKey | transloco }}</a>
             </li>
           }
         }
@@ -106,7 +106,7 @@
             <a
               class="nav-link text-light"
               routerLink="/admin"
-              queryParamsHandling="preserve"
+             
               style="cursor: pointer"
             >
               <i class="fas fa-cog me-1"></i>{{ 'nav.admin' | transloco }}
@@ -123,7 +123,7 @@
           </li>
         } @else {
           <li class="nav-item">
-            <a class="nav-link text-light" routerLink="/login" queryParamsHandling="preserve">
+            <a class="nav-link text-light" routerLink="/login">
               <i class="fas fa-sign-in-alt me-1"></i>{{ 'nav.login' | transloco }}
             </a>
           </li>

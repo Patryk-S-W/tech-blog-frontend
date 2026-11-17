@@ -3,7 +3,7 @@ import { TranslocoModule } from '@ngneat/transloco';
 import { Component, DestroyRef, effect, inject, signal } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AnnouncementsFacade } from '@blog/articles/data-access';
+import { AnnouncementsFacade, categoryTranslationKey } from '@blog/articles/data-access';
 import { SSR_RESPONSE_STATUS, UiPreferencesService } from '@blog/shared/util';
 import { MarkdownPipe } from '@blog/shared/ui';
 import { ArticleMetadataService } from './article-metadata.service';
@@ -16,6 +16,7 @@ import { ArticleMetadataService } from './article-metadata.service';
   providers: [ArticleMetadataService],
 })
 export class ArticleDetailComponent {
+  readonly categoryTranslationKey = categoryTranslationKey;
   private readonly route = inject(ActivatedRoute);
   private readonly destroyRef = inject(DestroyRef);
   private readonly facade = inject(AnnouncementsFacade);

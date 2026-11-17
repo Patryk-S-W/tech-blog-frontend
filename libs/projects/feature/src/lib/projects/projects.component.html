@@ -1,8 +1,8 @@
 <main class="projects-page">
   <div class="container projects-container">
     <header class="projects-heading">
-      <p class="eyebrow">{{ 'projects.eyebrow' | transloco }}</p>
-      <h1>{{ 'projects.title' | transloco }}</h1>
+      <p class="eyebrow">{{ (isWiki ? 'wiki.title' : 'projects.eyebrow') | transloco }}</p>
+      <h1>{{ (isWiki ? 'wiki.title' : 'projects.title') | transloco }}</h1>
     </header>
 
     @if (isLoading()) {
@@ -23,7 +23,7 @@
         <div class="project-grid">
           @for (project of projects(); track trackById($index, project)) {
             <article class="project-card">
-              <a [routerLink]="['/projects', project.id]" queryParamsHandling="preserve" class="project-link">
+               <a [routerLink]="projectLink(project.id)" class="project-link">
                 @if (project.image) {
                   <img
                     [src]="project.image"

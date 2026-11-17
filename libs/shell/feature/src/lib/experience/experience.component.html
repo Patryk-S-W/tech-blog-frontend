@@ -1,7 +1,7 @@
 <main class="experience-page">
   <div class="container experience-container">
     @if (caseStudy(); as study) {
-      <a class="back-link" routerLink="/about-me" queryParamsHandling="preserve">{{ 'experience.back' | transloco }}</a>
+      <a class="back-link" routerLink="/about-me">{{ 'experience.back' | transloco }}</a>
 
       <article class="case-study">
         <header class="case-header">
@@ -52,14 +52,14 @@
               }
             </ul>
           </div>
-          <a routerLink="/about-me" queryParamsHandling="preserve" class="about-link">{{ 'experience.moreAbout' | transloco }} <span aria-hidden="true">↗</span></a>
+          <a routerLink="/about-me" class="about-link">{{ 'experience.moreAbout' | transloco }} <span aria-hidden="true">↗</span></a>
         </footer>
       </article>
     } @else {
       <section class="not-found" aria-labelledby="not-found-title">
         <p class="eyebrow">{{ 'experience.notFoundLabel' | transloco }}</p>
         <h1 id="not-found-title">{{ 'experience.notFound' | transloco }}</h1>
-        <a routerLink="/about-me" queryParamsHandling="preserve" class="about-link">{{ 'experience.backAbout' | transloco }} <span aria-hidden="true">→</span></a>
+        <a routerLink="/about-me" class="about-link">{{ 'experience.backAbout' | transloco }} <span aria-hidden="true">→</span></a>
       </section>
     }
   </div>
