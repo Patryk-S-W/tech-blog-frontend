@@ -3,10 +3,10 @@ import {
   NgbDropdownModule,
 } from '@ng-bootstrap/ng-bootstrap';
 
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AuthFacade } from '@blog/auth/data-access';
-import { UiPreferencesService } from '@blog/shared/util';
+import { UiPreferencesService, categorySlug, categoryTranslationKey } from '@blog/shared/util';
 import { TranslocoModule } from '@ngneat/transloco';
 
 @Component({
@@ -16,6 +16,7 @@ import { TranslocoModule } from '@ngneat/transloco';
   imports: [RouterModule, NgbCollapseModule, NgbDropdownModule, TranslocoModule],
 })
 export class NavbarComponent {
+  readonly categories = input<readonly string[]>([]);
   private readonly auth = inject(AuthFacade);
   readonly preferences = inject(UiPreferencesService);
 
@@ -24,7 +25,7 @@ export class NavbarComponent {
   readonly isAuthenticated = this.auth.isAuthenticated;
   readonly username = this.auth.username;
 
-  links = [
+  readonly links = computed(() => [
     {
       titleKey: 'nav.home',
       fragment: '/',
@@ -34,6 +35,10 @@ export class NavbarComponent {
       fragment: '/projects',
     },
     {
+      titleKey: 'nav.wiki',
+      fragment: '/wiki',
+    },
+    {
       titleKey: 'nav.articles',
       fragment: '/recent-articles',
       dropdown: [
@@ -41,21 +46,14 @@ export class NavbarComponent {
           titleKey: 'nav.recentArticles',
           fragment: '/recent-articles',
         },
-        {
-          titleKey: 'nav.hardware',
-          fragment: '/hardware',
-        },
-        {
-          titleKey: 'nav.ai',
-          fragment: '/ai',
-        },
+        ...this.categories().map((category) => ({ titleKey: categoryTranslationKey(category) ?? '', label: category, fragment: '/recent-articles/' + categorySlug(category) })),
       ],
     },
     {
       titleKey: 'nav.about',
       fragment: '/about-me',
     },
-  ];
+  ]);
 
   logout(): void {
     this.auth.logout();

@@ -1,0 +1,81 @@
+<main class="journal" role="main">
+  <div class="container journal-container">
+    <section class="intro" aria-labelledby="author-name">
+      <p class="eyebrow">{{ 'home.eyebrow' | transloco }}</p>
+      <h1 id="author-name">Patryk Sadowski<span class="accent">.</span></h1>
+      <p class="intro-copy">
+        {{ 'home.intro' | transloco }}
+      </p>
+      <div class="hero-actions">
+        <a routerLink="/about-me" class="about-link">{{ 'home.about' | transloco }} <span aria-hidden="true">↗</span></a>
+        <a routerLink="/projects" class="work-link">{{ 'home.projectsCta' | transloco }} <span aria-hidden="true">→</span></a>
+        <a href="https://www.linkedin.com/in/patryksadowski/" target="_blank" rel="noopener noreferrer" class="about-link">LinkedIn <span aria-hidden="true">↗</span></a>
+      </div>
+      <div class="skills" [attr.aria-label]="'home.technologies' | transloco">
+        <span>Angular</span><span>.NET</span><span>Python</span>
+      </div>
+    </section>
+
+    <nav class="home-sections" [attr.aria-label]="'home.explore' | transloco">
+      <a routerLink="/wiki">{{ 'home.wiki' | transloco }} <span aria-hidden="true">↗</span></a>
+      <a routerLink="/recent-articles">{{ 'home.blog' | transloco }} <span aria-hidden="true">↗</span></a>
+      <a routerLink="/projects">{{ 'home.portfolio' | transloco }} <span aria-hidden="true">↗</span></a>
+    </nav>
+
+    @if (projects().length > 0) {
+      <section class="sample-project" aria-labelledby="featured-project-title">
+        <div class="sample-copy">
+          <p class="eyebrow">{{ 'projects.eyebrow' | transloco }}</p>
+          <h2 id="featured-project-title">{{ projects()[0].title }}</h2>
+          <p>{{ projects()[0].shortDescription }}</p>
+        </div>
+        <a [routerLink]="['/projects', projects()[0].id]" class="sample-link">{{ 'projects.info' | transloco }} <span aria-hidden="true">↗</span></a>
+      </section>
+    }
+
+    @if (isLoading()) {
+      <div class="loading-state" role="status" aria-live="polite">
+        <div class="spinner-border text-info" aria-hidden="true"></div>
+        <span class="visually-hidden">{{ 'articles.loading' | transloco }}</span>
+      </div>
+    } @else if (error()) {
+      <div class="alert alert-warning" role="alert">{{ 'common.loadError' | transloco }}</div>
+    } @else {
+      @if (latestFour().length > 0) {
+        <section class="latest-section" aria-labelledby="latest-title">
+          <div class="section-heading">
+            <p class="eyebrow">{{ 'home.latest' | transloco }}</p>
+            <a routerLink="/recent-articles">{{ 'home.allArticles' | transloco }} <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="article-grid">
+            @for (article of latestFour(); track trackById($index, article)) {
+              <article class="article-card" [class.text-only]="!article.image">
+                @if (article.image) { <img class="article-image" [src]="article.image" [alt]="article.title" /> }
+                <div class="article-card-copy">
+                  <div class="article-meta">
+                    @if (article.category) {
+                      <a class="article-category" [routerLink]="['/recent-articles', categorySlug(article.category)]">
+                        @let categoryKey = categoryTranslationKey(article.category);
+                        {{ categoryKey ? (categoryKey | transloco) : article.category }}
+                      </a>
+                    }
+                    @if (article.publishedAt) { <time [attr.datetime]="article.publishedAt">{{ article.publishedAt | date: "dd.MM.yyyy" }}</time> }
+                  </div>
+                  <h2><a [routerLink]="['/blog', article.id]">{{ article.title }}</a></h2>
+                  <div class="article-excerpt" [innerHTML]="article.text | markdown"></div>
+                  <a class="read-link" [routerLink]="['/blog', article.id]">{{ 'home.read' | transloco }} <span aria-hidden="true">→</span></a>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+      } @else {
+        <section class="empty-journal" aria-live="polite">
+          <p class="eyebrow">{{ 'home.journal' | transloco }}</p>
+          <h2>{{ 'home.noArticles' | transloco }}</h2>
+        </section>
+      }
+
+    }
+  </div>
+</main>

@@ -24,7 +24,11 @@ export class AnnouncementsFacade {
   loadPublishedById(id: number): Promise<void> { return this.store.loadPublishedById(id); }
   loadPublicArticleById(id: number): Promise<void> { return this.store.loadPublicArticleById(id); }
   loadArchive(page: number, category?: string): Promise<void> { return this.store.loadArchive(page, category); }
-  loadCategories(): Promise<void> { return this.store.loadCategories(); }
+  private categoriesRequest?: Promise<void>;
+  loadCategories(): Promise<void> {
+    if (this.categories().length) return Promise.resolve();
+    return this.categoriesRequest ??= this.store.loadCategories().finally(() => { this.categoriesRequest = undefined; });
+  }
   loadMyAnnouncements(): Promise<void> { return this.store.loadMyAnnouncements(); }
   createAnnouncement(request: CreateAnnouncementRequest): Promise<void> { return this.store.createAnnouncement(request); }
   updateAnnouncement(request: UpdateAnnouncementRequest): Promise<void> { return this.store.updateAnnouncement(request); }

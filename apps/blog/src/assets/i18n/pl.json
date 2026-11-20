@@ -1,7 +1,22 @@
 {
+  "categories": {
+    "ai": "Sztuczna inteligencja",
+    "bezpieczenstwo": "Bezpieczeństwo",
+    "development": "Programowanie",
+    "gaming": "Gry",
+    "hardware": "Sprzęt",
+    "nauka": "Nauka",
+    "open-source": "Otwarte oprogramowanie",
+    "self-hosting": "Self-hosting",
+    "sieci": "Sieci",
+    "smart-home": "Inteligentny dom",
+    "vps": "VPS",
+    "windows": "Windows"
+  },
   "nav": {
     "home": "Start",
     "projects": "Projekty",
+    "wiki": "Wiki",
     "articles": "Artykuły",
     "recentArticles": "Najnowsze artykuły",
     "hardware": "Sprzęt",
@@ -23,9 +38,15 @@
     "switchDark": "Włącz ciemny motyw"
   },
   "home": {
-    "eyebrow": "DZIENNIK TECHNOLOGICZNY · WEB DEVELOPMENT · AI",
-    "intro": "Programista z Polski. Skupiam się na tworzeniu aplikacji webowych i AI.",
+    "eyebrow": "PROGRAMISTA APLIKACJI WEBOWYCH",
+    "intro": "Tworzę aplikacje webowe — od dopracowanego interfejsu w Angularze po rozwiązania w .NET i Pythonie. Szukam nowych możliwości zawodowych.",
     "about": "O mnie",
+    "projectsCta": "Zobacz projekty",
+    "technologies": "Technologie",
+    "explore": "Poznaj stronę",
+    "wiki": "Wiki projektów",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
     "latest": "NAJNOWSZY ARTYKUŁ",
     "read": "Czytaj artykuł",
     "allArticles": "Wszystkie artykuły",
@@ -67,6 +88,7 @@
     "url": "Adres",
     "loadError": "Nie udało się wczytać projektu. Spróbuj ponownie."
   },
+  "wiki": { "title": "Wiki projektów" },
   "about": {
     "eyebrow": "O MNIE",
     "bio": "Jestem programistą z Polski i skupiam się na tworzeniu aplikacji webowych oraz AI.",

@@ -1,7 +1,22 @@
 {
+  "categories": {
+    "ai": "Artificial intelligence",
+    "bezpieczenstwo": "Security",
+    "development": "Development",
+    "gaming": "Gaming",
+    "hardware": "Hardware",
+    "nauka": "Learning",
+    "open-source": "Open source",
+    "self-hosting": "Self-hosting",
+    "sieci": "Networking",
+    "smart-home": "Smart home",
+    "vps": "VPS",
+    "windows": "Windows"
+  },
   "nav": {
     "home": "Home",
     "projects": "Projects",
+    "wiki": "Wiki",
     "articles": "Articles",
     "recentArticles": "Recent articles",
     "hardware": "Hardware",
@@ -23,9 +38,15 @@
     "switchDark": "Use dark theme"
   },
   "home": {
-    "eyebrow": "TECH JOURNAL · WEB DEVELOPMENT · AI",
-    "intro": "Software developer from Poland, focused on web development and AI.",
+    "eyebrow": "WEB APPLICATION DEVELOPER",
+    "intro": "I build web applications, from polished Angular interfaces to solutions in .NET and Python. I’m open to new career opportunities.",
     "about": "About me",
+    "projectsCta": "Explore projects",
+    "technologies": "Technologies",
+    "explore": "Explore this site",
+    "wiki": "Project wiki",
+    "blog": "Blog",
+    "portfolio": "Portfolio",
     "latest": "LATEST ARTICLE",
     "read": "Read article",
     "allArticles": "All articles",
@@ -67,6 +88,7 @@
     "url": "URL",
     "loadError": "Couldn't load the project. Please try again."
   },
+  "wiki": { "title": "Project wiki" },
   "about": {
     "eyebrow": "ABOUT ME",
     "bio": "I am a software developer from Poland, focused on web development and AI.",

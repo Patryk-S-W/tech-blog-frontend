@@ -3,6 +3,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { HttpTestingController, provideHttpClientTesting } from '@angular/common/http/testing';
 import { AnnouncementDto, PagedResult } from '@blog/articles/entity';
 import { AnnouncementsFacade } from './announcements.facade';
+import { AnnouncementStore } from './store/announcement.store';
 
 describe('article archive', () => {
   const article: AnnouncementDto = {
@@ -81,6 +82,7 @@ describe('article archive', () => {
     const http = TestBed.inject(HttpTestingController);
     const archive = facade.loadArchive(1);
     const categories = facade.loadCategories();
+    expect(facade.loadCategories()).toBe(categories);
     const rejected = expect(categories).rejects.toThrow('Failed to load article categories');
     const failed = http.expectOne('/api/v1/blog/categories?language=pl');
     expect(failed.request.method).toBe('GET');
@@ -101,8 +103,21 @@ describe('article archive', () => {
     expect(facade.archivePage()).toEqual(page(1));
   });
 
-  it('ignores a late categories failure after a newer categories success', async () => {
+  it('coalesces concurrent catalog requests and reuses the successful catalog', async () => {
     const facade = TestBed.inject(AnnouncementsFacade);
+    const http = TestBed.inject(HttpTestingController);
+    const first = facade.loadCategories();
+    const second = facade.loadCategories();
+    expect(second).toBe(first);
+    http.expectOne('/api/v1/blog/categories?language=pl').flush(['Hardware']);
+    await Promise.all([first, second]);
+    await facade.loadCategories();
+    http.expectNone('/api/v1/blog/categories?language=pl');
+    expect(facade.categories()).toEqual(['Hardware']);
+  });
+
+  it('ignores a late store categories failure after a newer categories success', async () => {
+    const facade = TestBed.inject(AnnouncementStore);
     const http = TestBed.inject(HttpTestingController);
     const older = facade.loadCategories();
     const oldRequest = http.expectOne('/api/v1/blog/categories?language=pl');
